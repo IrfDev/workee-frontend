@@ -1,0 +1,52 @@
+{
+    "name": "workee-frontend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "parcel src/index.html",
+        "format": "prettier \"src/**/* . {js,html}\"",
+        "lint": "eslint \"src/**/*.{js, jsx}\" --quiet"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IrfDev/workee-frontend.git"
+    },
+    "keywords": [],
+    "author": "IrfDev",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/IrfDev/workee-frontend/issues"
+    },
+    "homepage": "https://github.com/IrfDev/workee-frontend#readme",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "dynamodb": "^1.2.1",
+        "jest": "^26.0.1",
+        "mongodb": "^3.5.7",
+        "mongoose": "^5.9.14",
+        "pg": "^8.2.1",
+        "prettier": "^2.0.5",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "serverless": "^1.71.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.1.0",
+        "babel-eslint": "^10.1.0",
+        "babel-loader": "^8.0.2",
+        "css-loader": "^1.0.0",
+        "eslint": "^7.0.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.20.0",
+        "eslint-plugin-react-hooks": "^4.0.2",
+        "parcel-bundler": "^1.12.4",
+        "style-loader": "^0.23.0",
+        "webpack": "^4.19.1",
+        "webpack-cli": "^3.1.1",
+        "webpack-dev-server": "^3.1.8"
+    }
+}
