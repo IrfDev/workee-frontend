@@ -1,0 +1,80 @@
+{
+  "repos": [
+    {
+      "Title": "Hello",
+      "tecnologies": ["vue"],
+      "description": "This is a repo description",
+      "key": 123123
+    },
+    {
+      "Title": "Hello",
+      "tecnologies": ["vue"],
+      "description": "This is a repo description",
+      "key": 12312322
+    },
+    {
+      "Title": "Hello",
+      "tecnologies": ["vue"],
+      "description": "This is a repo description",
+      "key": 1231
+    },
+    {
+      "Title": "Hello",
+      "tecnologies": ["vue"],
+      "description": "This is a repo description",
+      "key": 12
+    }
+  ],
+  "reads": [
+    {
+      "title": "Las mejoras cosas que hacer",
+      "about": "Las cosas que tenemos que ver para poder hacer cosas",
+      "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+      "key": 89899989898
+    },
+    {
+      "title": "Las mejoras cosas que hacer",
+      "about": "Las cosas que tenemos que ver para poder hacer cosas",
+      "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+      "key": 8989998989
+    },
+    {
+      "title": "Las mejoras cosas que hacer",
+      "about": "Las cosas que tenemos que ver para poder hacer cosas",
+      "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+      "key": 8989998
+    },
+    {
+      "title": "Las mejoras cosas que hacer",
+      "about": "Las cosas que tenemos que ver para poder hacer cosas",
+      "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+      "key": 898
+    }
+  ],
+  "projects": [
+    {
+      "title": "Shaft",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "key": 1290319230129
+    },
+    {
+      "title": "revit",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "key": 129031
+    },
+    {
+      "title": "Hebotech",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "key": 129031923
+    },
+    {
+      "title": "Shaft",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "key": 129031344
+    }
+  ]
+}

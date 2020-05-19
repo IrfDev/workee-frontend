@@ -1,18 +1,25 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import ImageCard from '../Molecules/BasicCard.jsx';
+import { Link } from '@reach/router';
 
-export default function SimpleContainer() {
+export default function ProjectListing(props) {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth='sm'>
-        <Typography
-          component='div'
-          style={{ backgroundColor: '#cfe8fc', height: '100vh' }}
-        />
-      </Container>
-    </React.Fragment>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <h1>Projects</h1>
+      </Grid>
+      {props.projects.map((project) => (
+        <Grid key={project.key} item xs={6}>
+          <Link to={`/projects/${project.title}`}>
+            <ImageCard
+              title={project.title}
+              description={project.description}
+              img={project.thumb}
+            />
+          </Link>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
