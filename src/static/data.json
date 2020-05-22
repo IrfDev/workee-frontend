@@ -25,6 +25,7 @@
       "key": 12
     }
   ],
+  "streams": [89899989898, 89899989898, 8989998, 898],
   "reads": [
     {
       "title": "Las mejoras cosas que hacer",
@@ -51,59 +52,47 @@
       "key": 898
     }
   ],
+  "heroes": [
+    {
+      "name": "Dan Abramov",
+      "key": "h1",
+      "tags": ["Javascript", "React", "Redux"],
+      "links": [
+        {
+          "medium": "https://medium.com",
+          "github": "https://github.io"
+        }
+      ]
+    }
+  ],
+  "boards": [
+    {
+      "key": "b1",
+      "lists": [{ "Por hacer": 5 }, { "Heciendo": 2 }, { "Hecho": 4 }]
+    }
+  ],
+  "tasks": [
+    {
+      "Name": "Incluir nuevos features",
+      "key": "k1"
+    }
+  ],
+  "resources": [
+    {
+      "name": "Data flow structure",
+      "url": "Kind of things",
+      "tags": ["Data", "Schemas"]
+    }
+  ],
+  "noteBooks": [
+    {
+      "name": "Javascript",
+      "tags": ["Javascript", "Intro"],
+      "url": "https://onenoe.com",
+      "key": "n1"
+    }
+  ],
   "projects": [
-    {
-      "title": "Shaft",
-      "description": "Cascos para moto de colombia",
-      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 1290319230129,
-      "weekly": {
-        "boards": ["b1"]
-      },
-      "daily": {
-        "tasks": ["t1"]
-      },
-      "sources": {
-        "heroes": [
-          {
-            "name": "Dan Abramov",
-            "tags": ["Javascript", "React", "Redux"],
-            "links": [
-              {
-                "medium": "https://medium.com",
-                "github": "https://github.io"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "title": "revit",
-      "description": "Cascos para moto de colombia",
-      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031,
-      "weekly": {
-        "boards": ["b1"]
-      },
-      "daily": {
-        "tasks": ["t1"]
-      },
-      "sources": {
-        "heroes": [
-          {
-            "name": "Dan Abramov",
-            "tags": ["Javascript", "React", "Redux"],
-            "links": [
-              {
-                "medium": "https://medium.com",
-                "github": "https://github.io"
-              }
-            ]
-          }
-        ]
-      }
-    },
     {
       "title": "Hebotech",
       "description": "Cascos para moto de colombia",
@@ -117,41 +106,19 @@
       },
       "sources": {
         "stream": ["89899989898"],
-        "heroes": [
-          {
-            "name": "Dan Abramov",
-            "tags": ["Javascript", "React", "Redux"],
-            "links": [
-              {
-                "medium": "https://medium.com",
-                "github": "https://github.io"
-              }
-            ]
-          }
-        ]
+        "heroes": ["h1"]
       },
       "resources": {
         "repos": ["12312322"],
-        "noteBooks": [
-          {
-            "name": "Javascript",
-            "tags": ["Javascript", "Intro"]
-          }
-        ],
-        "resources": [
-          {
-            "name": "Data flow structure",
-            "url": "Kind of things",
-            "tags": ["Data", "Schemas"]
-          }
-        ]
+        "noteBooks": ["n1"],
+        "resources": ["r1"]
       }
     },
     {
       "title": "Shaft",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031344,
+      "key": 12121212,
       "weekly": {
         "boards": ["b1"]
       },
@@ -159,18 +126,34 @@
         "tasks": ["t1"]
       },
       "sources": {
-        "heroes": [
-          {
-            "name": "Dan Abramov",
-            "tags": ["Javascript", "React", "Redux"],
-            "links": [
-              {
-                "medium": "https://medium.com",
-                "github": "https://github.io"
-              }
-            ]
-          }
-        ]
+        "stream": ["89899989898"],
+        "heroes": ["h1"]
+      },
+      "resources": {
+        "repos": ["12312322"],
+        "noteBooks": ["n1"],
+        "resources": ["r1"]
+      }
+    },
+    {
+      "title": "Revit",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "key": 1231920931209321,
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "stream": ["89899989898"],
+        "heroes": ["h1"]
+      },
+      "resources": {
+        "repos": ["12312322"],
+        "noteBooks": ["n1"],
+        "resources": ["r1"]
       }
     }
   ]
