@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import ListReadItem from '../components/Organisms/ReadsListing.jsx';
-import ProjectListing from '../components/Organisms/ProjectListing.jsx';
+import ProjectListingContainer from '../store/containers/ProjectsContainer';
 import ReposListing from '../components/Organisms/ReposListing.jsx';
 import axios from 'axios';
 
@@ -26,7 +26,7 @@ export default class Home extends React.Component {
     return (
       <React.Fragment>
         <Container maxWidth='sm'>
-          <ProjectListing projects={this.state.projects} />
+          <ProjectListingContainer projects={this.state.projects} />
           <ListReadItem reads={this.state.reads} />
           <ReposListing repos={this.state.repos} />
         </Container>
