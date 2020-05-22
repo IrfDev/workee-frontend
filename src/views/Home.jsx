@@ -1,17 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Container from '@material-ui/core/Container';
 import ListReadItem from '../components/Organisms/ReadsListing.jsx';
 import ProjectListing from '../components/Organisms/ProjectListing.jsx';
 import ReposListing from '../components/Organisms/ReposListing.jsx';
 import axios from 'axios';
 
-export default class Home extends Component {
+export default class Home extends React.Component {
   state = {
     projects: [],
+    repos: [],
+    reads: [],
   };
-  componentDidMount() {
-    axios.get('http://localhost:8080/projects').then((response) => {
+  async componentDidMount() {
+    await axios.get('http://localhost:8080/projects').then((response) => {
       this.setState({ projects: response.data });
+    });
+    axios.get('http://localhost:8080/repos').then((response) => {
+      this.setState({ repos: response.data });
+    });
+    await axios.get('http://localhost:8080/reads').then((response) => {
+      this.setState({ reads: response.data });
     });
   }
   render() {
@@ -19,8 +27,8 @@ export default class Home extends Component {
       <React.Fragment>
         <Container maxWidth='sm'>
           <ProjectListing projects={this.state.projects} />
-          <ListReadItem />
-          <ReposListing />
+          <ListReadItem reads={this.state.reads} />
+          <ReposListing repos={this.state.repos} />
         </Container>
       </React.Fragment>
     );

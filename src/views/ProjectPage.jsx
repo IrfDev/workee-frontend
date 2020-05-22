@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import ProjectListing from '../components/Organisms/ProjectListing.jsx';
-import axios from 'axios';
+import BottomNav from '../components/Molecules/appBar/BottomNav.jsx';
 
 export default class ProjectPage extends Component {
   state = {
-    projects: [],
+    Boards: [],
+    Tasks: [],
+    Entries: [],
+    Resources: [],
   };
-  componentDidMount() {
-    axios.get('http://localhost:8080/projects').then((response) => {
-      this.setState({ projects: response.data });
-    });
-  }
   render() {
     return (
       <>
         <h1>{this.props.title}</h1>
-        <ProjectListing projects={this.state.projects} />
+        <BottomNav />
       </>
     );
   }

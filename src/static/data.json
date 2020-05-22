@@ -56,25 +56,122 @@
       "title": "Shaft",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 1290319230129
+      "key": 1290319230129,
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "heroes": [
+          {
+            "name": "Dan Abramov",
+            "tags": ["Javascript", "React", "Redux"],
+            "links": [
+              {
+                "medium": "https://medium.com",
+                "github": "https://github.io"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "title": "revit",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031
+      "key": 129031,
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "heroes": [
+          {
+            "name": "Dan Abramov",
+            "tags": ["Javascript", "React", "Redux"],
+            "links": [
+              {
+                "medium": "https://medium.com",
+                "github": "https://github.io"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "title": "Hebotech",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031923
+      "key": 129031923,
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "stream": ["89899989898"],
+        "heroes": [
+          {
+            "name": "Dan Abramov",
+            "tags": ["Javascript", "React", "Redux"],
+            "links": [
+              {
+                "medium": "https://medium.com",
+                "github": "https://github.io"
+              }
+            ]
+          }
+        ]
+      },
+      "resources": {
+        "repos": ["12312322"],
+        "noteBooks": [
+          {
+            "name": "Javascript",
+            "tags": ["Javascript", "Intro"]
+          }
+        ],
+        "resources": [
+          {
+            "name": "Data flow structure",
+            "url": "Kind of things",
+            "tags": ["Data", "Schemas"]
+          }
+        ]
+      }
     },
     {
       "title": "Shaft",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031344
+      "key": 129031344,
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "heroes": [
+          {
+            "name": "Dan Abramov",
+            "tags": ["Javascript", "React", "Redux"],
+            "links": [
+              {
+                "medium": "https://medium.com",
+                "github": "https://github.io"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
