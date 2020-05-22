@@ -22,15 +22,15 @@ export default function BasicCard(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.img}
+          image={props.project.thumb}
           title='Contemplative Reptile'
         />
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>
-            {props.title}
+            {props.project.title}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {props.description}
+            {props.project.description}
           </Typography>
         </CardContent>
       </CardActionArea>

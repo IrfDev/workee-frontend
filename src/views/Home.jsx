@@ -26,7 +26,7 @@ export default class Home extends React.Component {
     return (
       <React.Fragment>
         <Container maxWidth='sm'>
-          <ProjectListingContainer projects={this.state.projects} />
+          <ProjectListingContainer projects={this.props.projects} />
           <ListReadItem reads={this.state.reads} />
           <ReposListing repos={this.state.repos} />
         </Container>

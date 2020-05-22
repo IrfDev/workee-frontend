@@ -97,7 +97,28 @@
       "title": "Hebotech",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 129031923,
+      "id": "129031923",
+      "weekly": {
+        "boards": ["b1"]
+      },
+      "daily": {
+        "tasks": ["t1"]
+      },
+      "sources": {
+        "stream": ["89899989898"],
+        "heroes": ["h1"]
+      },
+      "resources": {
+        "repos": ["12312322"],
+        "noteBooks": ["n1"],
+        "resources": ["r1"]
+      }
+    },
+    {
+      "title": "Hebotech",
+      "description": "Cascos para moto de colombia",
+      "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+      "id": "129000000031923",
       "weekly": {
         "boards": ["b1"]
       },
@@ -118,7 +139,7 @@
       "title": "Shaft",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 12121212,
+      "id": "12121212",
       "weekly": {
         "boards": ["b1"]
       },
@@ -139,7 +160,7 @@
       "title": "Revit",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
-      "key": 1231920931209321,
+      "id": "1231920931209321",
       "weekly": {
         "boards": ["b1"]
       },
