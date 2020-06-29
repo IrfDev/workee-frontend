@@ -1,14 +1,25 @@
-import { projects as defaultProjects } from '../schemas/Project';
+// import { projects as defaultProjects } from '../schemas/Project';
+import { FETCH_PROJECTS, SET_PROJECTS } from "../actions/Projects";
 
-const projectsReducer = (projects = defaultProjects, action) => {
-  if (action.type === 'CREATE_PROJECT') {
-    const { projectId, newProject } = action.payload;
-    return {
-      entities: { ...projects.entities, [projectId]: newProject },
-      ids: [...projects.ids, projectId],
-    };
+const projectsReducer = (projects = {}, action) => {
+  switch (action.type) {
+    case FETCH_PROJECTS:
+      return {
+        projects,
+        isLoading: true,
+        error: null,
+      };
+
+    case SET_PROJECTS:
+      console.log("Reducer:", action.payload);
+      return {
+        ...action.payload,
+        isLoading: false,
+        error: null,
+      };
+
+    default:
+      return projects;
   }
-  return projects;
 };
-
 export default projectsReducer;

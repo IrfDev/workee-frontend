@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import { Router } from '@reach/router';
 import TopNav from './components/Molecules/appBar/TopNav.jsx';
 import Home from './views/Home.jsx';
+import Login from './views/Login.jsx';
 import Projects from './views/ProjectPage.jsx';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         <TopNav />
         <Router>
           <Home path='/' />
+          <Login path='/login' />
           <Projects path='/projects/:title' />
         </Router>
       </div>
