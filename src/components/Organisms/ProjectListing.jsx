@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { CircularProgress } from "@material-ui/core";
-import ImageCardContainer from "../../store/containers/ProjectContainer";
+import ImageCardContainer from "../../components/Molecules/BasicCard.jsx";
 import { Link } from "@reach/router";
 
 export default class ProjectListing extends React.Component {
@@ -18,10 +18,10 @@ export default class ProjectListing extends React.Component {
         </Grid>
 
         {this.props.isLoading === false ? (
-          this.props.ids.map((projectId) => (
-            <Grid key={projectId} item xs={6}>
-              <Link to={`/projects/${projectId}`}>
-                <ImageCardContainer projectId={projectId} />
+          this.props.projects.map((project) => (
+            <Grid key={project.id} item xs={6}>
+              <Link to={`/projects/${project.id}`}>
+                <ImageCardContainer project={project} />
               </Link>
             </Grid>
           ))

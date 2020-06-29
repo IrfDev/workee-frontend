@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { fetchProjects } from "../actions/Projects";
-import Projects from "../../components/Organisms/ProjectListing.jsx";
+import { fetchProjects } from "../../actions/Projects";
+import Projects from "../../../components/Organisms/ProjectListing.jsx";
 
 const mapStateToProps = (state) => {
   console.log("hello again", state);

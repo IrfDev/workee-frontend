@@ -13,7 +13,7 @@ const projectsReducer = (projects = {}, action) => {
     case SET_PROJECTS:
       console.log("Reducer:", action.payload);
       return {
-        ...action.payload,
+        projects: action.payload,
         isLoading: false,
         error: null,
       };

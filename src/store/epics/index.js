@@ -12,13 +12,10 @@ const fetchProjectsEpic = (action$) =>
     ofType(FETCH_PROJECTS),
     mergeMap(async () => {
       const response = await axios.get("http://localhost:8080/projects");
-      const normalizedProjectSchema = await normalize(response.data, [
-        projectSchema,
-      ]);
-      return setProjects({
-        entities: normalizedProjectSchema.entities.projects,
-        ids: normalizedProjectSchema.result,
-      });
+      // const normalizedProjectSchema = await normalize(response.data, [
+      //   projectSchema,
+      // ]);
+      return setProjects(response.data);
     })
   );
 
