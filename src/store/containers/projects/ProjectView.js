@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 import { fetchProjects, setActiveProject } from "../../actions/Projects";
-import Projects from "../../../components/Organisms/ProjectListing.jsx";
+import Projects from "../../../views/ProjectPage.jsx";
 
 const mapStateToProps = (state) => {
   return {
     ...state.projects,
+    nav: state.nav,
   };
 };
 

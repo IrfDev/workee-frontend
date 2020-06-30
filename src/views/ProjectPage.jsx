@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import BottomNav from '../components/Molecules/appBar/BottomNav.jsx';
+import React, { Component } from "react";
+import BottomNav from "../store/containers/nav/BottomNavProjects";
 
 export default class ProjectPage extends Component {
   state = {
@@ -12,6 +12,7 @@ export default class ProjectPage extends Component {
     return (
       <>
         <h1>{this.props.title}</h1>
+        <h2>{this.props.nav.activeNav}</h2>
         <BottomNav />
       </>
     );

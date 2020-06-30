@@ -1,8 +1,8 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import ListReadItem from "../components/Organisms/ReadsListing.jsx";
+import ListReadItem from "../store/containers/reads/ReadsListingContainer";
 import ProjectListingContainer from "../store/containers/projects/ProjectsContainer";
-import ReposListing from "../components/Organisms/ReposListing.jsx";
+import ReposListing from "../store/containers/repos/ReposListingContainer";
 // import axios from 'axio3s';
 
 // import  { fetchProjects } from '../store/actions/Projects'

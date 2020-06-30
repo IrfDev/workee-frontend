@@ -1,5 +1,9 @@
 // import { projects as defaultProjects } from '../schemas/Project';
-import { FETCH_PROJECTS, SET_PROJECTS } from "../actions/Projects";
+import {
+  FETCH_PROJECTS,
+  SET_PROJECTS,
+  SET_ACTIVE_PROJECT,
+} from "../actions/Projects";
 
 const projectsReducer = (projects = {}, action) => {
   switch (action.type) {
@@ -11,11 +15,16 @@ const projectsReducer = (projects = {}, action) => {
       };
 
     case SET_PROJECTS:
-      console.log("Reducer:", action.payload);
       return {
         projects: action.payload,
         isLoading: false,
         error: null,
+      };
+
+    case SET_ACTIVE_PROJECT:
+      return {
+        ...projects,
+        activeProject: action.payload,
       };
 
     default:
