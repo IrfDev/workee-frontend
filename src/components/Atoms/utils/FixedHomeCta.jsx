@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import Modal from "@material-ui/core/Modal";
 
-import NewProject from "../Molecules/Forms/NewProject.jsx";
+import NewProject from "../../Molecules/Forms/NewProject.jsx";
 
 const useStyles = makeStyles((theme) => ({
   button: {

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal(props) {
   const classes = useStyles();
   const handleChange = (e) => props.setActiveTab(e.target.value);
-  const handleFormsChanges = (e) => console.log(e);
+  const handleFormsChanges = (data) => console.log(props.activeTab, data);
 
   const renderSwitch = (param) => {
     switch (param) {

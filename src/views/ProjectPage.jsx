@@ -6,6 +6,8 @@ import Source from "../components/Organisms/Projects/Source.jsx";
 import Weekly from "../components/Organisms/Projects/Weekly.jsx";
 import Container from "@material-ui/core/Container";
 
+import { CircularProgress } from "@material-ui/core";
+
 export default class ProjectPage extends Component {
   state = {
     Boards: [],
@@ -39,18 +41,30 @@ export default class ProjectPage extends Component {
         break;
     }
   }
+
+   async componentDidMount() {
+    if (!this.state.activeProject) {
+      await this.props.fetchAndFindProjects(this.props.title);
+    }
+  }
   render() {
-    return (
+    return(
       <div>
-        <h1>{this.props.title}</h1>
-        <Container>
-          {this.renderSwitch(
-            this.props.nav.activeNav,
-            this.props.activeProject
-          )}
-        </Container>
-        <BottomNav activeProject={this.props.activeProject.id} />
-      </div>
-    );
+    {this.props.activeProject ?
+        <div>
+          <h1>{this.props.title}</h1>
+          <Container>
+            {this.renderSwitch(
+              this.props.nav.activeNav,
+              this.props.activeProject
+            )}
+          </Container>
+          <BottomNav activeProject={this.props.activeProject.id} />
+        </div>
+    :
+       <CircularProgress />
+    }
+    </div>
+    )
   }
 }

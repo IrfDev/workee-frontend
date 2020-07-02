@@ -11,7 +11,6 @@ const readsReducer = (reads = [], action) => {
       };
 
     case SET_READS:
-      console.log("Reducer:", action.payload);
       return {
         reads: action.payload,
         isLoading: false,

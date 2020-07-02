@@ -1,4 +1,3 @@
-// import { projects as defaultProjects } from '../schemas/Project';
 import { FETCH_REPOS, SET_REPOS } from "../actions/Repos";
 
 const reposReducer = (repos = [], action) => {
@@ -11,7 +10,6 @@ const reposReducer = (repos = [], action) => {
       };
 
     case SET_REPOS:
-      console.log("Reducer:", action.payload);
       return {
         repos: action.payload,
         isLoading: false,

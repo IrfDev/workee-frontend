@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchProjects: () => dispatch(fetchProjects()),
     setActiveProject: (s) => {
-      console.log("Inside active project action", s);
+
       return dispatch(setActiveProject(s));
     },
   };

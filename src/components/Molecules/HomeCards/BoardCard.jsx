@@ -15,7 +15,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import CardList from "../Atoms/CardBoardItem.jsx";
+import CardList from "../../Atoms/items/CardBoardItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {

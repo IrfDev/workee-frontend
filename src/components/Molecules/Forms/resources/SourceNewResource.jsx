@@ -207,7 +207,6 @@ export default class SourceNewResource extends Component {
             )}
           </div>
         </div>
-        <Button variant="contained" color="primary">Enviar formulario</Button>
         </>
         : 
         <>
@@ -233,6 +232,7 @@ export default class SourceNewResource extends Component {
         </>
             }
           </div>
+          <Button variant="contained" color="primary">Enviar formulario</Button>
       </form>
     );
   }

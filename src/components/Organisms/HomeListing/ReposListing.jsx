@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import RepoItem from "../Molecules/RepoItem.jsx";
+import RepoItem from "../../Molecules/RepoItem.jsx";
 
 export default class ReposListing extends React.Component {
   async componentDidMount() {

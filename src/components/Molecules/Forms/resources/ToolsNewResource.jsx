@@ -58,10 +58,11 @@ handleNotebookIdInput = (e) => {
     });
   };
 
-  addNotebookSectionInput = () => {
+  addNotebookSectionInput = (e) => {
+    e.persist()
     this.setState((state) => {
       const sectionsArray = state.notebookSections;
-      const newSection = state.notebookSectionInput;
+      const newSection = e.target.value;
       sectionsArray.push(newSection);
       return {
         ...state,
@@ -71,10 +72,22 @@ handleNotebookIdInput = (e) => {
     });
   };
 
+  deleteNotebookSections = (lastSection) => {
+    this.setState((state) => {
+      let repos = state.notebookSections;
+      let filterSections = repos.filter((section) => section !== lastSection);
+      return {
+        ...state,
+        notebookSections: filterSections,
+        notebookSectionInput: "",
+      };
+    });
+  };
+
 // Event handler for tags 🔖
   addTags = () => {
     this.setState((state) => {
-      const tagsArray = state.heroTags;
+      const tagsArray = state.tags;
       const newTag = state.newTagInput;
       tagsArray.push(newTag);
       return {
@@ -87,11 +100,11 @@ handleNotebookIdInput = (e) => {
 
   deleteTag = (newTag) => {
     this.setState((state) => {
-      const tags = state.heroTags;
+      const tags = state.tags;
       const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
       return {
         ...state,
-        heroTags: tagsWithoutDeletedTag,
+        tags: tagsWithoutDeletedTag,
         newTagInput: "",
       };
     });
@@ -205,6 +218,11 @@ handleWebsiteInput = (e) => {
                   <MenuItem value={"Stream"}>Stream</MenuItem>
                   <MenuItem value={"Hero"}>Hero</MenuItem>
                 </Select>
+                {
+              this.state.notebookSections.map((section, indexLink) =>  (
+                <Chip label={section} key={indexLink} onDelete={()=>this.deleteNotebookSections(section)} />  
+              )
+            )}
           </FormControl>
           </>
         );
@@ -240,8 +258,8 @@ handleWebsiteInput = (e) => {
           <Button onClick={this.addTags} color="primary">Agregar Tag</Button>
           <div>
             {
-              this.state.heroTags.map((tag, indexLink) =>  (
-                <Chip label={tag} key={indexLink} onDelete={()=>this.deleteTag(tag)} />  
+              this.state.notebookSections.map((section, indexLink) =>  (
+                <Chip label={section} key={indexLink} onDelete={()=>this.deleteNotebookSection(section)} />  
               )
             )}
           </div>
@@ -272,6 +290,7 @@ handleWebsiteInput = (e) => {
               </Select>
           </FormControl>
           <div>{this.renderSwitch()}</div>
+          <Button variant="contained" color="primary" onClick={()=>this.props.handleForm(this.state)}>Enviar formulario</Button>
       </form>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-import ReadItem from "../Molecules/ReadItem.jsx";
+import ReadItem from "../../Molecules/ReadItem.jsx";
 
 export default class ReadsListing extends React.Component {
   async componentDidMount() {

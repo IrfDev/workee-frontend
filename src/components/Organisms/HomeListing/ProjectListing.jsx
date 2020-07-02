@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { CircularProgress } from "@material-ui/core";
-import ImageCardContainer from "../../components/Molecules/BasicCard.jsx";
+import ImageCardContainer from "../../Molecules/HomeCards/BasicCard.jsx";
 import { Link } from "@reach/router";
 
 export default class ProjectListing extends React.Component {

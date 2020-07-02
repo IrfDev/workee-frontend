@@ -100,7 +100,7 @@ export default class WeeklyNewResource extends Component {
         <div>
           <FormControl onChange={this.newTagInput}>
             <TextField
-              // onKeyPress={(e) => console.log("keypress", e.ke)}
+              // onKeyPress={(e) => ("keypress", e.ke)}
               value={this.state.newTagInput}
               id="basicTemplate"
               label="NewTag"

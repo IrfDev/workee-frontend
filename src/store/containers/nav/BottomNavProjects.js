@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setActiveTab: (tab) => {
-      console.log("inside nav component", tab);
       return dispatch(setActiveTab(tab));
     },
   };
