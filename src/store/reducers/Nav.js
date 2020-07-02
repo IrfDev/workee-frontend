@@ -12,7 +12,10 @@ const projectsReducer = (nav = {}, action) => {
       };
 
     default:
-      return nav;
+      return {
+        ...nav,
+        activeNav: "Weekly",
+      };
   }
 };
 export default projectsReducer;

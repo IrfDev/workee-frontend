@@ -99,23 +99,194 @@
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
       "id": "129031923",
       "weekly": {
-        "boards": ["b1"]
+        "boards": [
+          {
+            "name": "Super Board",
+            "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+            "list": {
+              "name": "Por hacer",
+              "cards": [
+                {
+                  "title": "Hacer",
+                  "description": "Es para yaaa!",
+                  "Members": [
+                    "https://material-ui.com/static/images/avatar/1.jpg",
+                    "https://material-ui.com/static/images/avatar/1.jpg"
+                  ],
+                  "labels": ["Importante", "urgente"],
+                  "date": "24/7"
+                },
+                {
+                  "title": "chingo",
+                  "description": "Es para yaaa!",
+                  "Members": [
+                    "https://material-ui.com/static/images/avatar/1.jpg",
+                    "https://material-ui.com/static/images/avatar/1.jpg"
+                  ],
+                  "labels": ["Importante", "urgente"],
+                  "date": "24/7"
+                },
+                {
+                  "title": "de",
+                  "description": "Es para yaaa!",
+                  "Members": [
+                    "https://material-ui.com/static/images/avatar/1.jpg",
+                    "https://material-ui.com/static/images/avatar/1.jpg"
+                  ],
+                  "labels": ["Importante", "urgente"],
+                  "date": "24/7"
+                },
+                {
+                  "title": "cosas",
+                  "description": "Es para yaaa!",
+                  "Members": [
+                    "https://material-ui.com/static/images/avatar/1.jpg",
+                    "https://material-ui.com/static/images/avatar/1.jpg"
+                  ],
+                  "labels": ["Importante", "urgente"],
+                  "date": "24/7"
+                }
+              ],
+              "labels": ["Importante", "urgente"],
+              "Members": [
+                "https://material-ui.com/static/images/avatar/1.jpg",
+                "https://material-ui.com/static/images/avatar/1.jpg"
+              ],
+              "labels": ["Importante", "urgente"],
+              "date": "24/7"
+            }
+          }
+        ]
       },
       "daily": {
-        "tasks": ["t1"]
+        "tasks": [
+          {
+            "Name": "Incluir nuevos features",
+            "description": "Cascos para moto de colombia",
+            "key": "k1",
+            "date": "24/7"
+          },
+          {
+            "Name": "Incluir nuevos features",
+            "description": "Cascos para moto de colombia",
+            "key": "k1",
+            "date": "24/7"
+          },
+          {
+            "Name": "Incluir nuevos features",
+            "description": "Cascos para moto de colombia",
+            "key": "k1",
+            "date": "24/7"
+          },
+          {
+            "Name": "Incluir nuevos features",
+            "description": "Cascos para moto de colombia",
+            "key": "k1",
+            "date": "24/7"
+          }
+        ]
       },
       "sources": {
-        "stream": ["89899989898"],
-        "heroes": ["h1"]
+        "stream": [
+          {
+            "title": "Las mejoras cosas que hacer",
+            "about": "Las cosas que tenemos que ver para poder hacer cosas",
+            "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+            "key": 89899989898
+          },
+          {
+            "title": "Las mejoras cosas que hacer",
+            "about": "Las cosas que tenemos que ver para poder hacer cosas",
+            "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+            "key": 8989998989
+          },
+          {
+            "title": "Las mejoras cosas que hacer",
+            "about": "Las cosas que tenemos que ver para poder hacer cosas",
+            "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+            "key": 8989998
+          },
+          {
+            "title": "Las mejoras cosas que hacer",
+            "about": "Las cosas que tenemos que ver para poder hacer cosas",
+            "thumbnail": "https://images.freeimages.com/images/small-previews/5c6/sunset-jungle-1383333.jpg",
+            "key": 898
+          }
+        ],
+        "heroes": [
+          {
+            "name": "Dan Abramov",
+            "key": "h1",
+            "tags": ["Javascript", "React", "Redux"],
+            "links": [
+              {
+                "name": "Medium",
+                "url": "https://medium.com"
+              },
+              {
+                "name": "Github",
+                "url": "https://github.io"
+              }
+            ]
+          }
+        ]
       },
       "resources": {
-        "repos": ["12312322"],
-        "noteBooks": ["n1"],
-        "resources": ["r1"]
+        "repos": [
+          {
+            "Title": "Hello",
+            "tecnologies": ["vue"],
+            "description": "This is a repo description",
+            "key": 123123
+          },
+          {
+            "Title": "Hello",
+            "tecnologies": ["vue"],
+            "description": "This is a repo description",
+            "key": 12312322
+          },
+          {
+            "Title": "Hello",
+            "tecnologies": ["vue"],
+            "description": "This is a repo description",
+            "key": 1231
+          },
+          {
+            "Title": "Hello",
+            "tecnologies": ["vue"],
+            "description": "This is a repo description",
+            "key": 12
+          }
+        ],
+        "noteBooks": [
+          {
+            "name": "Javascript",
+            "tags": ["Javascript", "Intro"],
+            "url": "https://onenoe.com",
+            "key": "n1",
+            "sections": [
+              {
+                "name": "MongoDB",
+                "url": "https://medium.com"
+              },
+              {
+                "name": "React",
+                "url": "https://medium.com"
+              }
+            ]
+          }
+        ],
+        "resources": [
+          {
+            "name": "Data flow structure",
+            "url": "Kind of things",
+            "tags": ["Data", "Schemas"]
+          }
+        ]
       }
     },
     {
-      "title": "Hebotech",
+      "title": "Shafta",
       "description": "Cascos para moto de colombia",
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
       "id": "129000000031923",
@@ -141,7 +312,38 @@
       "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
       "id": "12121212",
       "weekly": {
-        "boards": ["b1"]
+        "boards": [
+          {
+            "name": "Super Board",
+            "thumb": "https://elviajero.elpais.com/elviajero/imagenes/2013/09/12/actualidad/1379004116_238269_1379081989_noticia_grande.jpg",
+            "lists": [
+              {
+                "Por hacer": {
+                  "count": 5,
+                  "cards": ["Hacer", "chingo", "de", "cosas"],
+                  "labels": ["Importante", "urgente"],
+                  "Members": ["Chic", "Super"]
+                }
+              },
+              {
+                "Heciendo": {
+                  "count": 5,
+                  "cards": ["Hacer", "chingo", "de", "cosas"],
+                  "labels": ["Importante", "urgente"],
+                  "Members": ["Chic", "Super"]
+                }
+              },
+              {
+                "Hecho": {
+                  "count": 5,
+                  "cards": ["Hacer", "chingo", "de", "cosas"],
+                  "labels": ["Importante", "urgente"],
+                  "Members": ["Chic", "Super"]
+                }
+              }
+            ]
+          }
+        ]
       },
       "daily": {
         "tasks": ["t1"]

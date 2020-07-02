@@ -1,4 +1,5 @@
 import React from "react";
+// Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +11,9 @@ import CheckIcon from "@material-ui/icons/Check";
 import AddIcon from "@material-ui/icons/Add";
 import ShareIcon from "@material-ui/icons/Share";
 import BuildIcon from "@material-ui/icons/Build";
+
+// Local Components
+import NewResourceForm from "../Forms/NewResource.jsx";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -53,8 +57,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BottomAppBar({ setActiveTab }) {
+export default function BottomAppBar({ setActiveTab, activeNav }) {
   const classes = useStyles();
+  const [openModal, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Grid container className={classes.Conatiner}>
       <CssBaseline />
@@ -83,7 +96,17 @@ export default function BottomAppBar({ setActiveTab }) {
             <CheckIcon />
             <span>Daily</span>
           </div>
-          <Fab aria-label="add" className={classes.fabButton}>
+          <NewResourceForm
+            open={openModal}
+            onClose={handleClose}
+            activeTab={activeNav}
+            setActiveTab={setActiveTab}
+          />
+          <Fab
+            aria-label="add"
+            className={classes.fabButton}
+            onClick={() => handleOpen()}
+          >
             <AddIcon />
           </Fab>
           <div className={classes.grow} />

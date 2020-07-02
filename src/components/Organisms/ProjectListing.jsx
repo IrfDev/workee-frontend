@@ -8,6 +8,7 @@ export default class ProjectListing extends React.Component {
   async componentDidMount() {
     await this.props.fetchProjects();
   }
+
   render() {
     return (
       <Grid container spacing={2}>
