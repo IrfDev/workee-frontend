@@ -11,7 +11,7 @@ export default class DailyNewResource extends Component {
     super(props);
     this.state = { title: "", about: "", tags: [], newTagInput: "" };
   }
-
+  // Title input 📝
   handleTitleInput = (e) => {
     e.persist();
     this.setState((previousState) => {
@@ -25,7 +25,7 @@ export default class DailyNewResource extends Component {
       return { ...previousState, about: e.target.value };
     });
   };
-
+  // Tags 🔖
   addTags = () => {
     this.setState((state) => {
       const tagsArray = state.tags;
@@ -60,6 +60,7 @@ export default class DailyNewResource extends Component {
       };
     });
   };
+
   render() {
     return (
       <form>
@@ -112,7 +113,11 @@ export default class DailyNewResource extends Component {
             ))}
           </div>
         </div>
-        <Button variant="contained" color="primary">
+        <Button
+          onClick={() => this.props.handleForm(this.state)}
+          variant="contained"
+          color="primary"
+        >
           Enviar formulario
         </Button>
       </form>

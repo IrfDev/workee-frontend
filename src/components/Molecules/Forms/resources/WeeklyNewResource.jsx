@@ -15,32 +15,32 @@ export default class WeeklyNewResource extends Component {
     this.state = { resourceId: "", activeList: "", tags: [], newTagInput: "" };
   }
 
-   handleBoardId = (e) => {
+  handleBoardId = (e) => {
     this.setState((previousState) => {
       return { ...previousState, resourceId: e.target.value };
     });
   };
 
-   handleActiveList = (e) => {
+  handleActiveList = (e) => {
     this.setState((previousState) => {
       return { ...previousState, activeList: e.target.value };
     });
   };
 
-   addTags = () => {
+  addTags = () => {
     this.setState((state) => {
       const tagsArray = state.tags;
       const newTag = state.newTagInput;
       tagsArray.push(newTag);
       return {
         ...state,
-        tags:tagsArray,
+        tags: tagsArray,
         newTagInput: "",
       };
     });
   };
 
-   deleteTag = (newTag) => {
+  deleteTag = (newTag) => {
     this.setState((state) => {
       const tags = state.tags;
       const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
@@ -52,14 +52,14 @@ export default class WeeklyNewResource extends Component {
     });
   };
 
-   newTagInput = (e) => {
-    e.persist()
-    this.setState((state)=>{
+  newTagInput = (e) => {
+    e.persist();
+    this.setState((state) => {
       return {
         ...state,
         newTagInput: e.target.value,
-      }
-    })
+      };
+    });
   };
   render() {
     return (
@@ -106,16 +106,26 @@ export default class WeeklyNewResource extends Component {
               label="NewTag"
             />
           </FormControl>
-          <Button onClick={this.addTags} color="primary">Agregar Tag</Button>
-          <div >
-            {
-              this.state.tags.map((tag, indexTag) =>  (
-                <Chip label={tag} key={indexTag} onDelete={()=>this.deleteTag(tag)} />  
-              )
-            )}
+          <Button onClick={this.addTags} color="primary">
+            Agregar Tag
+          </Button>
+          <div>
+            {this.state.tags.map((tag, indexTag) => (
+              <Chip
+                label={tag}
+                key={indexTag}
+                onDelete={() => this.deleteTag(tag)}
+              />
+            ))}
           </div>
         </div>
-        <Button variant="contained" color="primary">Enviar formulario</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.props.handleForm}
+        >
+          Enviar formulario
+        </Button>
       </form>
     );
   }
