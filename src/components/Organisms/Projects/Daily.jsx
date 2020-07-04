@@ -1,5 +1,5 @@
 import React from "react";
-import TaskCard from "../../Atoms/TaskCard.jsx";
+import TaskCard from "../../Molecules/cards/TaskCard.jsx";
 
 export default function Daily(props) {
   return (

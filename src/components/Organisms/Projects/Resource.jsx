@@ -1,7 +1,7 @@
 import React from "react";
-import RepoCard from "../../Atoms/RepoCard.jsx";
-import NotebookCard from "../../Atoms/NotebookCard.jsx";
-import ResourceCard from "../../Atoms/ResourceCard.jsx";
+import RepoCard from "../../Molecules/cards/RepoCard.jsx";
+import NotebookCard from "../../Molecules/cards/NotebookCard.jsx";
+import ResourceCard from "../../Molecules/cards/ResourceCard.jsx";
 
 export default function Resource(props) {
   return (

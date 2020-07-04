@@ -1,6 +1,6 @@
 import React from "react";
-import StreamCard from "../../Atoms/StreamCard.jsx";
-import HeroCard from "../../Atoms/HeroCard.jsx";
+import StreamCard from "../../Molecules/cards/StreamCard.jsx";
+import HeroCard from "../../Molecules/cards/HeroCard.jsx";
 
 export default function Source(props) {
   return (

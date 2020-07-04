@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { fetchReads } from "../../actions/Reads";
-import ReadsListingComponent from "../../../components/Organisms/ReadsListing.jsx";
+import ReadsListingComponent from "../../../components/Organisms/HomeListing/ReadsListing.jsx";
 
 const mapStateToProps = (state) => {
   return {

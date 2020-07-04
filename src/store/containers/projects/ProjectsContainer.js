@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { fetchProjects, setActiveProject } from "../../actions/Projects";
-import Projects from "../../../components/Organisms/ProjectListing.jsx";
+import Projects from "../../../components/Organisms/HomeListing/ProjectListing.jsx";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,7 +12,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchProjects: () => dispatch(fetchProjects()),
     setActiveProject: (s) => {
-
       return dispatch(setActiveProject(s));
     },
   };

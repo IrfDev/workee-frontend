@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import Logo from "../../Atoms/Logo.jsx";
+import Logo from "../../Atoms/utils/Logo.jsx";
 
 const useStyles = makeStyles((theme) => ({
   logo: {

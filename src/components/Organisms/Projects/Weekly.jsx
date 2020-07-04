@@ -1,5 +1,5 @@
 import React from "react";
-import BoardCard from "../../Molecules/BoardCard.jsx";
+import BoardCard from "../../Molecules/HomeCards/BoardCard.jsx";
 
 export default function Weekly(props) {
   return (
