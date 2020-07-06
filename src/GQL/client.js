@@ -3,7 +3,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 
-const link = new HttpLink({ uri: "https://www.api.workee.site/graphql" });
+const link = new HttpLink({ uri: "http://localhost:9000/graphql" });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

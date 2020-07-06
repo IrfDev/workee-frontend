@@ -20,6 +20,12 @@ import CreateIcon from "@material-ui/icons/Create";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import PublishIcon from "@material-ui/icons/Publish";
+import { useState } from "react";
+
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+import { navigate } from "@reach/router";
 
 const useQontoStepIconStyles = makeStyles({
   root: {
@@ -64,13 +70,7 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   */
   active: PropTypes.bool,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   */
   completed: PropTypes.bool,
 };
 
@@ -175,19 +175,28 @@ function getSteps() {
   return ["Nombre y descripción", "Agregar tablero", "Agregar Repo"];
 }
 
-function getStepContent(step) {
+function getStepContent(
+  step,
+  { handlingBasicProjectInput, githubRepos, trelloBoards, trelloLists }
+) {
   switch (step) {
     case 0:
       return (
         <div>
           <h4>Básico</h4>
-          <TextField id="outlined-basic" label="Nombre" variant="outlined" />
+          <TextField
+            id="outlined-basic"
+            label="Nombre"
+            variant="outlined"
+            onChange={(e) => handlingBasicProjectInput("name", e)}
+          />
           <TextField
             id="standard-multiline-static"
             label="Descripción"
             multiline
             variant="outlined"
             rows={4}
+            onChange={(e) => handlingBasicProjectInput("description", e)}
           />
         </div>
       );
@@ -200,12 +209,14 @@ function getStepContent(step) {
             <Select
               labelId="trello-board-input"
               id="trello-board-inputs"
-              value={10}
               autoWidth={true}
+              onChange={(e) => handlingBasicProjectInput("board", e)}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {trelloBoards.data.getTrelloBoards.map((board) => (
+                <MenuItem key={board.id} value={board.id}>
+                  {board.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <FormControl variant="filled" fullWidth={true}>
@@ -213,12 +224,18 @@ function getStepContent(step) {
             <Select
               labelId="trello-list-input"
               id="trello-list-inputs"
-              value="aasa"
               autoWidth={true}
+              onChange={(e) => handlingBasicProjectInput("activeList", e)}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {trelloLists.data ? (
+                trelloLists.data.getTrelloListsFromBoard.map((board) => (
+                  <MenuItem key={board.id} value={board.id}>
+                    {board.name}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem selected={true}>Selecciona un tablero</MenuItem>
+              )}
             </Select>
           </FormControl>
         </div>
@@ -232,16 +249,15 @@ function getStepContent(step) {
             <Select
               labelId="repo-input"
               id="repo-id-input"
-              value="aasa"
+              value={"asidjaso8djas"}
               autoWidth={true}
+              onChange={(e) => handlingBasicProjectInput("repo", e)}
             >
-              <MenuItem value={10}>
-                <div>
-                  <p>Im a paragraph inside</p>
-                </div>
-              </MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {githubRepos.data.getAllGithubRepos.map((repo) => (
+                <MenuItem key={repo.id} value={repo.id}>
+                  {repo.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
@@ -251,21 +267,166 @@ function getStepContent(step) {
   }
 }
 
-export default function CustomizedSteppers() {
+export default function NewProjectStepperForm() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [basicProjectInfo, setBasicInfoProject] = useState({
+    title: "",
+    description: "",
+  });
   const steps = getSteps();
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const NEW_PROJECT = gql`
+    mutation CreateProject(
+      $title: String!
+      $description: String!
+      $board: String!
+      $repo: String!
+    ) {
+      createProject(
+        input: {
+          title: $title
+          description: $description
+          weekly: { Boards: [$board] }
+          resources: { repos: [$repo] }
+        }
+      ) {
+        data {
+          title
+          description
+          id
+        }
+      }
+    }
+  `;
+
+  const NEW_REPO = gql`
+    mutation CreateRepo($githubId: String!) {
+      createRepo(input: { githubId: $githubId }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const NEW_BOARD = gql`
+    mutation CreateBoard($resourceId: String!, $activeList: String!) {
+      createBoard(input: { resourceid: $resourceId, activeList: $activeList }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const GET_GITHUB_REPOS = gql`
+    query {
+      getAllGithubRepos {
+        id
+        name
+      }
+    }
+  `;
+  const GET_TRELLO_BOARDS = gql`
+    query {
+      getTrelloBoards {
+        id
+        name
+      }
+    }
+  `;
+  const GET_TRELLO_LISTS = gql`
+    query GetTrelloLists($boardId: ID!) {
+      getTrelloListsFromBoard(boardId: $boardId) {
+        name
+        id
+      }
+    }
+  `;
+
+  const githubRepos = useQuery(GET_GITHUB_REPOS);
+  const trelloBoards = useQuery(GET_TRELLO_BOARDS);
+  const trelloLists = useQuery(GET_TRELLO_LISTS);
+
+  const [newProject, { data: newProjectData }] = useMutation(NEW_PROJECT);
+
+  const [newRepo] = useMutation(NEW_REPO);
+
+  const [newBoard] = useMutation(NEW_BOARD);
+
+  const handleNext = async () => {
+    if (activeStep === 2) {
+      const newBoardResponse = await newBoard({
+        variables: {
+          resourceId: basicProjectInfo.board,
+          activeList: basicProjectInfo.activeList,
+        },
+      });
+
+      const newRepoResponse = await newRepo({
+        variables: { githubId: basicProjectInfo.repo },
+      });
+
+      await setBasicInfoProject({
+        ...basicProjectInfo,
+        repo: newRepoResponse.data.createRepo.data.id,
+        board: newBoardResponse.data.createBoard.data.id,
+      });
+
+      const newProjectResponse = await newProject({
+        variables: basicProjectInfo,
+      });
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handlingBasicProjectInput = (target, event) => {
+    event.persist();
+    switch (target) {
+      case "name":
+        setBasicInfoProject({ ...basicProjectInfo, title: event.target.value });
+        break;
+
+      case "description":
+        setBasicInfoProject({
+          ...basicProjectInfo,
+          description: event.target.value,
+        });
+        break;
+
+      case "board":
+        setBasicInfoProject({
+          ...basicProjectInfo,
+          board: event.target.value,
+        });
+        trelloLists.refetch({ boardId: basicProjectInfo.board });
+        break;
+
+      case "activeList":
+        setBasicInfoProject({
+          ...basicProjectInfo,
+          activeList: event.target.value,
+        });
+        break;
+
+      case "repo":
+        setBasicInfoProject({
+          ...basicProjectInfo,
+          repo: event.target.value,
+        });
+        break;
+
+      default:
+        return "Unknown input";
+    }
   };
 
   return (
@@ -290,7 +451,9 @@ export default function CustomizedSteppers() {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleReset}
+              onClick={() =>
+                navigate(`/project/${newProjectData.createProject.data.id}`)
+              }
               className={classes.button}
             >
               Ir a mi proyecto
@@ -299,7 +462,13 @@ export default function CustomizedSteppers() {
           </div>
         ) : (
           <div>
-            {getStepContent(activeStep)}
+            {getStepContent(activeStep, {
+              handlingBasicProjectInput,
+              githubRepos,
+              trelloBoards,
+              basicProjectInfo,
+              trelloLists,
+            })}
             <div>
               <Button
                 disabled={activeStep === 0}

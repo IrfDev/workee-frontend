@@ -21,7 +21,6 @@ epicMiddleware.run(rootEpic);
 
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./GQL/client";
-console.log(client);
 
 ReactDOM.render(
   <Provider store={store}>

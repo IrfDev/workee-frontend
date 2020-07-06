@@ -32,7 +32,7 @@ export default function LoginForm() {
 
   const classes = useStyles();
   // Hooks ⚓️
-  const [getLogin, { data }] = useMutation(GET_LOGIN);
+  const [getLogin] = useMutation(GET_LOGIN);
 
   const [emailInput, setEmailInput] = useState("");
 
