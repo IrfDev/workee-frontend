@@ -57,7 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BottomAppBar({ setActiveTab, activeNav }) {
+export default function BottomAppBar({
+  setActiveTab,
+  activeNav,
+  activeProject,
+}) {
   const classes = useStyles();
   const [openModal, setOpen] = React.useState(false);
 
@@ -97,6 +101,7 @@ export default function BottomAppBar({ setActiveTab, activeNav }) {
             <span>Daily</span>
           </div>
           <NewResourceForm
+            activeProject={activeProject}
             open={openModal}
             onClose={handleClose}
             activeTab={activeNav}

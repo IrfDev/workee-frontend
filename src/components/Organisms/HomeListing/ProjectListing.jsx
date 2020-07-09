@@ -36,7 +36,7 @@ export default function ProjectListing(props) {
         projects.data.getAllProjects.map((project) => (
           <Grid key={project.id} item xs={6}>
             <Link
-              to={`/projects/${project.title}`}
+              to={`/projects/${project.id}`}
               onClick={() => {
                 props.setActiveProject(project);
               }}

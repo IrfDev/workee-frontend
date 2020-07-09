@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
@@ -8,290 +8,371 @@ import Chip from "@material-ui/core/Chip";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import { CircularProgress } from "@material-ui/core/";
 import InputLabel from "@material-ui/core/InputLabel";
 
-export default class SourceNewResource extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeResource:'Repo',
-      repos:[''],
-      notebook:"",
-      notebookSections:[],
-      notebookSectionInput:"",
-      tags:[],
-      newTagInput:"",
-      resourceTitle:"",
-      resourceWebsite:""
-    };
-  }
-// Event handlers for Repos 🐙
-  handleRepoResource = (e) => {
-    e.persist()
-    this.setState((state) => {
-      const repoArray = state.repos;
-      const newRepo = e.target.value;
-      repoArray.push(newRepo);
-      return {
-        ...state,
-        repos:repoArray,
-      };
+import GithubReposInpit from "../../../Atoms/forms/GithubRepos.jsx";
+
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+import TagInput from "../../../Atoms/forms/TagsResourceInput.jsx";
+
+export default function SourceNewResource(props) {
+  const [state, setState] = useState({
+    activeResource: "Notebooks",
+    repo: {},
+    notebook: "",
+    notebookSections: [],
+    notebookSectionInput: "",
+    tags: [],
+    newTagInput: "",
+    resourceTitle: "",
+    resourceWebsite: "",
+  });
+
+  const normalizeNotebookIds = () => {
+    // nb stands for Notebook
+    const sectionsIdArra = state.notebookSections.map((nb) => nb.id);
+    console.log("Befor norm", sectionsIdArra);
+
+    return sectionsIdArra;
+  };
+  // Event handlers for Repos 🐙
+  const handleRepoResource = (e) => {
+    e.persist();
+    return setState({
+      ...state,
+      repo: e.target.value,
     });
   };
 
-  deleteRepo = (previousRepo) => {
-    this.setState((state) => {
-      let repos = state.repos;
-      let filterRepos = repos.filter((stream) => stream !== previousRepo);
-      return {
-        ...state,
-        repos: filterRepos,
-      };
+  const deleteRepo = () => {
+    return setState({
+      ...state,
+      repo: {},
     });
   };
-// Event handlers for Notebooks 📝
+  // Event handlers for Notebooks 📝
 
-handleNotebookIdInput = (e) => {
-    e.persist()
-    this.setState((previousState) => {
-      return {notebook: e.target.value , ...previousState};
-    });
+  const handleNotebookIdInput = (e) => {
+    e.persist();
+    console.log(e);
+    return setState({ ...state, notebook: e.target.value });
   };
 
-  addNotebookSectionInput = (e) => {
-    e.persist()
-    this.setState((state) => {
-      const sectionsArray = state.notebookSections;
-      const newSection = e.target.value;
-      sectionsArray.push(newSection);
-      return {
-        ...state,
-        notebookSections: sectionsArray,
-        notebookSectionInput: "",
-      };
+  const addNotebookSectionInput = (e) => {
+    e.persist();
+    const sectionsArray = state.notebookSections;
+    const newSection = e.target.value;
+    sectionsArray.push(newSection);
+    setState({
+      ...state,
+      notebookSections: sectionsArray,
+      notebookSectionInput: "",
     });
   };
 
-  deleteNotebookSections = (lastSection) => {
-    this.setState((state) => {
-      let repos = state.notebookSections;
-      let filterSections = repos.filter((section) => section !== lastSection);
-      return {
-        ...state,
-        notebookSections: filterSections,
-        notebookSectionInput: "",
-      };
+  const deleteNotebookSections = (lastSection) => {
+    let repos = state.notebookSections;
+    let filterSections = repos.filter((section) => section !== lastSection);
+    setState({
+      ...state,
+      notebookSections: filterSections,
+      notebookSectionInput: "",
     });
   };
 
-// Event handler for tags 🔖
-  addTags = () => {
-    this.setState((state) => {
-      const tagsArray = state.tags;
-      const newTag = state.newTagInput;
-      tagsArray.push(newTag);
-      return {
-        ...state,
-        tags: tagsArray,
-        newTagInput: "",
-      };
-    });
+  // Handle resource events 🔨
+
+  const handleTitleInput = (e) => {
+    e.persist();
+    setState({ ...state, resourceTitle: e.target.value });
   };
 
-  deleteTag = (newTag) => {
-    this.setState((state) => {
-      const tags = state.tags;
-      const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
-      return {
-        ...state,
-        tags: tagsWithoutDeletedTag,
-        newTagInput: "",
-      };
-    });
+  const handleWebsiteInput = (e) => {
+    e.persist();
+    setState({ ...state, resourceWebsite: e.target.value });
   };
 
-   newTagInput = (e) => {
-    e.persist()
-    this.setState((state)=>{
-      return {
-        ...state,
-        newTagInput: e.target.value,
+  // Handle target resource select event 🔥
+  const handleActiveResource = (e) => {
+    e.persist();
+    setState({ ...state, activeResource: e.target.value });
+  };
+
+  const GET_ONENOTE_NOTEBOOKS = gql`
+    query {
+      getNotebooksFromOnenote {
+        name: displayName
+        id
       }
-    })
-  };
+    }
+  `;
 
-// Handle resource events 🔨
+  const GET_ONENOTE_SECTIONS = gql`
+    query GetOnenoteNotebook($notebookId: String!) {
+      getSectionsFromOnenote(notebookId: $notebookId) {
+        name: displayName
+        id
+      }
+    }
+  `;
 
-handleTitleInput = (e) => {
-  e.persist()
-  this.setState((previousState) => {
-    return { ...previousState, resourceTitle: e.target.value };
+  const getNotebooks = useQuery(GET_ONENOTE_NOTEBOOKS);
+  console.log("Get notebooks:", getNotebooks);
+
+  const getSections = useQuery(GET_ONENOTE_SECTIONS, {
+    variables: { notebookId: state.notebook },
   });
-};
 
-handleWebsiteInput = (e) => {
-  e.persist()
-  this.setState((previousState) => {
-    return { ...previousState, resourceWebsite: e.target.value };
-  });
-};
-
-// Handle target resource select event 🔥
-  handleActiveResource = (e) => {
-    e.persist()
-    this.setState((previousState) => {
-      return { ...previousState, activeResource: e.target.value };
-    });
-  };
-
-
-  renderSwitch = () => {
-    switch (this.state.activeResource) {
+  const renderSwitch = () => {
+    switch (state.activeResource) {
       case "Repo":
         return (
-          <>
-        <h5>Agrega tus repos</h5>
-          <FormControl variant="filled" fullWidth={true} >
-            <InputLabel id="trello-list-input">Agregar Repo</InputLabel>
-                <Select
-                  labelId="trello-list-input"
-                  id="trello-list-inputs"
-                  value={this.state.repo}
-                  onChange={this.handleRepoResource}
-                  autoWidth={true}
-                >
-                  <MenuItem value={"Stream"}>Stream</MenuItem>
-                  <MenuItem value={"Hero"}>Hero</MenuItem>
-                </Select>
-          </FormControl>
-        {
-          this.state.repos.map((repos, repoIndex) =>  (
-            <Chip label={repos} key={repoIndex} onDelete={()=>this.deleteRepo(repos)} />  
-          )
-        )}
-        </>
+          <GithubReposInpit
+            addRepos={handleRepoResource}
+            deleteRepo={deleteRepo}
+            formState={state}
+          />
         );
+
       case "Notebooks":
         return (
           <>
-          <h5>Agrega tu Notebook</h5>
-          <FormControl variant="filled" fullWidth={true} >
-            <InputLabel id="trello-list-input">Selecciona Notebook</InputLabel>
-                <Select
-                  labelId="trello-list-input"
-                  id="trello-list-inputs"
-                  value={this.state.notebook}
-                  onChange={this.handleNotebookIdInput}
-                  autoWidth={true}
-                >
-                  <MenuItem value={"Stream"}>Stream</MenuItem>
-                  <MenuItem value={"Hero"}>Hero</MenuItem>
-                </Select>
-          </FormControl>
-        <h5>Agrega nuevos tags</h5>
-        <div>
-          <FormControl onChange={this.newTagInput}>
-            <TextField
-              value={this.state.newTagInput}
-              id="basicTemplate"
-              label="NewTag"
-            />
-          </FormControl>
-          <Button onClick={this.addTags} color="primary">Agregar Tag</Button>
-          <div>
-            {
-              this.state.tags.map((tag, indexLink) =>  (
-                <Chip label={tag} key={indexLink} onDelete={()=>this.deleteTag(tag)} />  
-              )
-            )}
-          </div>
-          </div>
-          <FormControl variant="filled" fullWidth={true} >
-            <InputLabel id="trello-list-input">Seleccionar secciones</InputLabel>
-                <Select
-                  labelId="trello-list-input"
-                  id="trello-list-inputs"
-                  value={this.state.notebookSection}
-                  onChange={this.addNotebookSectionInput}
-                  autoWidth={true}
-                >
-                  <MenuItem value={"Stream"}>Stream</MenuItem>
-                  <MenuItem value={"Hero"}>Hero</MenuItem>
-                </Select>
-                {
-              this.state.notebookSections.map((section, indexLink) =>  (
-                <Chip label={section} key={indexLink} onDelete={()=>this.deleteNotebookSections(section)} />  
-              )
-            )}
-          </FormControl>
+            <h5>Agrega tu Notebook</h5>
+            <FormControl variant="filled" fullWidth={true}>
+              <InputLabel id="trello-list-input">
+                Selecciona Notebook
+              </InputLabel>
+              <Select
+                labelId="trello-list-input"
+                id="trello-list-inputs"
+                onChange={(e) => handleNotebookIdInput(e)}
+                autoWidth={true}
+              >
+                {!getNotebooks.loading ? (
+                  getNotebooks.data.getNotebooksFromOnenote.map((nb) => (
+                    <MenuItem key={nb.id} value={nb.id}>
+                      {nb.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <CircularProgress />
+                )}
+              </Select>
+            </FormControl>
+            <FormControl variant="filled" fullWidth={true}>
+              <InputLabel id="trello-list-input">
+                Seleccionar secciones
+              </InputLabel>
+              <Select
+                labelId="trello-list-input"
+                id="trello-list-inputs"
+                value={state.notebookSection}
+                onChange={(e) => addNotebookSectionInput(e)}
+                autoWidth={true}
+              >
+                {!getSections.loading && getSections.data ? (
+                  getSections.data.getSectionsFromOnenote.map((nb) => (
+                    <MenuItem key={nb.id} value={nb}>
+                      {nb.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <CircularProgress />
+                )}
+              </Select>
+              {state.notebookSections.map((section, indexLink) => (
+                <Chip
+                  label={section.name}
+                  key={indexLink}
+                  onDelete={() => deleteNotebookSections(section)}
+                />
+              ))}
+            </FormControl>
+            <TagInput state={state} setState={setState} />
           </>
         );
       case "Resources":
         return (
-        <>
-          <h5>Agrega el nombre de tu recurso</h5>
-          <FormControl variant="filled" fullWidth={true} >
-            <TextField
-              onChange={this.handleTitleInput}
-              value={this.state.resourceTitle}
-              id="basicTemplate"
-              label="Nombre de tu heroe"
-            />
-          </FormControl>
-          <h5>Agrega el sitio web de tu recurso</h5>
-          <FormControl variant="filled" fullWidth={true} >
-            <TextField
-              onChange={this.handleTitleInput}
-              value={this.state.title}
-              id="basicTemplate"
-              label="Nombre de tu heroe"
-            />
-          </FormControl>
-          <div>
-          <FormControl onChange={this.newTagInput}>
-            <TextField
-              value={this.state.newTagInput}
-              id="basicTemplate"
-              label="NewTag"
-            />
-          </FormControl>
-          <Button onClick={this.addTags} color="primary">Agregar Tag</Button>
-          <div>
-            {
-              this.state.notebookSections.map((section, indexLink) =>  (
-                <Chip label={section} key={indexLink} onDelete={()=>this.deleteNotebookSection(section)} />  
-              )
-            )}
-          </div>
-          </div>
-        </>
-          );
+          <>
+            <h5>Agrega el nombre de tu recurso</h5>
+            <FormControl variant="filled" fullWidth={true}>
+              <TextField
+                onChange={handleTitleInput}
+                value={state.resourceTitle}
+                id="basicTemplate"
+                label="Name of your resource"
+              />
+            </FormControl>
+            <h5>Agrega el sitio web de tu recurso</h5>
+            <FormControl variant="filled" fullWidth={true}>
+              <TextField
+                onChange={handleWebsiteInput}
+                value={state.resourceWebsite}
+                id="basicTemplate"
+                label="The url of the resource website"
+              />
+            </FormControl>
+            <div>
+              <TagInput state={state} setState={setState} />
+              <div>
+                {state.notebookSections.map((section, indexLink) => (
+                  <Chip
+                    label={section}
+                    key={indexLink}
+                    onDelete={() => deleteNotebookSection(section)}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
+        );
       default:
         "S";
         break;
     }
   };
-  render() {
-    return (
-      <form>
-        <h5>Selecciona el recurso que quieres agregar</h5>
-        <FormControl variant="filled" fullWidth={true}>
-              <InputLabel id="trello-list-input">Recurso</InputLabel>
-              <Select
-                labelId="trello-list-input"
-                id="trello-list-inputs"
-                value={this.state.activeResource}
-                onChange={this.handleActiveResource}
-                autoWidth={true}
-              >
-                <MenuItem value={"Repo"}>Repo</MenuItem>
-                <MenuItem value={"Notebooks"}>Notebooks</MenuItem>
-                <MenuItem value={"Resources"}>Resources</MenuItem>
-              </Select>
-          </FormControl>
-          <div>{this.renderSwitch()}</div>
-          <Button variant="contained" color="primary" onClick={()=>this.props.handleForm(this.state)}>Enviar formulario</Button>
-      </form>
-    );
-  }
+
+  const NEW_REPO = gql`
+    mutation CreateRepo($githubId: String!) {
+      createRepo(input: { githubId: $githubId }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const NEW_RESOURCE = gql`
+    mutation CreateResource(
+      $website: String!
+      $name: String!
+      $tags: [String!]
+    ) {
+      createResource(input: { website: $website, name: $name, tags: $tags }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const NEW_NOTEBOOK = gql`
+    mutation CreateNotebook(
+      $sections: [String!]
+      $onenoteId: ID!
+      $tags: [String!]
+    ) {
+      createNotebook(
+        input: { sections: $sections, onenoteId: $onenoteId, tags: $tags }
+      ) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const PUSH_NEW_RESOURCE = gql`
+    mutation PushSourceIntoProject($id: ID!, $target: String!, $data: String!) {
+      pushInProject(id: $id, data: $data, target: $target) {
+        success
+      }
+    }
+  `;
+
+  const [newRepo] = useMutation(NEW_REPO);
+  const [newNotebook] = useMutation(NEW_NOTEBOOK);
+  const [newResource] = useMutation(NEW_RESOURCE);
+
+  const [pushNewSource] = useMutation(PUSH_NEW_RESOURCE);
+
+  const handleNewResource = async () => {
+    const notebooksId = normalizeNotebookIds();
+    switch (state.activeResource) {
+      case "Repo":
+        await newRepo({
+          variables: {
+            githubId: state.repo.id,
+          },
+        }).then((response) => {
+          pushNewSource({
+            variables: {
+              target: "resources.repos",
+              data: response.data.createRepo.data.id,
+              id: props.activeProject,
+            },
+          });
+        });
+
+        return props.handleForm();
+
+      case "Notebooks":
+        await newNotebook({
+          variables: {
+            sections: notebooksId,
+            onenoteId: state.notebook,
+            tags: state.tags,
+          },
+        }).then((response) => {
+          pushNewSource({
+            variables: {
+              target: "resources.notebooks",
+              data: response.data.createNotebook.data.id,
+              id: props.activeProject,
+            },
+          });
+        });
+
+        return props.handleForm();
+
+      case "Resources":
+        await newResource({
+          variables: {
+            name: state.resourceTitle,
+            website: state.resourceWebsite,
+            tags: state.tags,
+          },
+        }).then((response) => {
+          console.log(response.data.createResource.data.id);
+          pushNewSource({
+            variables: {
+              id: props.activeProject,
+              target: "resources.resources",
+              data: response.data.createResource.data.id,
+            },
+          }).then((res) => console.log("Push source:", res));
+        });
+
+        return props.handleForm();
+
+      default:
+        break;
+    }
+  };
+  return (
+    <form>
+      <h5>Selecciona el recurso que quieres agregar</h5>
+      <FormControl variant="filled" fullWidth={true}>
+        <InputLabel id="trello-list-input">Recurso</InputLabel>
+        <Select
+          labelId="trello-list-input"
+          id="trello-list-inputs"
+          value={state.activeResource}
+          onChange={handleActiveResource}
+          autoWidth={true}
+        >
+          <MenuItem value={"Repo"}>Repo</MenuItem>
+          <MenuItem value={"Notebooks"}>Notebooks</MenuItem>
+          <MenuItem value={"Resources"}>Resources</MenuItem>
+        </Select>
+      </FormControl>
+      <div>{renderSwitch()}</div>
+      <Button variant="contained" color="primary" onClick={handleNewResource}>
+        Enviar formulario
+      </Button>
+    </form>
+  );
 }

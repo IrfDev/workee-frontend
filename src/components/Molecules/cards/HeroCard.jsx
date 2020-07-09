@@ -53,7 +53,7 @@ export default function HeroCard(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            D
+            {props.hero.name.charAt(0)}
           </Avatar>
         }
         action={
@@ -75,8 +75,8 @@ export default function HeroCard(props) {
           <List component="nav" aria-label="contacts">
             {props.hero.links.map((link) => (
               <ListItem key={Math.random()} button href={link.url}>
-                <ListItemIcon>
-                  <LinkIcon />
+                <ListItemIcon href={link.url}>
+                  <LinkIcon href={link.url} />
                 </ListItemIcon>
                 <ListItemText primary={link.name} />
               </ListItem>

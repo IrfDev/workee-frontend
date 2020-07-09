@@ -15,15 +15,23 @@ export default function Resource(props) {
       </div>
       <div>
         <h2>Notebooks</h2>
-        {props.notebooks.map((notebook) => (
-          <NotebookCard key={Math.random()} notebook={notebook} />
-        ))}
+        {props.notebooks && props.notebooks.length ? (
+          props.notebooks.map((notebook) => (
+            <NotebookCard key={Math.random()} notebook={notebook} />
+          ))
+        ) : (
+          <h1>Add Notebooks to your project</h1>
+        )}
       </div>
       <div>
         <h2>Extras</h2>
-        {props.resources.map((resource) => (
-          <ResourceCard key={Math.random()} resource={resource} />
-        ))}
+        {props.resources && props.resources.length ? (
+          props.resources.map((resource) => (
+            <ResourceCard key={Math.random()} resource={resource} />
+          ))
+        ) : (
+          <h1>Add some resources to your project</h1>
+        )}
       </div>
     </>
   );

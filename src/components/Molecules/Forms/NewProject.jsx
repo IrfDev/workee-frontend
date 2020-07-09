@@ -16,6 +16,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 import TextField from "@material-ui/core/TextField";
 
+import TrelloBoardsInput from "../../Atoms/forms/TrelloBoardsInput.jsx";
+
 import CreateIcon from "@material-ui/icons/Create";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import GitHubIcon from "@material-ui/icons/GitHub";
@@ -177,7 +179,7 @@ function getSteps() {
 
 function getStepContent(
   step,
-  { handlingBasicProjectInput, githubRepos, trelloBoards, trelloLists }
+  { handlingBasicProjectInput, githubRepos, basicProjectInfo }
 ) {
   switch (step) {
     case 0:
@@ -202,43 +204,10 @@ function getStepContent(
       );
     case 1:
       return (
-        <div>
-          <h4>Selecciona un tablero de Trello y una lista activa</h4>
-          <FormControl variant="filled" fullWidth={true}>
-            <InputLabel id="trello-board-input">Tablero</InputLabel>
-            <Select
-              labelId="trello-board-input"
-              id="trello-board-inputs"
-              autoWidth={true}
-              onChange={(e) => handlingBasicProjectInput("board", e)}
-            >
-              {trelloBoards.data.getTrelloBoards.map((board) => (
-                <MenuItem key={board.id} value={board.id}>
-                  {board.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl variant="filled" fullWidth={true}>
-            <InputLabel id="trello-list-input">Lista</InputLabel>
-            <Select
-              labelId="trello-list-input"
-              id="trello-list-inputs"
-              autoWidth={true}
-              onChange={(e) => handlingBasicProjectInput("activeList", e)}
-            >
-              {trelloLists.data ? (
-                trelloLists.data.getTrelloListsFromBoard.map((board) => (
-                  <MenuItem key={board.id} value={board.id}>
-                    {board.name}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem selected={true}>Selecciona un tablero</MenuItem>
-              )}
-            </Select>
-          </FormControl>
-        </div>
+        <TrelloBoardsInput
+          handler={handlingBasicProjectInput}
+          formState={basicProjectInfo}
+        />
       );
     case 2:
       return (
@@ -287,7 +256,7 @@ export default function NewProjectStepperForm() {
         input: {
           title: $title
           description: $description
-          weekly: { Boards: [$board] }
+          weekly: { boards: [$board] }
           resources: { repos: [$repo] }
         }
       ) {
@@ -311,8 +280,8 @@ export default function NewProjectStepperForm() {
   `;
 
   const NEW_BOARD = gql`
-    mutation CreateBoard($resourceId: String!, $activeList: String!) {
-      createBoard(input: { resourceid: $resourceId, activeList: $activeList }) {
+    mutation CreateBoard($resourceid: String!, $activeList: String!) {
+      createBoard(input: { resourceid: $resourceid, activeList: $activeList }) {
         data {
           id
         }
@@ -328,26 +297,8 @@ export default function NewProjectStepperForm() {
       }
     }
   `;
-  const GET_TRELLO_BOARDS = gql`
-    query {
-      getTrelloBoards {
-        id
-        name
-      }
-    }
-  `;
-  const GET_TRELLO_LISTS = gql`
-    query GetTrelloLists($boardId: ID!) {
-      getTrelloListsFromBoard(boardId: $boardId) {
-        name
-        id
-      }
-    }
-  `;
 
   const githubRepos = useQuery(GET_GITHUB_REPOS);
-  const trelloBoards = useQuery(GET_TRELLO_BOARDS);
-  const trelloLists = useQuery(GET_TRELLO_LISTS);
 
   const [newProject, { data: newProjectData }] = useMutation(NEW_PROJECT);
 
@@ -359,7 +310,7 @@ export default function NewProjectStepperForm() {
     if (activeStep === 2) {
       const newBoardResponse = await newBoard({
         variables: {
-          resourceId: basicProjectInfo.board,
+          resourceid: basicProjectInfo.board,
           activeList: basicProjectInfo.activeList,
         },
       });
@@ -368,14 +319,18 @@ export default function NewProjectStepperForm() {
         variables: { githubId: basicProjectInfo.repo },
       });
 
-      await setBasicInfoProject({
+      const newState = await setBasicInfoProject({
         ...basicProjectInfo,
         repo: newRepoResponse.data.createRepo.data.id,
         board: newBoardResponse.data.createBoard.data.id,
       });
 
       const newProjectResponse = await newProject({
-        variables: basicProjectInfo,
+        variables: {
+          ...basicProjectInfo,
+          repo: newRepoResponse.data.createRepo.data.id,
+          board: newBoardResponse.data.createBoard.data.id,
+        },
       });
 
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -407,7 +362,8 @@ export default function NewProjectStepperForm() {
           ...basicProjectInfo,
           board: event.target.value,
         });
-        trelloLists.refetch({ boardId: basicProjectInfo.board });
+        // trelloLists.variables({ boardId: basicProjectInfo.board });
+        // .refetch({ boardId: basicProjectInfo.board });
         break;
 
       case "activeList":
@@ -465,9 +421,8 @@ export default function NewProjectStepperForm() {
             {getStepContent(activeStep, {
               handlingBasicProjectInput,
               githubRepos,
-              trelloBoards,
+
               basicProjectInfo,
-              trelloLists,
             })}
             <div>
               <Button

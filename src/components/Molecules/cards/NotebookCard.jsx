@@ -69,7 +69,7 @@ export default function NotebookCard(props) {
             <ExpandMoreIcon />
           </IconButton>
         }
-        title={props.notebook.name}
+        title={props.notebook.resource.name}
       />
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

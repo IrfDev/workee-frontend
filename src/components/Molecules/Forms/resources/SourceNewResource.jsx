@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
@@ -10,244 +10,286 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-export default class SourceNewResource extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeResource: "Hero",
-      newLinkName: "",
-      newLinkUrl: "",
-      heroTags: [],
-      heroLinks: [],
-      newTagInput: "",
-      newHeroLinkInput: "",
-      streams: [],
-      hero: {},
-    };
-  }
+import TagInput from "../../../Atoms/forms/TagsResourceInput.jsx";
+
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+export default function SourceNewResource(props) {
+  const [previousState, setState] = useState({
+    activeResource: "Hero",
+    newLinkName: "",
+    newLinkUrl: "",
+    tags: [],
+    heroLinks: [],
+    newTagInput: "",
+    newHeroLinkInput: "",
+    newHeroLinkNameInput: "",
+    streams: [],
+    hero: {},
+  });
   // Handle activeResource select
-  handleTitleInput = (e) => {
+  const handleTitleInput = (e) => {
     e.persist();
-    this.setState((previousState) => {
-      return { hero: { name: e.target.value }, ...previousState };
-    });
+    setState({ ...previousState, hero: { name: e.target.value } });
   };
 
-  handleActiveResource = (e) => {
+  const handleActiveResource = (e) => {
     e.persist();
-    this.setState((previousState) => {
-      return { ...previousState, activeResource: e.target.value };
-    });
+    setState({ ...previousState, activeResource: e.target.value });
   };
 
-  handleStreamResource = (e) => {
+  const handleStreamResource = (e) => {
     e.persist();
-    this.setState((state) => {
-      const streamArray = state.streams;
-      const newStream = e.target.value;
-      streamArray.push(newStream);
-      return {
-        ...state,
-        streams: streamArray,
-      };
+    const streamArray = previousState.streams;
+    const newStream = e.target.value;
+    streamArray.push(newStream);
+    setState({
+      ...previousState,
+      streams: streamArray,
     });
   };
 
-  handleAboutInput = (e) => {
-    e.persist();
-    this.setState((previousState) => {
-      return { ...previousState, about: e.target.value };
+  const addLink = () => {
+    const linksArray = previousState.heroLinks;
+    const newLink = {
+      website: previousState.newHeroLinkInput,
+      urlLink: previousState.newLinkName,
+    };
+    linksArray.push(newLink);
+    setState({
+      ...previousState,
+      heroLinks: linksArray,
+      newHeroLinkInput: "",
+      newLinkName: "",
     });
   };
 
-  addTags = () => {
-    this.setState((state) => {
-      const tagsArray = state.heroTags;
-      const newTag = state.newTagInput;
-      tagsArray.push(newTag);
-      return {
-        ...state,
-        tags: tagsArray,
-        newTagInput: "",
-      };
+  const deleteLink = (newTag) => {
+    const tags = previousState.heroLinks;
+    const tagsWithoutDeletedTag = tags.filter((tag) => tag.website !== newTag);
+    setState({
+      ...previousState,
+      heroLinks: tagsWithoutDeletedTag,
+      newHeroLinkInput: "",
     });
   };
 
-  addLink = () => {
-    this.setState((state) => {
-      const linksArray = state.heroLinks;
-      const newLink = state.newHeroLinkInput;
-      linksArray.push(newLink);
-      return {
-        ...state,
-        heroLinks: linksArray,
-        newHeroLinkInput: "",
-      };
-    });
-  };
-
-  deleteLink = (newTag) => {
-    this.setState((state) => {
-      const tags = state.heroLinks;
-      const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
-      return {
-        ...state,
-        heroLinks: tagsWithoutDeletedTag,
-        newHeroLinkInput: "",
-      };
-    });
-  };
-
-  deleteTag = (newTag) => {
-    this.setState((state) => {
-      const tags = state.heroTags;
-      const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
-      return {
-        ...state,
-        heroTags: tagsWithoutDeletedTag,
-        newTagInput: "",
-      };
-    });
-  };
-
-  deleteStream = (previousStream) => {
-    this.setState((state) => {
-      const stream = state.streams;
-      const filterStream = stream.filter((stream) => stream !== previousStream);
-      return {
-        ...state,
-        streams: filterStream,
-        newTagInput: "",
-      };
-    });
-  };
-
-  newTagInput = (e) => {
-    e.persist();
-    this.setState((state) => {
-      return {
-        ...state,
-        newTagInput: e.target.value,
-      };
-    });
-  };
-  newHeroLinkInput = (e) => {
-    e.persist();
-    this.setState((state) => {
-      return {
-        ...state,
-        newHeroLinkInput: e.target.value,
-      };
-    });
-  };
-  render() {
-    return (
-      <form>
-        <h5>Selecciona el recurso que quieres agregar</h5>
-        <FormControl variant="filled" fullWidth={true}>
-          <InputLabel id="trello-list-input">Recurso</InputLabel>
-          <Select
-            labelId="trello-list-input"
-            id="trello-list-inputs"
-            value={this.state.activeResource}
-            onChange={this.handleActiveResource}
-            autoWidth={true}
-          >
-            <MenuItem value={"Stream"}>Stream</MenuItem>
-            <MenuItem value={"Hero"}>Hero</MenuItem>
-          </Select>
-        </FormControl>
-        <div className="form-content">
-          {this.state.activeResource === "Hero" ? (
-            <>
-              <h5>Agrega el nombre de tu heroe</h5>
-              <FormControl variant="filled" fullWidth={true}>
-                <TextField
-                  onChange={this.handleTitleInput}
-                  value={this.state.title}
-                  id="basicTemplate"
-                  label="Nombre de tu heroe"
-                />
-              </FormControl>
-              <h5>Arega los links de tu heroe</h5>
-              <div>
-                <FormControl onChange={this.newHeroLinkInput}>
-                  <TextField
-                    value={this.state.newHeroLinkInput}
-                    id="basicTemplate"
-                    label="Nuevo link"
-                  />
-                </FormControl>
-                <Button onClick={this.addLink} color="primary">
-                  Agregar Link
-                </Button>
-                <div>
-                  {this.state.heroLinks.map((link, indexTag) => (
-                    <Chip
-                      label={link}
-                      key={indexTag}
-                      onDelete={() => this.deleteLink(link)}
-                    />
-                  ))}
-                </div>
-              </div>
-              <h5>Agrega nuevos tags</h5>
-              <div>
-                <FormControl onChange={this.newTagInput}>
-                  <TextField
-                    value={this.state.newTagInput}
-                    id="basicTemplate"
-                    label="NewTag"
-                  />
-                </FormControl>
-                <Button onClick={this.addTags} color="primary">
-                  Agregar Tag
-                </Button>
-                <div>
-                  {this.state.heroTags.map((tag, indexLink) => (
-                    <Chip
-                      label={tag}
-                      key={indexLink}
-                      onDelete={() => this.deleteTag(tag)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <h5>Agrega el stream</h5>
-              <FormControl variant="filled" fullWidth={true}>
-                <InputLabel id="trello-list-input">Agregar Stream</InputLabel>
-                <Select
-                  labelId="trello-list-input"
-                  id="trello-list-inputs"
-                  value={this.state.stream}
-                  onChange={this.handleStreamResource}
-                  autoWidth={true}
-                >
-                  <MenuItem value={"Stream"}>Stream</MenuItem>
-                  <MenuItem value={"Hero"}>Hero</MenuItem>
-                </Select>
-              </FormControl>
-              {this.state.streams.map((stream, indexTag) => (
-                <Chip
-                  label={stream}
-                  key={indexTag}
-                  onDelete={() => this.deleteStream(stream)}
-                />
-              ))}
-            </>
-          )}
-        </div>
-        <Button
-          onClick={() => this.props.handleForm(this.state)}
-          variant="contained"
-          color="primary"
-        >
-          Enviar formulario
-        </Button>
-      </form>
+  const deleteStream = (previousStream) => {
+    const stream = previousState.streams;
+    const filterStream = stream.filter(
+      (stream) => stream.id !== previousStream
     );
-  }
+    setState({
+      ...previousState,
+      streams: filterStream,
+      newTagInput: "",
+    });
+  };
+
+  const newHeroLinkInput = (e) => {
+    e.persist();
+    setState({
+      ...previousState,
+      newHeroLinkInput: e.target.value,
+    });
+  };
+
+  const newHeroLinkNameInput = (e) => {
+    e.persist();
+    setState({
+      ...previousState,
+      newLinkName: e.target.value,
+    });
+  };
+
+  const NEW_HERO = gql`
+    mutation CreateHero(
+      $name: String!
+      $tags: [String!]
+      $links: [LinkInput!]
+    ) {
+      createHeroe(input: { name: $name, tags: $tags, links: $links }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const NEW_STREAM = gql`
+    mutation CreateStream($tags: [String!], $feedlyStreamsid: [String!]) {
+      createStream(input: { feedlyStreamsid: $feedlyStreamsid, tags: $tags }) {
+        data {
+          id
+        }
+      }
+    }
+  `;
+
+  const PUSH_NEW_SOURCE = gql`
+    mutation PushSourceIntoProject($id: ID!, $target: String!, $data: String!) {
+      pushInProject(id: $id, data: $data, target: $target) {
+        success
+      }
+    }
+  `;
+
+  const GET_FEEDLY_STREAMS = gql`
+    query {
+      getFeedsFromFeedly {
+        id
+        label
+      }
+    }
+  `;
+
+  const feedlyStreams = useQuery(GET_FEEDLY_STREAMS);
+  const [createHero] = useMutation(NEW_HERO);
+  const [createStream] = useMutation(NEW_STREAM);
+  const [pushNewSource] = useMutation(PUSH_NEW_SOURCE);
+
+  const normalizedStreamIds = () => {
+    const streamIds = previousState.streams.map((stream) => stream.id);
+    return setState({ ...previousState, streamIds });
+  };
+
+  const handleNewSource = async () => {
+    switch (previousState.activeResource) {
+      case "Hero":
+        await createHero({
+          variables: {
+            name: previousState.hero.name,
+            tags: previousState.tags,
+            links: previousState.heroLinks,
+          },
+        }).then(async (response) => {
+          let heroId = response.data.createHeroe.data.id;
+          await pushNewSource({
+            variables: {
+              id: props.activeProject,
+              target: "sources.heroes",
+              data: heroId,
+            },
+          });
+        });
+        return props.handleForm();
+
+      case "Stream":
+        normalizedStreamIds();
+        await createStream({
+          variables: {
+            feedlyStreamsid: previousState.streamIds,
+            tags: previousState.tags,
+          },
+        }).then(async (response) => {
+          let streamId = response.data.createStream.data.id;
+          await pushNewSource({
+            variables: {
+              id: props.activeProject,
+              target: "sources.streams",
+              data: streamId,
+            },
+          });
+        });
+        return props.handleForm();
+
+      default:
+        break;
+    }
+  };
+
+  return (
+    <form>
+      <h5>Selecciona el recurso que quieres agregar</h5>
+      <FormControl variant="filled" fullWidth={true}>
+        <InputLabel id="trello-list-input">Recurso</InputLabel>
+        <Select
+          labelId="trello-list-input"
+          id="trello-list-inputs"
+          value={previousState.activeResource}
+          onChange={handleActiveResource}
+          autoWidth={true}
+        >
+          <MenuItem value={"Stream"}>Stream</MenuItem>
+          <MenuItem value={"Hero"}>Hero</MenuItem>
+        </Select>
+      </FormControl>
+      <div className="form-content">
+        {previousState.activeResource === "Hero" ? (
+          <>
+            <h5>Agrega el nombre de tu heroe</h5>
+            <FormControl variant="filled" fullWidth={true}>
+              <TextField
+                onChange={handleTitleInput}
+                value={previousState.title}
+                id="basicTemplate"
+                label="Nombre de tu heroe"
+              />
+            </FormControl>
+            <h5>Arega los links de tu heroe</h5>
+            <div>
+              <FormControl>
+                <TextField
+                  onChange={newHeroLinkNameInput}
+                  value={previousState.newLinkName}
+                  id="basicTemplate"
+                  label="Nombre del sitio"
+                />
+                <TextField
+                  onChange={newHeroLinkInput}
+                  value={previousState.newHeroLinkInput}
+                  id="basicTemplate"
+                  label="Url"
+                />
+              </FormControl>
+              <Button onClick={addLink} color="primary">
+                Agregar Link
+              </Button>
+              <div>
+                {previousState.heroLinks.map((link, indexTag) => (
+                  <Chip
+                    label={link.website}
+                    key={indexTag}
+                    onDelete={() => deleteLink(link.website)}
+                  />
+                ))}
+              </div>
+            </div>
+            <TagInput state={previousState} setState={setState} />
+          </>
+        ) : (
+          <>
+            <h5>Agrega el stream</h5>
+            <FormControl variant="filled" fullWidth={true}>
+              <InputLabel id="trello-list-input">Agregar Stream</InputLabel>
+              <Select
+                labelId="trello-list-input"
+                id="trello-list-inputs"
+                value={previousState.stream}
+                onChange={handleStreamResource}
+                autoWidth={true}
+              >
+                {feedlyStreams.data.getFeedsFromFeedly.map((feed) => (
+                  <MenuItem key={feed.id} value={feed}>
+                    {feed.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {previousState.streams.map((stream, indexTag) => (
+              <Chip
+                label={stream.label}
+                key={indexTag}
+                onDelete={() => deleteStream(stream.id)}
+              />
+            ))}
+          </>
+        )}
+      </div>
+      <Button onClick={handleNewSource} variant="contained" color="primary">
+        Enviar formulario
+      </Button>
+    </form>
+  );
 }

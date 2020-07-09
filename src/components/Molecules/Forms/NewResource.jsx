@@ -34,18 +34,40 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal(props) {
   const classes = useStyles();
   const handleChange = (e) => props.setActiveTab(e.target.value);
-  const handleFormsChanges = (data) => console.log(props.activeTab, data);
+  const handleFormsChanges = () => {
+    props.onClose();
+  };
 
   const renderSwitch = (param) => {
     switch (param) {
       case "Weekly":
-        return <WeeklyNewResource handleForm={handleFormsChanges} />;
+        return (
+          <WeeklyNewResource
+            activeProject={props.activeProject}
+            handleForm={handleFormsChanges}
+          />
+        );
       case "Daily":
-        return <DailyNewResource handleForm={handleFormsChanges}/>;
+        return (
+          <DailyNewResource
+            activeProject={props.activeProject}
+            handleForm={handleFormsChanges}
+          />
+        );
       case "Tools":
-        return <ToolsNewResource handleForm={handleFormsChanges}/>;
+        return (
+          <ToolsNewResource
+            activeProject={props.activeProject}
+            handleForm={handleFormsChanges}
+          />
+        );
       case "Source":
-        return <SourceNewResource handleForm={handleFormsChanges}/>;
+        return (
+          <SourceNewResource
+            activeProject={props.activeProject}
+            handleForm={handleFormsChanges}
+          />
+        );
       default:
         "S";
         break;

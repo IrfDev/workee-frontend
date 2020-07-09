@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Chip } from "@material-ui/core/";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -33,13 +34,13 @@ export default function TaskCard(props) {
           Tarea:
         </Typography>
         <Typography variant="h5" component="h2">
-          {props.task.Name}
+          {props.task.resource.title}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        {/* <Typography className={classes.pos} color="textSecondary">
           {props.task.date}
-        </Typography>
+        </Typography> */}
         <Typography variant="body2" component="p">
-          {props.task.description}
+          {props.task.resource.about}
         </Typography>
       </CardContent>
       <CardActions>

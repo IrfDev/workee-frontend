@@ -7,7 +7,7 @@ export default function Weekly(props) {
       <h1>Weekly</h1>
       <div>
         {props.boards.map((board) => (
-          <BoardCard key={Math.random()} board={board} />
+          <BoardCard key={board.id} board={board} />
         ))}
       </div>
     </>

@@ -28,19 +28,28 @@ export default function RepoCard(props) {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.repo.Title}
+            {props.repo.info.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.repo.description}
+            {props.repo.info.description}
           </Typography>
-          {props.repo.tecnologies.map((tech) => (
+          {props.repo.technologies && props.repo.technologies.length ? (
+            props.repo.technologies.map((tech) => (
+              <Chip
+                label={tech}
+                color="primary"
+                size="small"
+                key={Math.random()}
+              />
+            ))
+          ) : (
             <Chip
-              label={tech}
+              label={props.repo.info.language}
               color="primary"
               size="small"
               key={Math.random()}
             />
-          ))}
+          )}
           <Divider light />
         </CardContent>
       </CardActionArea>

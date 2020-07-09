@@ -47,6 +47,13 @@ export default function BoardCards(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const DELETE_BOARD = gql`
+    mutation DeleteBoard($id: ID!) {
+      deleteBoatrd
+    }
+  `;
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -56,17 +63,17 @@ export default function BoardCards(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <OpenInBrowserIcon />
+          <IconButton href={props.board.info.url} aria-label="settings">
+            <OpenInBrowserIcon href={props.board.info.url} />
           </IconButton>
         }
-        title={props.board.name}
+        title={props.board.info.name}
         subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
-        image={props.board.thumb}
-        title={`${props.board.name} img`}
+        image={props.board.info.prefs.backgroundImage}
+        title={`${props.board.info.name} img`}
       />
 
       <CardActions disableSpacing>
@@ -90,7 +97,7 @@ export default function BoardCards(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <h1>{props.board.list.name}:</h1>
-          {props.board.list.cards.map((card) => (
+          {props.board.cards.map((card) => (
             <CardList key={Math.random()} card={card} />
           ))}
         </CardContent>
