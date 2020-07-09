@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
 
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import TagsInput from "../../../Atoms/forms/TagsResourceInput.jsx";
 
-import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { NEW_TASK, PUSH_NEW_TASK } from "GQL/mutations";
 
 export default function DailyNewResource(props) {
   const [previousState, setNewDailyObject] = useState({
@@ -27,29 +27,6 @@ export default function DailyNewResource(props) {
     setNewDailyObject({ ...previousState, about: e.target.value });
   };
 
-  const NEW_TASK = gql`
-    mutation CreatTask(
-      $tags: [String!]
-      $resource: resourceInput!
-      $type: String
-    ) {
-      createTask(input: { tags: $tags, resource: $resource, type: $type }) {
-        success
-        data {
-          id
-        }
-      }
-    }
-  `;
-
-  const PUSH_NEW_TASK = gql`
-    mutation PushTaskIntoProject($id: ID!, $target: String!, $data: String!) {
-      pushInProject(id: $id, data: $data, target: $target) {
-        success
-      }
-    }
-  `;
-
   const [createTasks] = useMutation(NEW_TASK);
   const [pushNewTask] = useMutation(PUSH_NEW_TASK);
 
@@ -66,7 +43,6 @@ export default function DailyNewResource(props) {
     });
 
     let taskId = newTaskResponse.data.createTask.data.id;
-    console.log(newTaskResponse);
 
     const pushBoardResponse = await pushNewTask({
       variables: {

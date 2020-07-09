@@ -1,6 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -15,7 +16,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import CardList from "../../Atoms/items/CardBoardItem.jsx";
+import CardList from "Atoms/items/CardBoardItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,18 +49,12 @@ export default function BoardCards(props) {
     setExpanded(!expanded);
   };
 
-  const DELETE_BOARD = gql`
-    mutation DeleteBoard($id: ID!) {
-      deleteBoatrd
-    }
-  `;
-
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            I
+            {props.board.info.name}
           </Avatar>
         }
         action={

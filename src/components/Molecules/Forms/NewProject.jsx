@@ -1,97 +1,43 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useState } from "react";
+import { navigate } from "@reach/router";
+
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Check from "@material-ui/icons/Check";
 import StepConnector from "@material-ui/core/StepConnector";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-
-import TextField from "@material-ui/core/TextField";
-
-import TrelloBoardsInput from "../../Atoms/forms/TrelloBoardsInput.jsx";
-
-import CreateIcon from "@material-ui/icons/Create";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import PublishIcon from "@material-ui/icons/Publish";
-import { useState } from "react";
 
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import StepContent from "Molecules/Forms/SwitchContent/StepContent.jsx";
+import handlingBasicProjectInput from "Utilities/Forms/HandlingNewProject";
+import ColorlibStepIcon from "Atoms/utils/NewProjectStepIcons.jsx";
 
-import { navigate } from "@reach/router";
-
-const useQontoStepIconStyles = makeStyles({
-  root: {
-    color: "#eaeaf0",
-    display: "flex",
-    height: 100,
-    alignItems: "center",
-  },
-  active: {
-    color: "#784af4",
-  },
-  circle: {
-    width: 8,
-    height: 8,
-    borderRadius: "50%",
-    backgroundColor: "currentColor",
-  },
-  completed: {
-    color: "#784af4",
-    zIndex: 1,
-    fontSize: 18,
-  },
-});
-
-function QontoStepIcon(props) {
-  const classes = useQontoStepIconStyles();
-  const { active, completed } = props;
-
-  return (
-    <div
-      className={clsx(classes.root, {
-        [classes.active]: active,
-      })}
-    >
-      {completed ? (
-        <Check className={classes.completed} />
-      ) : (
-        <div className={classes.circle} />
-      )}
-    </div>
-  );
-}
-
-QontoStepIcon.propTypes = {
-  active: PropTypes.bool,
-  completed: PropTypes.bool,
-};
+import { NEW_PROJECT, NEW_REPO, NEW_BOARD } from "GQL/mutations";
+import { GET_GITHUB_REPOS } from "GQL/queries";
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
     top: 22,
   },
+
   active: {
     "& $line": {
       backgroundImage:
         "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
     },
   },
+
   completed: {
     "& $line": {
       backgroundImage:
         "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
     },
   },
+
   line: {
     height: 3,
     border: 0,
@@ -99,66 +45,6 @@ const ColorlibConnector = withStyles({
     borderRadius: 1,
   },
 })(StepConnector);
-
-const useColorlibStepIconStyles = makeStyles({
-  root: {
-    backgroundColor: "#ccc",
-    zIndex: 1,
-    color: "#fff",
-    width: 50,
-    height: 50,
-    display: "flex",
-    borderRadius: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  active: {
-    backgroundImage:
-      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
-    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-  },
-  completed: {
-    backgroundImage:
-      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
-  },
-});
-
-function ColorlibStepIcon(props) {
-  const classes = useColorlibStepIconStyles();
-  const { active, completed } = props;
-
-  const icons = {
-    1: <CreateIcon />,
-    2: <DashboardIcon />,
-    3: <GitHubIcon />,
-  };
-
-  return (
-    <div
-      className={clsx(classes.root, {
-        [classes.active]: active,
-        [classes.completed]: completed,
-      })}
-    >
-      {icons[String(props.icon)]}
-    </div>
-  );
-}
-
-ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   */
-  active: PropTypes.bool,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   */
-  completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
-  icon: PropTypes.node,
-};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -177,65 +63,6 @@ function getSteps() {
   return ["Nombre y descripción", "Agregar tablero", "Agregar Repo"];
 }
 
-function getStepContent(
-  step,
-  { handlingBasicProjectInput, githubRepos, basicProjectInfo }
-) {
-  switch (step) {
-    case 0:
-      return (
-        <div>
-          <h4>Básico</h4>
-          <TextField
-            id="outlined-basic"
-            label="Nombre"
-            variant="outlined"
-            onChange={(e) => handlingBasicProjectInput("name", e)}
-          />
-          <TextField
-            id="standard-multiline-static"
-            label="Descripción"
-            multiline
-            variant="outlined"
-            rows={4}
-            onChange={(e) => handlingBasicProjectInput("description", e)}
-          />
-        </div>
-      );
-    case 1:
-      return (
-        <TrelloBoardsInput
-          handler={handlingBasicProjectInput}
-          formState={basicProjectInfo}
-        />
-      );
-    case 2:
-      return (
-        <div>
-          <h3>Selecciona un repositorio activo de Github</h3>
-          <FormControl variant="filled" fullWidth={true}>
-            <InputLabel id="repo-input">Selecciona tu repo</InputLabel>
-            <Select
-              labelId="repo-input"
-              id="repo-id-input"
-              value={"asidjaso8djas"}
-              autoWidth={true}
-              onChange={(e) => handlingBasicProjectInput("repo", e)}
-            >
-              {githubRepos.data.getAllGithubRepos.map((repo) => (
-                <MenuItem key={repo.id} value={repo.id}>
-                  {repo.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-      );
-    default:
-      return "Unknown step";
-  }
-}
-
 export default function NewProjectStepperForm() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -243,68 +70,14 @@ export default function NewProjectStepperForm() {
     title: "",
     description: "",
   });
-  const steps = getSteps();
-
-  const NEW_PROJECT = gql`
-    mutation CreateProject(
-      $title: String!
-      $description: String!
-      $board: String!
-      $repo: String!
-    ) {
-      createProject(
-        input: {
-          title: $title
-          description: $description
-          weekly: { boards: [$board] }
-          resources: { repos: [$repo] }
-        }
-      ) {
-        data {
-          title
-          description
-          id
-        }
-      }
-    }
-  `;
-
-  const NEW_REPO = gql`
-    mutation CreateRepo($githubId: String!) {
-      createRepo(input: { githubId: $githubId }) {
-        data {
-          id
-        }
-      }
-    }
-  `;
-
-  const NEW_BOARD = gql`
-    mutation CreateBoard($resourceid: String!, $activeList: String!) {
-      createBoard(input: { resourceid: $resourceid, activeList: $activeList }) {
-        data {
-          id
-        }
-      }
-    }
-  `;
-
-  const GET_GITHUB_REPOS = gql`
-    query {
-      getAllGithubRepos {
-        id
-        name
-      }
-    }
-  `;
 
   const githubRepos = useQuery(GET_GITHUB_REPOS);
 
   const [newProject, { data: newProjectData }] = useMutation(NEW_PROJECT);
-
   const [newRepo] = useMutation(NEW_REPO);
-
   const [newBoard] = useMutation(NEW_BOARD);
+
+  const steps = getSteps();
 
   const handleNext = async () => {
     if (activeStep === 2) {
@@ -343,48 +116,6 @@ export default function NewProjectStepperForm() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handlingBasicProjectInput = (target, event) => {
-    event.persist();
-    switch (target) {
-      case "name":
-        setBasicInfoProject({ ...basicProjectInfo, title: event.target.value });
-        break;
-
-      case "description":
-        setBasicInfoProject({
-          ...basicProjectInfo,
-          description: event.target.value,
-        });
-        break;
-
-      case "board":
-        setBasicInfoProject({
-          ...basicProjectInfo,
-          board: event.target.value,
-        });
-        // trelloLists.variables({ boardId: basicProjectInfo.board });
-        // .refetch({ boardId: basicProjectInfo.board });
-        break;
-
-      case "activeList":
-        setBasicInfoProject({
-          ...basicProjectInfo,
-          activeList: event.target.value,
-        });
-        break;
-
-      case "repo":
-        setBasicInfoProject({
-          ...basicProjectInfo,
-          repo: event.target.value,
-        });
-        break;
-
-      default:
-        return "Unknown input";
-    }
-  };
-
   return (
     <div className={classes.root}>
       <Stepper
@@ -418,12 +149,12 @@ export default function NewProjectStepperForm() {
           </div>
         ) : (
           <div>
-            {getStepContent(activeStep, {
-              handlingBasicProjectInput,
-              githubRepos,
-
-              basicProjectInfo,
-            })}
+            <StepContent
+              step={activeStep}
+              handlingBasicProjectInput={handlingBasicProjectInput}
+              githubRepos={githubRepos}
+              basicProjectInfo={basicProjectInfo}
+            />
             <div>
               <Button
                 disabled={activeStep === 0}

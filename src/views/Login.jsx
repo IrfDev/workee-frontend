@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Container from "@material-ui/core/Container";
 import LockIcon from "@material-ui/icons/Lock";
-import LoginForm from "../components/Molecules/Forms/Login.jsx";
+import LoginForm from "Molecules/Forms/Login.jsx";
 import Button from "@material-ui/core/Button";
 
 export default class Login extends Component {

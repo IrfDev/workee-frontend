@@ -1,27 +1,18 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import { CircularProgress } from "@material-ui/core";
-import ImageCardContainer from "../../Molecules/HomeCards/BasicCard.jsx";
+import { useQuery } from "@apollo/react-hooks";
 import { Link } from "@reach/router";
 
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import Grid from "@material-ui/core/Grid";
+import { CircularProgress } from "@material-ui/core";
+
+import ImageCardContainer from "Molecules/HomeCards/BasicCard.jsx";
+import { GET_ALL_PROJECTS } from "GQL/queries";
 
 export default function ProjectListing(props) {
   // async componentDidMount() {
   //   await this.props.fetchProjects();
   // }
   // props.fetchProjects();
-  const GET_ALL_PROJECTS = gql`
-    query {
-      getAllProjects {
-        id
-        title
-        description
-        thumb
-      }
-    }
-  `;
 
   const projects = useQuery(GET_ALL_PROJECTS);
   if (projects.data) console.log(projects.data.getAllProjects);

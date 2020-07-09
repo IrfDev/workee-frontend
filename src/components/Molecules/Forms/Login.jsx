@@ -1,12 +1,14 @@
 import React from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
+import { navigate, redirectTo } from "@reach/router";
+
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { useState } from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
-import { navigate, redirectTo } from "@reach/router";
+
+import { GET_LOGIN } from "GQL/mutations";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,15 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LoginForm() {
-  const GET_LOGIN = gql`
-    mutation GetLogin($email: String!, $password: String!) {
-      getLogin(input: { email: $email, password: $password }) {
-        token
-        usuario
-      }
-    }
-  `;
-
   const classes = useStyles();
   // Hooks ⚓️
   const [getLogin] = useMutation(GET_LOGIN);

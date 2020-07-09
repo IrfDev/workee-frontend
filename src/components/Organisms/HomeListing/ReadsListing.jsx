@@ -1,29 +1,13 @@
 import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-import HeroCard from "../../Molecules/cards/HeroCard.jsx";
 
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import HeroCard from "Molecules/cards/HeroCard.jsx";
+import { GET_ALL_HEROS } from "GQL/queries";
 
-export default function ReadsListing(props) {
-  const validSource = (resources) =>
-    resources && resources.length ? true : false;
-
-  const GET_ALL_HEROS = gql`
-    query {
-      getAllHeroes {
-        id
-        tags
-        name
-        links {
-          name: website
-          url: urlLink
-        }
-      }
-    }
-  `;
-
+export default function ReadsListing() {
   const allHeros = useQuery(GET_ALL_HEROS);
 
   return (

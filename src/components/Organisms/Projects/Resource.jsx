@@ -9,9 +9,13 @@ export default function Resource(props) {
       <h1>Resources</h1>
       <div>
         <h2>Repos</h2>
-        {props.repos.map((repo) => (
-          <RepoCard key={Math.random()} repo={repo} />
-        ))}
+        {props.repos && props.repos.length ? (
+          props.repos.map((repo) => (
+            <RepoCard key={Math.random()} repo={repo} />
+          ))
+        ) : (
+          <h1>Add some repos to your project</h1>
+        )}
       </div>
       <div>
         <h2>Notebooks</h2>
