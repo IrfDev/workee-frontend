@@ -16,8 +16,8 @@ export default function ReposListing() {
         <h1>Repos</h1>
       </Grid>
       {!allGithubRepos.loading && allGithubRepos.data ? (
-        allGithubRepos.data.getAllGithubRepos.map((repo) => (
-          <Grid key={repo.key} item xs={12}>
+        allGithubRepos.data.getAllGithubRepos.map((repo, repoIndex) => (
+          <Grid key={repoIndex} item xs={12}>
             <RepoItem
               Title={repo.Title}
               description={repo.description}

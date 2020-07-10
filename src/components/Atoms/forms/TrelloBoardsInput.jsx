@@ -8,7 +8,11 @@ import { CircularProgress } from "@material-ui/core";
 
 import gql from "graphql-tag";
 
-export default function TrelloBoardsInput({ handler, formState }) {
+export default function TrelloBoardsInput({
+  handler,
+  formState,
+  setBasicInfoProject,
+}) {
   const GET_TRELLO_BOARDS = gql`
     query {
       getTrelloBoards {
@@ -41,7 +45,7 @@ export default function TrelloBoardsInput({ handler, formState }) {
           labelId="trello-board-input"
           id="trello-board-inputs"
           autoWidth={true}
-          onChange={(e) => handler("board", e)}
+          onChange={(e) => handler("board", e, { setBasicInfoProject })}
         >
           {trelloBoards.data.getTrelloBoards.map((board) => (
             <MenuItem key={board.id} value={board.id}>

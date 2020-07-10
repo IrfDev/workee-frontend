@@ -13,6 +13,7 @@ import { GET_ONENOTE_NOTEBOOKS, GET_ONENOTE_SECTIONS } from "GQL/queries";
 
 import GithubReposInpit from "Atoms/forms/GithubRepos.jsx";
 import TagInput from "Atoms/forms/TagsResourceInput.jsx";
+import MicrosoftLogin from "Atoms/utils/MicrosoftLogin.jsx";
 
 export default function ToolsResourceContent(props) {
   const getNotebooks = useQuery(GET_ONENOTE_NOTEBOOKS);
@@ -100,6 +101,26 @@ export default function ToolsResourceContent(props) {
                     {nb.name}
                   </MenuItem>
                 ))
+              ) : getNotebooks.error ? (
+                getNotebooks.error.message.includes(
+                  "CompactToken validation failed"
+                ) ||
+                getNotebooks.error.message.includes(
+                  "Unauthorized from Microsoft"
+                ) ? (
+                  <>
+                    <h1>Failed gettin the Mircosoft Auth Token</h1>
+                    <h4>Please Login again</h4>
+                    <MicrosoftLogin />
+                  </>
+                ) : (
+                  <>
+                    <h1>
+                      Sorry! There was an unknown error getting the notebooks
+                    </h1>
+                    <p>{getNotebooks.error}</p>
+                  </>
+                )
               ) : (
                 <CircularProgress />
               )}
@@ -134,7 +155,7 @@ export default function ToolsResourceContent(props) {
               />
             ))}
           </FormControl>
-          <TagInput state={props.state} setState={props.props.setState} />
+          <TagInput state={props.state} setState={props.setState} />
         </>
       );
     case "Resources":

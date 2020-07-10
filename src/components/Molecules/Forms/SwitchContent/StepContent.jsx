@@ -12,6 +12,7 @@ export default function getStepContent({
   step,
   handlingBasicProjectInput,
   githubRepos,
+  setBasicInfoProject,
   basicProjectInfo,
 }) {
   switch (step) {
@@ -23,7 +24,12 @@ export default function getStepContent({
             id="outlined-basic"
             label="Nombre"
             variant="outlined"
-            onChange={(e) => handlingBasicProjectInput("name", e)}
+            onChange={(e) =>
+              handlingBasicProjectInput("name", e, {
+                basicProjectInfo,
+                setBasicInfoProject,
+              })
+            }
           />
           <TextField
             id="standard-multiline-static"
@@ -31,7 +37,12 @@ export default function getStepContent({
             multiline
             variant="outlined"
             rows={4}
-            onChange={(e) => handlingBasicProjectInput("description", e)}
+            onChange={(e) =>
+              handlingBasicProjectInput("description", e, {
+                basicProjectInfo,
+                setBasicInfoProject,
+              })
+            }
           />
         </div>
       );
@@ -40,6 +51,7 @@ export default function getStepContent({
         <TrelloBoardsInput
           handler={handlingBasicProjectInput}
           formState={basicProjectInfo}
+          setBasicInfoProject={setBasicInfoProject}
         />
       );
     case 2:
@@ -53,7 +65,12 @@ export default function getStepContent({
               id="repo-id-input"
               value={"asidjaso8djas"}
               autoWidth={true}
-              onChange={(e) => handlingBasicProjectInput("repo", e)}
+              onChange={(e) =>
+                handlingBasicProjectInput("repo", e, {
+                  basicProjectInfo,
+                  setBasicInfoProject,
+                })
+              }
             >
               {githubRepos.data.getAllGithubRepos.map((repo) => (
                 <MenuItem key={repo.id} value={repo.id}>

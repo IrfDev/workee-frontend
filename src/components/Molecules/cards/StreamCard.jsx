@@ -47,7 +47,13 @@ export default function Streamcard(props) {
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
         <Typography>{props.streams[activeStep].title}</Typography>
-        <p>{props.streams[activeStep].summary.content}</p>
+        <p>
+          {props.streams[activeStep].origin ? (
+            props.streams[activeStep].origin.title
+          ) : (
+            <></>
+          )}
+        </p>
       </Paper>
       <img
         className={classes.img}

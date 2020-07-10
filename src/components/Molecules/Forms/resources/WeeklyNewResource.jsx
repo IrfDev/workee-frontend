@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
+
 import Button from "@material-ui/core/Button";
-import TrelloBoardsInput from "../../../Atoms/forms/TrelloBoardsInput.jsx";
-import TagsInput from "../../../Atoms/forms/TagsResourceInput.jsx";
+
+import TrelloBoardsInput from "Atoms/forms/TrelloBoardsInput.jsx";
+const TagsInput = React.lazy(() => import("Atoms/forms/TagsResourceInput.jsx"));
 
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+
+import { PUSH_NEW_BOARD, NEW_BOARD } from "GQL/queries";
 
 export default function WeeklyNewResource(props) {
   const [lastState, setState] = useState({
@@ -30,29 +33,6 @@ export default function WeeklyNewResource(props) {
     }
   };
 
-  const PUSH_NEW_BOARD = gql`
-    mutation PushBoardIntoProject($id: ID!, $target: String!, $data: String!) {
-      pushInProject(id: $id, data: $data, target: $target) {
-        success
-      }
-    }
-  `;
-
-  const NEW_BOARD = gql`
-    mutation CreateBoard(
-      $resourceid: String!
-      $activeList: String!
-      $tags: [String!]
-    ) {
-      createBoard(
-        input: { resourceid: $resourceid, activeList: $activeList, tags: $tags }
-      ) {
-        data {
-          id
-        }
-      }
-    }
-  `;
   const [newBoard] = useMutation(NEW_BOARD);
   const [pushNewBoard] = useMutation(PUSH_NEW_BOARD);
 
@@ -80,10 +60,12 @@ export default function WeeklyNewResource(props) {
 
   return (
     <form>
-      <TrelloBoardsInput
-        handler={handlingBasicProjectInput}
-        formState={lastState}
-      />
+      <Suspense fallback={<h6>Waiting Trello boards</h6>}>
+        <TrelloBoardsInput
+          handler={handlingBasicProjectInput}
+          formState={lastState}
+        />
+      </Suspense>
       <h5>Agrega una lista activa de tu tablero de Trello</h5>
       <TagsInput state={lastState} setState={setState} />
       <Button variant="contained" color="primary" onClick={handlingForm}>

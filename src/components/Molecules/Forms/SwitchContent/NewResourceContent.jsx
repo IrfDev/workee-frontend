@@ -1,39 +1,63 @@
-import React from "react";
+import React, { Suspense } from "react";
 // Local Forms imports
-import WeeklyNewResource from "../Forms/resources/WeeklyNewResource.jsx";
-import DailyNewResource from "../Forms/resources/DailyNewResource.jsx";
-import SourceNewResource from "../Forms/resources/SourceNewResource.jsx";
-import ToolsNewResource from "../Forms/resources/ToolsNewResource.jsx";
+const WeeklyNewResource = React.lazy(() =>
+  import("Molecules/Forms/resources/WeeklyNewResource.jsx")
+);
+const DailyNewResource = React.lazy(() =>
+  import("Molecules/Forms/resources/DailyNewResource.jsx")
+);
+const SourceNewResource = React.lazy(() =>
+  import("Molecules/Forms/resources/SourceNewResource.jsx")
+);
+const ToolsNewResource = React.lazy(() =>
+  import("Molecules/Forms/resources/ToolsNewResource.jsx")
+);
 
 export default function renderSwitch({ props, handleFormsChanges }) {
   switch (props.activeTab) {
     case "Weekly":
       return (
-        <WeeklyNewResource
-          activeProject={props.activeProject}
-          handleForm={handleFormsChanges}
-        />
+        <>
+          <Suspense fallback={<h5>Cargando...</h5>}>
+            <WeeklyNewResource
+              activeProject={props.activeProject}
+              handleForm={handleFormsChanges}
+            />
+          </Suspense>
+        </>
       );
     case "Daily":
       return (
-        <DailyNewResource
-          activeProject={props.activeProject}
-          handleForm={handleFormsChanges}
-        />
+        <>
+          <Suspense fallback={<h5>Cargando...</h5>}>
+            <DailyNewResource
+              activeProject={props.activeProject}
+              handleForm={handleFormsChanges}
+            />
+          </Suspense>
+        </>
       );
     case "Tools":
       return (
-        <ToolsNewResource
-          activeProject={props.activeProject}
-          handleForm={handleFormsChanges}
-        />
+        <>
+          <Suspense fallback={<h5>Cargando...</h5>}>
+            <ToolsNewResource
+              activeProject={props.activeProject}
+              handleForm={handleFormsChanges}
+            />
+          </Suspense>
+        </>
       );
     case "Source":
       return (
-        <SourceNewResource
-          activeProject={props.activeProject}
-          handleForm={handleFormsChanges}
-        />
+        <>
+          <Suspense fallback={<h5>Cargando...</h5>}>
+            <SourceNewResource
+              activeProject={props.activeProject}
+              handleForm={handleFormsChanges}
+            />
+          </Suspense>
+        </>
       );
     default:
       "S";

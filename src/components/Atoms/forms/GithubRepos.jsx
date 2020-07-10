@@ -19,9 +19,10 @@ export default function SelectGithubRepos(props) {
   `;
 
   const githubRepos = useQuery(GET_GITHUB_REPOS);
-  console.log("github:", githubRepos);
 
-  return (
+  githubRepos.error ? (
+    <h6>We're having troubles with the Github API, please try again</h6>
+  ) : (
     <div>
       <h3>Selecciona un repositorio activo de Github</h3>
       <FormControl variant="filled" fullWidth={true}>

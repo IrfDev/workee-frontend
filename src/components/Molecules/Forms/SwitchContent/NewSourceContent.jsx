@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
+import { CircularProgress } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
@@ -13,7 +14,7 @@ import { GET_FEEDLY_STREAMS } from "GQL/queries";
 
 import TagInput from "Atoms/forms/TagsResourceInput.jsx";
 
-export function NewHeroForm(props) {
+export default function NewHeroForm(props) {
   const feedlyStreams = useQuery(GET_FEEDLY_STREAMS);
 
   const handleStreamResource = (e) => {
@@ -153,11 +154,15 @@ export function NewHeroForm(props) {
               onChange={handleStreamResource}
               autoWidth={true}
             >
-              {feedlyStreams.data.getFeedsFromFeedly.map((feed) => (
-                <MenuItem key={feed.id} value={feed}>
-                  {feed.label}
-                </MenuItem>
-              ))}
+              {!feedlyStreams.loading && feedlyStreams.data ? (
+                feedlyStreams.data.getFeedsFromFeedly.map((feed) => (
+                  <MenuItem key={feed.id} value={feed}>
+                    {feed.label}
+                  </MenuItem>
+                ))
+              ) : (
+                <CircularProgress />
+              )}
             </Select>
           </FormControl>
           {props.previousState.streams.map((stream, indexTag) => (

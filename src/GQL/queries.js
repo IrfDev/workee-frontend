@@ -5,6 +5,54 @@ export const GET_PROJECT_BY_ID = gql`
     getProjectById(id: $id) {
       title
       id
+    }
+  }
+`;
+
+export const GET_WEEKLY_PROJECT = gql`
+  query GetWeeklyProject($idWeekly: ID!) {
+    getProjectById(id: $idWeekly) {
+      id
+      weekly {
+        boards {
+          id
+          cards: trelloCardsFromActiveList {
+            title: name
+            date: dueReminder
+            description: desc
+            labels {
+              green
+              yellow
+              orange
+              red
+              purple
+              blue
+              sky
+              lime
+              pink
+              black
+            }
+          }
+          info: trelloBoard {
+            name
+            prefs {
+              backgroundImage
+            }
+            url: shortUrl
+          }
+          list: trelloActiveList {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_DAILY_PROJECT = gql`
+  query GetDailyProject($id: ID!) {
+    getProjectById(id: $id) {
+      id
       daily {
         tasks {
           resource {
@@ -14,6 +62,54 @@ export const GET_PROJECT_BY_ID = gql`
           tags
         }
       }
+    }
+  }
+`;
+
+export const GET_RESOURCES_PROJECT = gql`
+  query GetResourceProject($id: ID!) {
+    getProjectById(id: $id) {
+      id
+      resources {
+        notebooks {
+          id
+          onenoteId
+          resource: onenoteNotebook {
+            name: displayName
+            url: sectionsUrl
+          }
+          sections: onenoteSections {
+            name: displayName
+            url: sectionsUrl
+          }
+        }
+        resources {
+          name
+          tags
+          website
+        }
+        repos {
+          info: githubRepo {
+            name
+            owner {
+              login
+              avatar_url
+            }
+            description
+            url
+            language
+          }
+          technologies
+        }
+      }
+    }
+  }
+`;
+
+export const GET_SOURCES_PROJECT = gql`
+  query GetSourceProject($id: ID!) {
+    getProjectById(id: $id) {
+      id
       sources {
         heroes {
           name
@@ -51,71 +147,6 @@ export const GET_PROJECT_BY_ID = gql`
               label
               author
             }
-          }
-        }
-      }
-      resources {
-        notebooks {
-          id
-          onenoteId
-          resource: onenoteNotebook {
-            name: displayName
-            url: sectionsUrl
-          }
-          sections: onenoteSections {
-            name: displayName
-            url: sectionsUrl
-          }
-        }
-        resources {
-          name
-          tags
-          website
-        }
-        repos {
-          info: githubRepo {
-            name
-            owner {
-              login
-              avatar_url
-            }
-            description
-            url
-            language
-          }
-          technologies
-        }
-      }
-
-      weekly {
-        boards {
-          id
-          cards: trelloCardsFromActiveList {
-            title: name
-            date: dueReminder
-            description: desc
-            labels {
-              green
-              yellow
-              orange
-              red
-              purple
-              blue
-              sky
-              lime
-              pink
-              black
-            }
-          }
-          info: trelloBoard {
-            name
-            prefs {
-              backgroundImage
-            }
-            url: shortUrl
-          }
-          list: trelloActiveList {
-            name
           }
         }
       }
@@ -186,6 +217,30 @@ export const GET_ONENOTE_SECTIONS = gql`
     getSectionsFromOnenote(notebookId: $notebookId) {
       name: displayName
       id
+    }
+  }
+`;
+
+export const NEW_BOARD = gql`
+  mutation CreateBoard(
+    $resourceid: String!
+    $activeList: String!
+    $tags: [String!]
+  ) {
+    createBoard(
+      input: { resourceid: $resourceid, activeList: $activeList, tags: $tags }
+    ) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
+export const PUSH_NEW_BOARD = gql`
+  mutation PushBoardIntoProject($id: ID!, $target: String!, $data: String!) {
+    pushInProject(id: $id, data: $data, target: $target) {
+      success
     }
   }
 `;

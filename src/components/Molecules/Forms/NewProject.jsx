@@ -154,6 +154,7 @@ export default function NewProjectStepperForm() {
               handlingBasicProjectInput={handlingBasicProjectInput}
               githubRepos={githubRepos}
               basicProjectInfo={basicProjectInfo}
+              setBasicInfoProject={setBasicInfoProject}
             />
             <div>
               <Button

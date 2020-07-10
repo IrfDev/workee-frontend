@@ -7,7 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import TooleResourceContent from "Molecules/Forms/SwitchContent/TooleResourceContent.jsx";
+import ToolsResourceContent from "Molecules/Forms/SwitchContent/ToolsResourceContent.jsx";
 
 import {
   NEW_REPO,
@@ -35,7 +35,6 @@ export default function SourceNewResource(props) {
 
     return sectionsIdArra;
   };
-  // Event handlers for Repos 🐙
 
   const handleActiveResource = (e) => {
     e.persist();
@@ -127,7 +126,7 @@ export default function SourceNewResource(props) {
         </Select>
       </FormControl>
       <div>
-        <TooleResourceContent setState={setState} state={state} />
+        <ToolsResourceContent setState={setState} state={state} />
       </div>
       <Button variant="contained" color="primary" onClick={handleNewResource}>
         Enviar formulario

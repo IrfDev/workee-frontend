@@ -104,16 +104,6 @@ export const PUSH_NEW_SOURCE = gql`
   }
 `;
 
-export const NEW_REPO = gql`
-  mutation CreateRepo($githubId: String!) {
-    createRepo(input: { githubId: $githubId }) {
-      data {
-        id
-      }
-    }
-  }
-`;
-
 export const NEW_RESOURCE = gql`
   mutation CreateResource($website: String!, $name: String!, $tags: [String!]) {
     createResource(input: { website: $website, name: $name, tags: $tags }) {

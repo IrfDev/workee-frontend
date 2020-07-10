@@ -54,7 +54,7 @@ export default function BoardCards(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {props.board.info.name}
+            I
           </Avatar>
         }
         action={

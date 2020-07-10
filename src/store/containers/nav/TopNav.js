@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { setActiveTab } from "../../actions/Nav";
-import Projects from "../../../components/Molecules/appBar/BottomNav.jsx";
+import { setActiveTab, setNavMessage } from "../../actions/Nav";
+import Projects from "Molecules/appBar/TopNav.jsx";
 
 const mapStateToProps = (state) => {
   return {
@@ -11,6 +11,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setActiveTab: (tab) => dispatch(setActiveTab(tab)),
+
+    setNavMessage: (message) => dispatch(setNavMessage(message)),
   };
 };
 

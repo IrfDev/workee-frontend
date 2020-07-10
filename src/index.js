@@ -17,7 +17,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(epicMiddleware))
   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-epicMiddleware.run(rootEpic);
+// epicMiddleware.run(rootEpic);
 
 import { ApolloProvider } from "@apollo/react-hooks";
 import client from "./GQL/client";

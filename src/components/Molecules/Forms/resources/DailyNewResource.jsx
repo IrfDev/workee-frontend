@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import TagsInput from "../../../Atoms/forms/TagsResourceInput.jsx";
+import TagsInput from "Atoms/forms/TagsResourceInput.jsx";
 
 import { NEW_TASK, PUSH_NEW_TASK } from "GQL/mutations";
 
