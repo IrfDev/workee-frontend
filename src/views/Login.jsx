@@ -1,21 +1,15 @@
 import React, { Component } from "react";
+
 import Container from "@material-ui/core/Container";
-import LockIcon from "@material-ui/icons/Lock";
-import LoginForm from "../components/Molecules/Forms/Login.jsx";
-import Button from "@material-ui/core/Button";
+
+import LoginForm from "Molecules/Forms/Login.jsx";
+import MicrosoftLogin from "Atoms/utils/MicrosoftLogin.jsx";
 
 export default class Login extends Component {
   render() {
     return (
       <Container>
-        <Button
-          variant="contained"
-          color="primary"
-          href="https://api.workee.site/auth/signin"
-        >
-          <LockIcon />
-          Login with Microsoft
-        </Button>
+        <MicrosoftLogin />
         <div className="login-form">
           <h1>Inicia sesión</h1>
           <LoginForm />

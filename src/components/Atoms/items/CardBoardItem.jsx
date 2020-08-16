@@ -50,17 +50,21 @@ export default function CardBoardItem(props) {
           }
         />
         <br />
-        <div>
-          {props.card.labels.map((label) => (
-            <Chip
-              size="small"
-              variant="outlined"
-              key={Math.random()}
-              label={label}
-              color="secondary"
-            />
-          ))}
-        </div>
+        {/* <div>
+          {props.card.labels.map((label) => {
+            label !== null ? (
+              <Chip
+                size="small"
+                variant="outlined"
+                key={Math.random()}
+                label={label}
+                color="secondary"
+              />
+            ) : (
+              <></>
+            );
+          })}
+        </div> */}
       </ListItem>
       <Divider variant="inset" component="li" />
     </div>

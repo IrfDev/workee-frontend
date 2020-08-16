@@ -1,20 +1,15 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-
-// Form imports
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-// Local Forms imports
-import WeeklyNewResource from "../Forms/resources/WeeklyNewResource.jsx";
-import DailyNewResource from "../Forms/resources/DailyNewResource.jsx";
-import SourceNewResource from "../Forms/resources/SourceNewResource.jsx";
-import ToolsNewResource from "../Forms/resources/ToolsNewResource.jsx";
+import NewResourceContent from "Molecules/Forms/SwitchContent/NewResourceContent.jsx";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -34,22 +29,8 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal(props) {
   const classes = useStyles();
   const handleChange = (e) => props.setActiveTab(e.target.value);
-  const handleFormsChanges = (data) => console.log(props.activeTab, data);
-
-  const renderSwitch = (param) => {
-    switch (param) {
-      case "Weekly":
-        return <WeeklyNewResource handleForm={handleFormsChanges} />;
-      case "Daily":
-        return <DailyNewResource handleForm={handleFormsChanges}/>;
-      case "Tools":
-        return <ToolsNewResource handleForm={handleFormsChanges}/>;
-      case "Source":
-        return <SourceNewResource handleForm={handleFormsChanges}/>;
-      default:
-        "S";
-        break;
-    }
+  const handleFormsChanges = () => {
+    props.onClose();
   };
 
   return (
@@ -84,7 +65,12 @@ export default function TransitionsModal(props) {
                 <MenuItem value={"Tools"}>Tools</MenuItem>
               </Select>
             </FormControl>
-            <div>{renderSwitch(props.activeTab)}</div>
+            <div>
+              <NewResourceContent
+                props={props}
+                handleFormsChanges={handleFormsChanges}
+              />
+            </div>
           </div>
         </Fade>
       </Modal>

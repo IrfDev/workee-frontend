@@ -1,11 +1,14 @@
 import React from "react";
-import { Link } from "@reach/router";
+
+import { Link, useLocation, navigate } from "@reach/router";
+
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-import Logo from "../../Atoms/Logo.jsx";
+import Logo from "Atoms/utils/Logo.jsx";
 
 const useStyles = makeStyles((theme) => ({
   logo: {
@@ -72,13 +75,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
+  const location = useLocation();
 
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
+          {location.pathname.includes("projects") ? (
+            <ArrowBackIcon onClick={() => navigate(-1)} />
+          ) : (
+            <></>
+          )}
           <div className={classes.sectionMobile}>
             <Link to="/">
               <Logo width="45" class="logoImg" />
@@ -90,7 +99,7 @@ export default function PrimarySearchAppBar() {
             </Link>
           </div>
           <Typography className={classes.title} variant="h6" noWrap>
-            Inicio
+            {props.message}
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}></div>

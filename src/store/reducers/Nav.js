@@ -1,5 +1,5 @@
 // import { projects as defaultProjects } from '../schemas/Project';
-import { SET_ACTIVE_TAB } from "../actions/Nav";
+import { SET_ACTIVE_TAB, SET_NAV_MESSAGE } from "../actions/Nav";
 
 const projectsReducer = (nav = {}, action) => {
   switch (action.type) {
@@ -9,6 +9,11 @@ const projectsReducer = (nav = {}, action) => {
         activeNav: action.payload,
         isLoading: true,
         error: null,
+      };
+    case SET_NAV_MESSAGE:
+      return {
+        ...nav,
+        message: action.message,
       };
 
     default:

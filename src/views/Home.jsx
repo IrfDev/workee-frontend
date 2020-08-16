@@ -1,12 +1,9 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import ListReadItem from "../store/containers/reads/ReadsListingContainer";
-import ProjectListingContainer from "../store/containers/projects/ProjectsContainer";
-import ReposListing from "../store/containers/repos/ReposListingContainer";
-import FixedCta from "../components/Atoms/FixedHomeCta.jsx";
-// import axios from 'axio3s';
-
-// import  { fetchProjects } from '../store/actions/Projects'
+import ListReadItem from "Organisms/HomeListing/ReadsListing.jsx";
+import ProjectListingContainer from "Organisms/HomeListing/ProjectListing.jsx";
+import ReposListing from "Organisms/HomeListing/ReposListing.jsx";
+import FixedCta from "Atoms/utils/FixedHomeCta.jsx";
 
 export default class Home extends React.Component {
   state = {

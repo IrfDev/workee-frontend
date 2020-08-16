@@ -1,6 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -15,7 +16,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import CardList from "../../Atoms/items/CardBoardItem.jsx";
+import CardList from "Atoms/items/CardBoardItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +48,7 @@ export default function BoardCards(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -56,17 +58,17 @@ export default function BoardCards(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <OpenInBrowserIcon />
+          <IconButton href={props.board.info.url} aria-label="settings">
+            <OpenInBrowserIcon href={props.board.info.url} />
           </IconButton>
         }
-        title={props.board.name}
+        title={props.board.info.name}
         subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
-        image={props.board.thumb}
-        title={`${props.board.name} img`}
+        image={props.board.info.prefs.backgroundImage}
+        title={`${props.board.info.name} img`}
       />
 
       <CardActions disableSpacing>
@@ -90,7 +92,7 @@ export default function BoardCards(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <h1>{props.board.list.name}:</h1>
-          {props.board.list.cards.map((card) => (
+          {props.board.cards.map((card) => (
             <CardList key={Math.random()} card={card} />
           ))}
         </CardContent>

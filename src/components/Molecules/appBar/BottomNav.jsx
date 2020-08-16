@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 // Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -13,7 +13,9 @@ import ShareIcon from "@material-ui/icons/Share";
 import BuildIcon from "@material-ui/icons/Build";
 
 // Local Components
-import NewResourceForm from "../Forms/NewResource.jsx";
+const NewResourceForm = React.lazy(() =>
+  import("Molecules/Forms/NewResource.jsx")
+);
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -57,7 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BottomAppBar({ setActiveTab, activeNav }) {
+export default function BottomAppBar({
+  setActiveTab,
+  activeNav,
+  activeProject,
+}) {
   const classes = useStyles();
   const [openModal, setOpen] = React.useState(false);
 
@@ -96,12 +102,15 @@ export default function BottomAppBar({ setActiveTab, activeNav }) {
             <CheckIcon />
             <span>Daily</span>
           </div>
-          <NewResourceForm
-            open={openModal}
-            onClose={handleClose}
-            activeTab={activeNav}
-            setActiveTab={setActiveTab}
-          />
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <NewResourceForm
+              activeProject={activeProject}
+              open={openModal}
+              onClose={handleClose}
+              activeTab={activeNav}
+              setActiveTab={setActiveTab}
+            />
+          </Suspense>
           <Fab
             aria-label="add"
             className={classes.fabButton}

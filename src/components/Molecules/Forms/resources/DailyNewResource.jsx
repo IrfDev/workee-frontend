@@ -1,126 +1,96 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/react-hooks";
 
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import TagsInput from "Atoms/forms/TagsResourceInput.jsx";
 
-import Chip from "@material-ui/core/Chip";
+import { NEW_TASK, PUSH_NEW_TASK } from "GQL/mutations";
 
-export default class DailyNewResource extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { title: "", about: "", tags: [], newTagInput: "" };
-  }
+export default function DailyNewResource(props) {
+  const [previousState, setNewDailyObject] = useState({
+    title: "",
+    about: "",
+    tags: [],
+    newTagInput: "",
+  });
+
   // Title input 📝
-  handleTitleInput = (e) => {
+  const handleTitleInput = (e) => {
     e.persist();
-    this.setState((previousState) => {
-      return { ...previousState, title: e.target.value };
-    });
+    setNewDailyObject({ ...previousState, title: e.target.value });
   };
 
-  handleAboutInput = (e) => {
+  const handleAboutInput = (e) => {
     e.persist();
-    this.setState((previousState) => {
-      return { ...previousState, about: e.target.value };
-    });
-  };
-  // Tags 🔖
-  addTags = () => {
-    this.setState((state) => {
-      const tagsArray = state.tags;
-      const newTag = state.newTagInput;
-      tagsArray.push(newTag);
-      return {
-        ...state,
-        tags: tagsArray,
-        newTagInput: "",
-      };
-    });
+    setNewDailyObject({ ...previousState, about: e.target.value });
   };
 
-  deleteTag = (newTag) => {
-    this.setState((state) => {
-      const tags = state.tags;
-      const tagsWithoutDeletedTag = tags.filter((tag) => tag !== newTag);
-      return {
-        ...state,
-        tags: tagsWithoutDeletedTag,
-        newTagInput: "",
-      };
+  const [createTasks] = useMutation(NEW_TASK);
+  const [pushNewTask] = useMutation(PUSH_NEW_TASK);
+
+  const handleNewTask = async () => {
+    const newTaskResponse = await createTasks({
+      variables: {
+        type: "manual",
+        resource: {
+          title: previousState.title,
+          about: previousState.about,
+        },
+        tags: previousState.tags,
+      },
     });
+
+    let taskId = newTaskResponse.data.createTask.data.id;
+
+    const pushBoardResponse = await pushNewTask({
+      variables: {
+        id: props.activeProject,
+        target: "daily.tasks",
+        data: taskId,
+      },
+    });
+
+    if (pushBoardResponse.data.pushInProject.success) {
+      return props.handleForm();
+    } else {
+      return <p>Error during project updating, please try again!</p>;
+    }
   };
 
-  newTagInput = (e) => {
-    e.persist();
-    this.setState((state) => {
-      return {
-        ...state,
-        newTagInput: e.target.value,
-      };
-    });
-  };
-
-  render() {
-    return (
-      <form>
-        <h5>Agrega una tarea a tu día</h5>
-        <FormControl
-          variant="filled"
-          fullWidth={true}
-          onChange={this.handleTitleInput}
-        >
-          <TextField
-            value={this.state.title}
-            id="basicTemplate"
-            label="Nombre de tu tarea"
-          />
-        </FormControl>
-        <h5>Agrega una descripción a tu tarea</h5>
-        <FormControl
-          variant="filled"
-          fullWidth={true}
-          onChange={this.handleAboutInput}
-        >
-          <TextField
-            value={this.state.about}
-            id="basicTemplate"
-            multiline={true}
-            rows={4}
-            label="Descripción"
-          />
-        </FormControl>
-        <h5>Agrega nuevos tags</h5>
-        <div>
-          <FormControl onChange={this.newTagInput}>
-            <TextField
-              // onKeyPress={(e) => ("keypress", e.ke)}
-              value={this.state.newTagInput}
-              id="basicTemplate"
-              label="NewTag"
-            />
-          </FormControl>
-          <Button onClick={this.addTags} color="primary">
-            Agregar Tag
-          </Button>
-          <div>
-            {this.state.tags.map((tag, indexTag) => (
-              <Chip
-                label={tag}
-                key={indexTag}
-                onDelete={() => this.deleteTag(tag)}
-              />
-            ))}
-          </div>
-        </div>
-        <Button
-          onClick={() => this.props.handleForm(this.state)}
-          variant="contained"
-          color="primary"
-        >
-          Enviar formulario
-        </Button>
-      </form>
-    );
-  }
+  return (
+    <form>
+      <h5>Agrega una tarea a tu día</h5>
+      <FormControl
+        variant="filled"
+        fullWidth={true}
+        onChange={handleTitleInput}
+      >
+        <TextField
+          value={previousState.title}
+          id="basicTemplate"
+          label="Nombre de tu tarea"
+        />
+      </FormControl>
+      <h5>Agrega una descripción a tu tarea</h5>
+      <FormControl
+        variant="filled"
+        fullWidth={true}
+        onChange={handleAboutInput}
+      >
+        <TextField
+          value={previousState.about}
+          id="basicTemplate"
+          multiline={true}
+          rows={4}
+          label="Descripción"
+        />
+      </FormControl>
+      <TagsInput state={previousState} setState={setNewDailyObject} />
+      <Button onClick={handleNewTask} variant="contained" color="primary">
+        Enviar formulario
+      </Button>
+    </form>
+  );
 }

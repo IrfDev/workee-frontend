@@ -1,9 +1,16 @@
 import { connect } from "react-redux";
-import { fetchProjects, setActiveProject, fetchAndFindProjects } from "../../actions/Projects";
+import {
+  fetchProjects,
+  setActiveProject,
+  fetchAndFindProjects,
+} from "Actions/Projects";
+
+import { setNavMessage } from "Actions/Nav";
+
 import Projects from "../../../views/ProjectPage.jsx";
 
 const mapStateToProps = (state) => {
-  ("Reducer", state)
+  "Reducer", state;
   return {
     ...state.projects,
     nav: state.nav,
@@ -13,13 +20,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchProjects: () => dispatch(fetchProjects()),
-    setActiveProject: (s) => {
-      return dispatch(setActiveProject(s));
-    },
-    fetchAndFindProjects: (s) => {
-      ("Inside active project action", s);
-      return dispatch(fetchAndFindProjects(s));
-    },
+
+    setActiveProject: (projectObject) =>
+      dispatch(setActiveProject(projectObject)),
+
+    fetchAndFindProjects: (id) => dispatch(fetchAndFindProjects(id)),
+
+    setNavMessage: (message) => dispatch(setNavMessage(message)),
   };
 };
 

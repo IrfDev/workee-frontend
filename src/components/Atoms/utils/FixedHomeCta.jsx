@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import Modal from "@material-ui/core/Modal";
 
-import NewProject from "../../Molecules/Forms/NewProject.jsx";
+const NewProject = React.lazy(() => import("Molecules/Forms/NewProject.jsx"));
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -49,16 +49,18 @@ export default function SimpleModal() {
       >
         Nuevo proyecto
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        <div className={classes.paper}>
-          <NewProject />
-        </div>
-      </Modal>
+      <Suspense fallback={<h6>Cargando...</h6>}>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className={classes.paper}>
+            <NewProject />
+          </div>
+        </Modal>
+      </Suspense>
     </div>
   );
 }

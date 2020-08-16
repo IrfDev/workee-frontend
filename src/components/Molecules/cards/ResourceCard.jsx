@@ -48,7 +48,7 @@ export default function ResourceCard(props) {
         ))}
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" href={props.resource.url}>
+        <Button size="small" color="primary" href={props.resource.website}>
           <OpenInBrowserIcon />
           Abrir
         </Button>

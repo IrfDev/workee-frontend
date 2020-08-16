@@ -1,7 +1,7 @@
 import { ofType } from "redux-observable";
 import { mergeMap } from "rxjs/operators/";
 
-import { FORM_SUBMIT, NEW_OBJECT } from "../actions/Forms";
+import { FORM_SUBMIT } from "../actions/Forms";
 
 export const submitFormEpic = (action$) =>
   action$.pipe(

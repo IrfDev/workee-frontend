@@ -10,9 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setActiveTab: (tab) => {
-      return dispatch(setActiveTab(tab));
-    },
+    setActiveTab: (tab) => dispatch(setActiveTab(tab)),
   };
 };
 
