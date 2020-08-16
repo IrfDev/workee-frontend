@@ -96,11 +96,33 @@ export default function ToolsResourceContent(props) {
               autoWidth={true}
             >
               {!getNotebooks.loading ? (
-                getNotebooks.data.getNotebooksFromOnenote.map((nb) => (
-                  <MenuItem key={nb.id} value={nb.id}>
-                    {nb.name}
-                  </MenuItem>
-                ))
+                getNotebooks.error ? (
+                  getNotebooks.error.message.includes(
+                    "CompactToken validation failed"
+                  ) ||
+                  getNotebooks.error.message.includes(
+                    "Unauthorized from Microsoft"
+                  ) ? (
+                    <>
+                      <h1>Failed gettin the Mircosoft Auth Token</h1>
+                      <h4>Please Login again</h4>
+                      <MicrosoftLogin />
+                    </>
+                  ) : (
+                    <>
+                      <h1>
+                        Sorry! There was an unknown error getting the notebooks
+                      </h1>
+                      <p>{getNotebooks.error}</p>
+                    </>
+                  )
+                ) : (
+                  getNotebooks.data.getNotebooksFromOnenote.map((nb) => (
+                    <MenuItem key={nb.id} value={nb.id}>
+                      {nb.name}
+                    </MenuItem>
+                  ))
+                )
               ) : getNotebooks.error ? (
                 getNotebooks.error.message.includes(
                   "CompactToken validation failed"

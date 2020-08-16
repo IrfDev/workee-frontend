@@ -95,15 +95,15 @@ export default function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.sectionDesktop}>
             <Link to="/">
-              <Logo width="500" class="logoImg" />
+              <Logo width="40" class="logoImg img-fluid" />
             </Link>
           </div>
           <Typography className={classes.title} variant="h6" noWrap>
             {props.message}
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}></div>
-          <div className={classes.sectionMobile}></div>
+          <div className={classes.sectionDesktop}>Workee</div>
+          <div className={classes.sectionMobile}> Workee</div>
         </Toolbar>
       </AppBar>
     </div>

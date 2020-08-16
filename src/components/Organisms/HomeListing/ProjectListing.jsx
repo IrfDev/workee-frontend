@@ -2,13 +2,12 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Link, Redirect } from "@reach/router";
 
-import Grid from "@material-ui/core/Grid";
 import { CircularProgress } from "@material-ui/core";
 
 import ImageCardContainer from "Molecules/HomeCards/BasicCard.jsx";
 import { GET_ALL_PROJECTS } from "GQL/queries";
 
-export default function ProjectListing(props) {
+export default function ProjectListing() {
   // async componentDidMount() {
   //   await this.props.fetchProjects();
   // }
@@ -18,27 +17,27 @@ export default function ProjectListing(props) {
 
   return projects.error ? (
     projects.error.message.includes("Unauthorized") ? (
-      <Redirect to="/login" noThrow />
+      <Redirect to="/landing" noThrow />
     ) : (
-      <h1>Sorry we couldnt display</h1>
+      <h1>Sorry we couldnt display the projects</h1>
     )
   ) : (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <div className="row m-0 justify-content-around mt-5">
+      <div className="col-12 text-center">
         <h1>Projects</h1>
-      </Grid>
+      </div>
 
       {projects.loading === false ? (
         projects.data.getAllProjects.map((project) => (
-          <Grid key={project.id} item xs={6}>
-            <Link to={`/projects/${project.id}`}>
+          <div key={project.id} className=" mt-3 mb-3 col-12 col-md-6 col-lg-4">
+            <Link to={`/app/projects/${project.id}`}>
               <ImageCardContainer project={project} />
             </Link>
-          </Grid>
+          </div>
         ))
       ) : (
         <CircularProgress />
       )}
-    </Grid>
+    </div>
   );
 }

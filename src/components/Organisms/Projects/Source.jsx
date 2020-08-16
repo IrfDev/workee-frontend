@@ -17,40 +17,48 @@ export default function Source(props) {
     },
   });
 
-  console.log(getSources);
+  console.log("[Query to get sources]", getSources, validSource);
 
   return (
-    <>
-      <h1>Streams</h1>
+    <div className="row m-0 mt-3">
+      <div className="col-12 text-center">
+        <h2>Streams</h2>
+      </div>
       {!getSources.loading ? (
         !getSources.error ? (
           getSources.data.getProjectById.sources.streams[0].feedlyItems.map(
-            (stream) => <StreamCard streams={stream.items} key={stream.id} />
+            (stream) => (
+              <div key={stream.id} className="col-12 col-md-6 col-lg-4">
+                <StreamCard streams={stream.items} />
+              </div>
+            )
           )
         ) : (
-          <div>
-            <h1>Error while fetching Streams project try reloading</h1>
+          <div className="col-12 text-center">
+            <h4>Error while fetching Streams project try reloading</h4>
             <p>{getSources.error.message}</p>
           </div>
         )
       ) : (
         <CircularProgress />
       )}
-      <h2>Heros</h2>
+      <div className="col-12 text-center">
+        <h2>Heros</h2>
+      </div>
       {!getSources.loading ? (
         !getSources.error ? (
           getSources.data.getProjectById.sources.heroes.map((hero) => (
             <HeroCard hero={hero} key={Math.random()} />
           ))
         ) : (
-          <div>
-            <h1>Error while fetching Heros project try reloading</h1>
+          <div className="col-12 text-center">
+            <h4>Error while fetching Heros projects try reloading</h4>
             <p>{getSources.error.message}</p>
           </div>
         )
       ) : (
         <CircularProgress />
       )}
-    </>
+    </div>
   );
 }

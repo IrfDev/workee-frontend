@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ["Nombre y descripción", "Agregar tablero", "Agregar Repo"];
+  return ["Name and description", "Add Board", "Add Repo"];
 }
 
 export default function NewProjectStepperForm() {
@@ -162,7 +162,7 @@ export default function NewProjectStepperForm() {
                 onClick={handleBack}
                 className={classes.button}
               >
-                Atrás
+                Last
               </Button>
               <Button
                 variant="contained"
@@ -170,7 +170,7 @@ export default function NewProjectStepperForm() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? "Finalizar" : "Siguiente"}
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
             </div>
           </div>

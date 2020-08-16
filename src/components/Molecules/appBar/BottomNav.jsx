@@ -5,7 +5,6 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Fab from "@material-ui/core/Fab";
-import Grid from "@material-ui/core/Grid";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import CheckIcon from "@material-ui/icons/Check";
 import AddIcon from "@material-ui/icons/Add";
@@ -75,31 +74,41 @@ export default function BottomAppBar({
     setOpen(false);
   };
   return (
-    <Grid container className={classes.Conatiner}>
+    <div className="row m-0 p-0 justify-content-center">
       <CssBaseline />
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <Toolbar className={classes.Toolbar}>
+      <AppBar
+        position="fixed"
+        color="primary"
+        className={[classes.appBar, "col-12 col-md-4 col-lg-6 bottom-navbar"]}
+      >
+        <Toolbar
+          className={`d-flex align-items-center justify-content-between`}
+        >
           <div
             onKeyDown={() => setActiveTab("Weekly")}
             onClick={() => setActiveTab("Weekly")}
             tabIndex={0}
             role="button"
             aria-label="open drawer"
-            className={classes.IconButton}
+            className={`${classes.IconButton} ${
+              activeNav === "Weekly" ? "activeTab" : ""
+            }`}
           >
-            <DragHandleIcon />
+            <DragHandleIcon className="menu-icon" />
             <span>Weekly</span>
           </div>
           <div
             color="inherit"
             aria-label="open drawer"
-            className={classes.IconButton}
+            className={`${classes.IconButton} ${
+              activeNav === "Daily" ? "activeTab" : ""
+            }`}
             onKeyDown={() => setActiveTab("Daily")}
             onClick={() => setActiveTab("Daily")}
             tabIndex={0}
             role="button"
           >
-            <CheckIcon />
+            <CheckIcon className="menu-icon" />
             <span>Daily</span>
           </div>
           <Suspense fallback={<h1>Loading...</h1>}>
@@ -125,9 +134,11 @@ export default function BottomAppBar({
             tabIndex={0}
             role="button"
             color="inherit"
-            className={classes.IconButton}
+            className={`${classes.IconButton} ${
+              activeNav === "Source" ? "activeTab" : ""
+            }`}
           >
-            <ShareIcon />
+            <ShareIcon className="menu-icon" />
             <span>Source</span>
           </div>
           <div
@@ -136,13 +147,15 @@ export default function BottomAppBar({
             tabIndex={0}
             color="inherit"
             role="button"
-            className={classes.IconButton}
+            className={`${classes.IconButton} ${
+              activeNav === "Tools" ? "activeTab" : ""
+            }`}
           >
-            <BuildIcon />
+            <BuildIcon className="menu-icon" />
             <span>Tools</span>
           </div>
         </Toolbar>
       </AppBar>
-    </Grid>
+    </div>
   );
 }

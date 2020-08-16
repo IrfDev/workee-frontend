@@ -62,13 +62,19 @@ export default function WeeklyNewResource(props) {
     <form>
       <Suspense fallback={<h6>Waiting Trello boards</h6>}>
         <TrelloBoardsInput
+          className="mt-3 mb-4"
           handler={handlingBasicProjectInput}
           formState={lastState}
         />
       </Suspense>
       <h5>Agrega una lista activa de tu tablero de Trello</h5>
-      <TagsInput state={lastState} setState={setState} />
-      <Button variant="contained" color="primary" onClick={handlingForm}>
+      <TagsInput className="mt-3 mb-4" state={lastState} setState={setState} />
+      <Button
+        className="mt-3 mb-4"
+        variant="contained"
+        color="primary"
+        onClick={handlingForm}
+      >
         Enviar formulario
       </Button>
     </form>

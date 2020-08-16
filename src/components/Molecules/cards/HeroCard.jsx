@@ -18,12 +18,11 @@ import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    marginBottom: 100,
+    // marginBottom: 100,
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    // height: 0,
+    // paddingTop: "56.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -32,9 +31,11 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
+
   expandOpen: {
     transform: "rotate(180deg)",
   },
+
   avatar: {
     backgroundColor: red[500],
   },

@@ -91,7 +91,7 @@ export default function BoardCards(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <h1>{props.board.list.name}:</h1>
+          <h4 color="primary">{props.board.list.name}:</h4>
           {props.board.cards.map((card) => (
             <CardList key={Math.random()} card={card} />
           ))}

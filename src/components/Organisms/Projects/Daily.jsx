@@ -14,22 +14,26 @@ export default function Daily(props) {
 
   console.log("QUery Get Daily:", getDaily);
   return (
-    <>
-      <h1>Tasks</h1>
+    <div className="row m-0">
+      <div className="col-12 text-center">
+        <h1>Tasks</h1>
+      </div>
       {!getDaily.loading ? (
         !getDaily.error ? (
           getDaily.data.getProjectById.daily.tasks.map((task, taskIndex) => (
-            <TaskCard key={taskIndex} task={task} />
+            <div key={taskIndex} className="col-12 col-md-6 col-lg-4">
+              <TaskCard task={task} />
+            </div>
           ))
         ) : (
           <div>
-            <h1>Error while fetching Weekly project try reloading</h1>
+            <h3>Error while fetching Weekly project try reloading</h3>
             <p>{getDaily.error.message}</p>
           </div>
         )
       ) : (
         <CircularProgress />
       )}
-    </>
+    </div>
   );
 }

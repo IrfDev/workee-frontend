@@ -47,10 +47,15 @@ export default function TransitionsModal(props) {
           timeout: 500,
         }}
       >
-        <Fade in={props.open}>
-          <div className={classes.paper}>
+        <Fade in={props.open} className="p-4 text-center new-resource-modal">
+          <div className={`${classes.paper} `}>
             <h4>{props.activeTab}</h4>
-            <FormControl variant="filled" fullWidth={true}>
+
+            <FormControl
+              className="mt-3 mb-3"
+              variant="filled"
+              fullWidth={true}
+            >
               <InputLabel id="trello-list-input">Lista</InputLabel>
               <Select
                 labelId="trello-list-input"
@@ -65,7 +70,7 @@ export default function TransitionsModal(props) {
                 <MenuItem value={"Tools"}>Tools</MenuItem>
               </Select>
             </FormControl>
-            <div>
+            <div className="mt-3 mb-3">
               <NewResourceContent
                 props={props}
                 handleFormsChanges={handleFormsChanges}

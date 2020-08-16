@@ -24,22 +24,38 @@ export default function Resource(props) {
       <Redirect to="/login" noThrow />
     ) : getResources.error.message.includes("CompactToken validation failed") ||
       getResources.error.message.includes("Unauthorized from Microsoft") ? (
-      <>
-        <h1>Failed gettin the Mircosoft Auth Token</h1>
-        <h4>Please Login again</h4>
-        <MicrosoftLogin />
-      </>
+      <div className="row m-0 text-center">
+        <div className="col-12">
+          <h4>
+            Failed getting the Mircosoft Auth Token
+            <span role="img" aria-label="lock-emoji">
+              🔓
+            </span>
+          </h4>
+          <h5>
+            Please Login again
+            <span role="img" aria-label="hand-pointing-down-emoji">
+              👇🏻
+            </span>
+          </h5>
+          <MicrosoftLogin />
+        </div>
+      </div>
     ) : (
-      <>
-        <h1>Sorry! There was an unknown error</h1>
+      <div className="col-12">
+        <h4>Sorry! There was an unknown error</h4>
         <p>{getResources.error}</p>
-      </>
+      </div>
     )
   ) : (
-    <>
-      <h1>Resources</h1>
-      <div>
-        <h2>Repos</h2>
+    <div className="container-fluid">
+      <div className="col-12 text-center">
+        <h2>Resources</h2>
+      </div>
+      <div className="row m-0">
+        <div className="col-12 text-center">
+          <h2>Repos</h2>
+        </div>
         {!getResources.loading ? (
           !getResources.error ? (
             getResources.data.getProjectById.resources.repos ? (
@@ -47,11 +63,11 @@ export default function Resource(props) {
                 <RepoCard key={Math.random()} repo={repo} />
               ))
             ) : (
-              <h3>Create Some Repos for your project</h3>
+              <h4>Create Some Repos for your project</h4>
             )
           ) : (
             <div>
-              <h1>Error while fetching Repos project try reloading</h1>
+              <h4>Error while fetching Repos project try reloading</h4>
               <p>{getResources.error.message}</p>
             </div>
           )
@@ -70,11 +86,11 @@ export default function Resource(props) {
                 )
               )
             ) : (
-              <h3>Create Some Notebooks for your project</h3>
+              <h4>Create Some Notebooks for your project</h4>
             )
           ) : (
             <div>
-              <h1>Error while fetching notebooks project try reloading</h1>
+              <h4>Error while fetching notebooks project try reloading</h4>
               <p>{getResources.error.message}</p>
             </div>
           )
@@ -93,11 +109,11 @@ export default function Resource(props) {
                 )
               )
             ) : (
-              <h3>Create Some resources for your project</h3>
+              <h4>Create Some resources for your project</h4>
             )
           ) : (
             <div>
-              <h1>Error while fetching resources project try reloading</h1>
+              <h4>Error while fetching resources project try reloading</h4>
               <p>{getResources.error.message}</p>
             </div>
           )
@@ -105,6 +121,6 @@ export default function Resource(props) {
           <CircularProgress />
         )}
       </div>
-    </>
+    </div>
   );
 }

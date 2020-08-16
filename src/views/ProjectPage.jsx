@@ -20,7 +20,7 @@ export default function ProjectPage(props) {
 
   return activeProject.error ? (
     activeProject.error.message.includes("Unauthorized") ? (
-      <Redirect to="/login" noThrow />
+      <Redirect to="/landing" noThrow />
     ) : activeProject.error.message.includes(
         "CompactToken validation failed"
       ) ||
@@ -37,10 +37,12 @@ export default function ProjectPage(props) {
       </>
     )
   ) : (
-    <div>
+    <div className="container-fluid pb-5 mb-5">
       {!activeProject.loading && activeProject.data ? (
-        <div>
-          <h1>{activeProject.data.getProjectById.title}</h1>
+        <div className="row m-0 mt-3">
+          <div className="col-12 text-center">
+            <h1>{activeProject.data.getProjectById.title}</h1>
+          </div>
           <Container>
             <PageContent
               param={props.nav.activeNav}

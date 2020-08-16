@@ -18,12 +18,13 @@ export default function getStepContent({
   switch (step) {
     case 0:
       return (
-        <div>
-          <h4>Básico</h4>
+        <form>
+          <h4>Basic</h4>
           <TextField
             id="outlined-basic"
-            label="Nombre"
+            label="Name"
             variant="outlined"
+            fullWidth={true}
             onChange={(e) =>
               handlingBasicProjectInput("name", e, {
                 basicProjectInfo,
@@ -33,8 +34,9 @@ export default function getStepContent({
           />
           <TextField
             id="standard-multiline-static"
-            label="Descripción"
+            label="Description"
             multiline
+            fullWidth={true}
             variant="outlined"
             rows={4}
             onChange={(e) =>
@@ -44,7 +46,7 @@ export default function getStepContent({
               })
             }
           />
-        </div>
+        </form>
       );
     case 1:
       return (

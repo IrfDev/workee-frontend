@@ -54,7 +54,7 @@ export default function LoginForm() {
   const token = localStorage.getItem("token");
   console.log("getToken", token);
 
-  if (token) redirectTo("/");
+  // if (token) redirectTo("/app");
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -78,7 +78,7 @@ export default function LoginForm() {
         onClick={onSubmit}
         endIcon={<ExitToAppIcon />}
       >
-        Iniciar sesión
+        Sign in
       </Button>
     </form>
   );

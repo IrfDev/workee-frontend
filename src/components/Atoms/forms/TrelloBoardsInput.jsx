@@ -69,7 +69,7 @@ export default function TrelloBoardsInput({
               </MenuItem>
             ))
           ) : (
-            <MenuItem selected={true}>Selecciona un tablero</MenuItem>
+            <MenuItem selected={true}>Pick a board</MenuItem>
           )}
         </Select>
       </FormControl>

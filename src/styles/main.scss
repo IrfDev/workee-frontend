@@ -1,0 +1,51 @@
+@import "landing";
+@import "colors";
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+h6 {
+  font-family: Roboto !important;
+}
+
+.bottom-navbar {
+  border-radius: 8px 8px 0 0;
+  span {
+    font-size: 0.78em;
+  }
+  transition: all 0.5s ease-in-out;
+  .activeTab {
+    transition: all 0.7s ease-in-out;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 800px) {
+    span {
+      font-size: 1em;
+    }
+    transition: all 0.7s ease-in-out;
+    .menu-icon {
+      font-size: 1.7em;
+    }
+    .activeTab {
+      transition: all 0.7s ease-in-out;
+      font-weight: 900;
+    }
+
+    margin-right: 25vw;
+  }
+}
+
+.new-resource-modal {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 3em !important;
+
+  @media screen and (min-width: 800px) {
+    padding: 3em !important;
+  }
+}
