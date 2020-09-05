@@ -1,0 +1,39 @@
+.landing-view {
+  .welcome-header {
+    h1 {
+      font-size: 3.5em;
+    }
+    p {
+      font-size: 1.4em;
+    }
+  }
+  .features-landing {
+    .card {
+      transition: all 0.4s ease-in-out;
+      p {
+        transition: all 0.6s ease-in-out;
+      }
+    }
+    .card:hover {
+      transition: all 0.4s ease-in-out;
+      border: 1px solid #6200ee;
+      p {
+        transition: all 0.4s ease-in-out;
+        color: #6200ee;
+      }
+    }
+  }
+  .list-resource {
+    transition: all 0.4s ease-in-out;
+    &:hover {
+      border-radius: 11px;
+      border: 1px solid inset #6200ee;
+      color: #6200ee;
+      transition: all 0.4s ease-in-out;
+      .MuiAvatar-circle {
+        transition: all 0.4s ease-in-out;
+        color: #6200ee;
+      }
+    }
+  }
+}

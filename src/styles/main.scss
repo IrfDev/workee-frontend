@@ -13,10 +13,13 @@ h6 {
 
 .bottom-navbar {
   border-radius: 8px 8px 0 0;
+
   span {
     font-size: 0.78em;
   }
+
   transition: all 0.5s ease-in-out;
+
   .activeTab {
     transition: all 0.7s ease-in-out;
     font-weight: 900;
@@ -47,5 +50,20 @@ h6 {
 
   @media screen and (min-width: 800px) {
     padding: 3em !important;
+  }
+}
+
+footer {
+  background-color: #6200ee;
+  padding: 1% 0;
+  h5,
+  p,
+  a,
+  small {
+    color: white;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline wavy white;
   }
 }

@@ -54,18 +54,18 @@ export default function LoginForm() {
   const token = localStorage.getItem("token");
   console.log("getToken", token);
 
-  // if (token) redirectTo("/app");
+  if (token) redirectTo("/app");
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <TextField
-        id="outlined-basic"
+        id="login-email"
         onChange={(e) => handlingInput(e, "email")}
         label="Email"
         variant="outlined"
       />
       <TextField
-        id="outlined-basic"
+        id="login-password"
         label="Password"
         type="password"
         variant="outlined"

@@ -17,7 +17,7 @@ export default function ProjectListing() {
 
   return projects.error ? (
     projects.error.message.includes("Unauthorized") ? (
-      <Redirect to="/landing" noThrow />
+      <Redirect to="/" noThrow />
     ) : (
       <h1>Sorry we couldnt display the projects</h1>
     )

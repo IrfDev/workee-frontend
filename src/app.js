@@ -6,6 +6,7 @@ import { CircularProgress } from "@material-ui/core";
 import { hot } from "react-hot-loader";
 
 import TopNav from "Molecules/appBar/TopNav.jsx";
+import Footer from "Molecules/appBar/Footer.jsx";
 
 import "./styles/main.scss";
 
@@ -35,6 +36,9 @@ class App extends Component {
               <Landing path="/" pathname="Landing" />
             </Router>
           </Suspense>
+          <LocationProvider>
+            <Footer />
+          </LocationProvider>
         </ThemeProvider>
       </div>
     );

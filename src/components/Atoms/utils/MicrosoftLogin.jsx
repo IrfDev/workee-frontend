@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 const MicrosoftLogin = () => {
   return (
     <Button
+      size="medium"
       variant="contained"
       color="primary"
       href="https://api.workee.site/auth/signin"

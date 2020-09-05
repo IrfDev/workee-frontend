@@ -20,7 +20,7 @@ export default function ProjectPage(props) {
 
   return activeProject.error ? (
     activeProject.error.message.includes("Unauthorized") ? (
-      <Redirect to="/landing" noThrow />
+      <Redirect to="/" noThrow />
     ) : activeProject.error.message.includes(
         "CompactToken validation failed"
       ) ||
