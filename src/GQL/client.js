@@ -4,7 +4,8 @@ import { HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 
 const link = new HttpLink({
-  uri: "https://api.workee.site/graphql",
+  //uri: "https://api.workee.site/graphql",
+  uri: "http://localhost:9000/graphql",
   credentials: "include",
 });
 

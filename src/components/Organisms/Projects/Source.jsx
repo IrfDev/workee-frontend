@@ -17,15 +17,20 @@ export default function Source(props) {
     },
   });
 
-  console.log("[Query to get sources]", getSources, validSource);
+  console.log(
+    "[Query to get sources]:",
+    getSources,
+    "[Valid source]",
+    validSource
+  );
 
   return (
     <div className="row m-0 mt-3">
-      <div className="col-12 text-center">
+      {/* <div className="col-12 text-center">
         <h2>Streams</h2>
       </div>
       {!getSources.loading ? (
-        !getSources.error ? (
+        !getSources.error && getSources.data.getProjectById.sources.streams ? (
           getSources.data.getProjectById.sources.streams[0].feedlyItems.map(
             (stream) => (
               <div key={stream.id} className="col-12 col-md-6 col-lg-4">
@@ -36,12 +41,16 @@ export default function Source(props) {
         ) : (
           <div className="col-12 text-center">
             <h4>Error while fetching Streams project try reloading</h4>
-            <p>{getSources.error.message}</p>
+            <p>
+              {getSources.error
+                ? getSources.error.message
+                : "It seems like the Feedly option is temporarly unavailable"}
+            </p>
           </div>
         )
       ) : (
         <CircularProgress />
-      )}
+      )} */}
       <div className="col-12 text-center">
         <h2>Heros</h2>
       </div>

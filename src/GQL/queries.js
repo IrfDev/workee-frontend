@@ -119,36 +119,36 @@ export const GET_SOURCES_PROJECT = gql`
             url: urlLink
           }
         }
-        streams {
-          feedlyItems {
-            id
-            items {
-              origin {
-                title
-                htmlUrl
-              }
-              webfeeds {
-                logo
-              }
-              keywords
-              title
-              content {
-                content
-              }
-              categories {
-                label
-              }
-              visual {
-                url
-              }
-              summary {
-                content
-              }
-              label
-              author
-            }
-          }
-        }
+        # streams {
+        #   feedlyItems {
+        #     id
+        #     items {
+        #       origin {
+        #         title
+        #         htmlUrl
+        #       }
+        #       webfeeds {
+        #         logo
+        #       }
+        #       keywords
+        #       title
+        #       content {
+        #         content
+        #       }
+        #       categories {
+        #         label
+        #       }
+        #       visual {
+        #         url
+        #       }
+        #       summary {
+        #         content
+        #       }
+        #       label
+        #       author
+        #     }
+        #   }
+        # }
       }
     }
   }

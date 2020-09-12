@@ -52,7 +52,6 @@ export default function LoginForm() {
   };
 
   const token = localStorage.getItem("token");
-  console.log("getToken", token);
 
   if (token) redirectTo("/app");
 
