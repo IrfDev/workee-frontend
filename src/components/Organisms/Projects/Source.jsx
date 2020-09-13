@@ -56,9 +56,13 @@ export default function Source(props) {
       </div>
       {!getSources.loading ? (
         !getSources.error ? (
-          getSources.data.getProjectById.sources.heroes.map((hero) => (
-            <HeroCard hero={hero} key={Math.random()} />
-          ))
+          getSources.data.getProjectById.sources.heroes.map(
+            (hero, heroIndex) => (
+              <div key={heroIndex} className="col-lg-4 col-md-5 col-12 mb-4">
+                <HeroCard hero={hero} />
+              </div>
+            )
+          )
         ) : (
           <div className="col-12 text-center">
             <h4>Error while fetching Heros projects try reloading</h4>

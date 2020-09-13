@@ -11,19 +11,15 @@ import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
-    marginBottom: 150,
+    margin: "auto",
   },
   bullet: {
     display: "inline-block",
-    margin: "0 2px",
+
     transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
   },
 });
 
@@ -36,9 +32,10 @@ export default function ResourceCard(props) {
         <Typography variant="h5" component="h2">
           {props.resource.name}
         </Typography>
-        {props.resource.tags.map((tag) => (
+
+        {props.resource.tags.map((tag, tagIndex) => (
           <Chip
-            key={Math.random()}
+            key={tagIndex}
             label={tag}
             variant="outlined"
             color="primary"

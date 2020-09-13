@@ -15,15 +15,15 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-    marginTop: 50,
+    margin: "auto",
+    height: "100%",
   },
 });
 
 export default function RepoCard(props) {
   const classes = useStyles();
 
-  return (
+  return !props.home ? (
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent>
@@ -34,33 +34,49 @@ export default function RepoCard(props) {
             {props.repo.info.description}
           </Typography>
           {props.repo.technologies && props.repo.technologies.length ? (
-            props.repo.technologies.map((tech) => (
-              <Chip
-                label={tech}
-                color="primary"
-                size="small"
-                key={Math.random()}
-              />
+            props.repo.technologies.map((tech, techIndex) => (
+              <Chip label={tech} color="primary" size="small" key={techIndex} />
             ))
           ) : (
             <Chip
-              label={props.repo.info.language}
+              className="mt-3"
+              label={props.repo.info.language || "JavaScript"}
               color="primary"
               size="small"
-              key={Math.random()}
             />
           )}
           <Divider light />
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="secondary">
+        {/* <Button size="small" color="secondary">
           <DeleteIcon />
-        </Button>
-        <Button size="small" color="primary">
+        </Button> */}
+        <Button href={props.repo.info.url} size="small" color="primary">
           <OpenInBrowserIcon />
         </Button>
       </CardActions>
+    </Card>
+  ) : (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {props.repo.name}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {props.repo.description}
+          </Typography>
+          <Chip
+            className="mt-3"
+            label={props.repo.language || "JavaScript"}
+            color="primary"
+            size="small"
+          />
+
+          <Divider light />
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 }

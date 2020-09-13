@@ -74,12 +74,12 @@ export default function HeroCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <List component="nav" aria-label="contacts">
-            {props.hero.links.map((link) => (
-              <ListItem key={Math.random()} button href={link.url}>
+            {props.hero.links.map((link, linkIndex) => (
+              <ListItem key={linkIndex} button href={link.url}>
                 <ListItemIcon href={link.url}>
                   <LinkIcon href={link.url} />
                 </ListItemIcon>
-                <ListItemText primary={link.name} />
+                <ListItemText href={link.url} primary={link.name} />
               </ListItem>
             ))}
           </List>

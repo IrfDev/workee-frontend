@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Grid from "@material-ui/core/Grid";
 import { CircularProgress } from "@material-ui/core/";
 
-import RepoItem from "../../Molecules/RepoItem.jsx";
+import RepoCard from "Molecules/cards/RepoCard.jsx";
 import { GET_GITHUB_REPOS } from "GQL/queries";
 
 export default function ReposListing() {
@@ -14,7 +14,7 @@ export default function ReposListing() {
 
   return (
     // <Grid container spacing={2}>
-    <div className="row m-0 align-items-stretch align-content-stretch">
+    <div className="row m-0 align-items-stretch align-content-stretch justify-content-around">
       <div className="col-12 text-center">
         <h2>Repos</h2>
       </div>
@@ -24,14 +24,9 @@ export default function ReposListing() {
           repoIndex < 6 ? (
             <div
               key={repoIndex}
-              className="align-self-stretch col-12 col-md-6 col-lg-4"
+              className="align-self-stretch col-12 col-md-6 col-lg-4 mb-4"
             >
-              <RepoItem
-                Title={repo.name}
-                description={repo.description}
-                technologies={repo.tecnologies}
-                language={repo.language}
-              />
+              <RepoCard repo={repo} home={true} />
             </div>
           ) : (
             ""

@@ -19,8 +19,7 @@ import NoteIcon from "@material-ui/icons/Note";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-    marginBottom: 100,
+    margin: "auto",
   },
   media: {
     height: 0,

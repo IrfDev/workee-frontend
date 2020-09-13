@@ -23,7 +23,7 @@ export default function Weekly(props) {
       {!getWeekly.loading ? (
         !getWeekly.error ? (
           getWeekly.data.getProjectById.weekly.boards.map((board) => (
-            <div key={board.id} className="col-12 mt-5 col-md-6 col-lg-4">
+            <div key={board.id} className="col-12 mb-5 col-md-6 col-lg-4">
               <BoardCard board={board} />
             </div>
           ))

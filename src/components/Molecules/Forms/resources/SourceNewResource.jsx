@@ -7,7 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import { NEW_HERO, NEW_STREAM, PUSH_NEW_SOURCE } from "GQL/mutations";
+import { NEW_HERO, PUSH_NEW_SOURCE } from "GQL/mutations";
 
 import SwitchContent from "Molecules/Forms/SwitchContent/NewSourceContent.jsx";
 
@@ -32,13 +32,13 @@ export default function SourceNewResource(props) {
   };
 
   const [createHero] = useMutation(NEW_HERO);
-  const [createStream] = useMutation(NEW_STREAM);
+
   const [pushNewSource] = useMutation(PUSH_NEW_SOURCE);
 
-  const normalizedStreamIds = () => {
-    const streamIds = previousState.streams.map((stream) => stream.id);
-    return setState({ ...previousState, streamIds });
-  };
+  // const normalizedStreamIds = () => {
+  //   const streamIds = previousState.streams.map((stream) => stream.id);
+  //   return setState({ ...previousState, streamIds });
+  // };
 
   const handleNewSource = async () => {
     switch (previousState.activeResource) {
@@ -63,27 +63,27 @@ export default function SourceNewResource(props) {
 
         return props.handleForm();
 
-      case "Stream":
-        normalizedStreamIds();
+      // case "Stream":
+      //   normalizedStreamIds();
 
-        await createStream({
-          variables: {
-            feedlyStreamsid: previousState.streamIds,
-            tags: previousState.tags,
-          },
-        }).then(async (response) => {
-          let streamId = response.data.createStream.data.id;
+      //   await createStream({
+      //     variables: {
+      //       feedlyStreamsid: previousState.streamIds,
+      //       tags: previousState.tags,
+      //     },
+      //   }).then(async (response) => {
+      //     let streamId = response.data.createStream.data.id;
 
-          await pushNewSource({
-            variables: {
-              id: props.activeProject,
-              target: "sources.streams",
-              data: streamId,
-            },
-          });
-        });
+      //     await pushNewSource({
+      //       variables: {
+      //         id: props.activeProject,
+      //         target: "sources.streams",
+      //         data: streamId,
+      //       },
+      //     });
+      //   });
 
-        return props.handleForm();
+      //   return props.handleForm();
 
       default:
         break;
@@ -102,14 +102,19 @@ export default function SourceNewResource(props) {
           onChange={handleActiveResource}
           autoWidth={true}
         >
-          <MenuItem value={"Stream"}>Stream</MenuItem>
+          {/* <MenuItem value={"Stream"}>Stream</MenuItem> */}
           <MenuItem value={"Hero"}>Hero</MenuItem>
         </Select>
       </FormControl>
       <div className="form-content">
         <SwitchContent setState={setState} previousState={previousState} />
       </div>
-      <Button onClick={handleNewSource} variant="contained" color="primary">
+      <Button
+        className="mt-5"
+        onClick={handleNewSource}
+        variant="contained"
+        color="primary"
+      >
         Enviar formulario
       </Button>
     </form>

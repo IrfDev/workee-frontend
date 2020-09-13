@@ -16,7 +16,7 @@ export default function Daily(props) {
   return (
     <div className="row m-0">
       <div className="col-12 text-center">
-        <h1>Tasks</h1>
+        <h2>Tasks</h2>
       </div>
       {!getDaily.loading ? (
         !getDaily.error ? (

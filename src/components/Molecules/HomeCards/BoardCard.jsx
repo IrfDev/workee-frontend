@@ -20,7 +20,7 @@ import CardList from "Atoms/items/CardBoardItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    //maxWidth: 345,
   },
   media: {
     height: 0,

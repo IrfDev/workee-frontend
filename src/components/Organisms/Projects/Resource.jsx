@@ -17,8 +17,6 @@ export default function Resource(props) {
     },
   });
 
-  console.log("[Query] getResources:", getResources);
-
   return getResources.error ? (
     getResources.error.message.includes("Unauthorized!") ? (
       <Redirect to="/login" noThrow />
@@ -52,15 +50,20 @@ export default function Resource(props) {
       <div className="col-12 text-center">
         <h2>Resources</h2>
       </div>
-      <div className="row m-0">
-        <div className="col-12 text-center">
-          <h2>Repos</h2>
+      <div className="row m-0 align-items-stretch justify-content-around">
+        <div className="col-12 text-center mt-3">
+          <h3>Repos</h3>
         </div>
         {!getResources.loading ? (
           !getResources.error ? (
             getResources.data.getProjectById.resources.repos ? (
               getResources.data.getProjectById.resources.repos.map((repo) => (
-                <RepoCard key={Math.random()} repo={repo} />
+                <div
+                  key={Math.random()}
+                  className="col-md-5 col-lg-4 col-12 mb-3"
+                >
+                  <RepoCard repo={repo} />
+                </div>
               ))
             ) : (
               <h4>Create Some Repos for your project</h4>
@@ -75,14 +78,21 @@ export default function Resource(props) {
           <CircularProgress />
         )}
       </div>
-      <div>
-        <h2>Notebooks</h2>
+      <div className="row m-0 justify-content-around align-items-center">
+        <div className="col-12 text-center m-4">
+          <h2>Notebooks</h2>
+        </div>
         {!getResources.loading ? (
           !getResources.error ? (
             getResources.data.getProjectById.resources.notebooks ? (
               getResources.data.getProjectById.resources.notebooks.map(
-                (notebook) => (
-                  <NotebookCard key={Math.random()} notebook={notebook} />
+                (notebook, notebookIndex) => (
+                  <div
+                    key={notebookIndex}
+                    className="col-md-5 col-lg-4 col-12 mb-5"
+                  >
+                    <NotebookCard notebook={notebook} />
+                  </div>
                 )
               )
             ) : (
@@ -98,14 +108,21 @@ export default function Resource(props) {
           <CircularProgress />
         )}
       </div>
-      <div>
-        <h2>Extras</h2>
+      <div className="row m-0 justify-content-around align-items-center">
+        <div className="col-12 text-center m-4">
+          <h2>Extras</h2>
+        </div>
         {!getResources.loading ? (
           !getResources.error ? (
             getResources.data.getProjectById.resources.resources ? (
               getResources.data.getProjectById.resources.resources.map(
-                (resource) => (
-                  <ResourceCard key={Math.random()} resource={resource} />
+                (resource, resourceIndex) => (
+                  <div
+                    className="col-md-4 col-lg-3 col-12 mb-4"
+                    key={resourceIndex}
+                  >
+                    <ResourceCard resource={resource} />
+                  </div>
                 )
               )
             ) : (
