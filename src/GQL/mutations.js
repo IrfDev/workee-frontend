@@ -17,6 +17,14 @@ export const DELETE_RESOURCE = gql`
   }
 `;
 
+export const DELETE_PROJECT = gql`
+  mutation DeleteProject($title: String!, $id: ID!) {
+    deleteProject(title: $title, id: $id) {
+      success
+    }
+  }
+`;
+
 export const NEW_PROJECT = gql`
   mutation CreateProject(
     $title: String!

@@ -20,7 +20,7 @@ export default function Source(props) {
 
   const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
 
-  const handleDeleteHeroe = ({ resourceId, target }) => {
+  const handleDeleteHeroe = ({ resourceId }) => {
     let projectId = String(props.activeProject);
     let resource = String(resourceId);
 

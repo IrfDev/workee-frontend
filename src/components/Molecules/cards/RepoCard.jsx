@@ -1,14 +1,17 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+
 import Card from "@material-ui/core/Card";
+import Divider from "@material-ui/core/Divider";
+
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
-
-import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -55,6 +58,21 @@ export default function RepoCard(props) {
         <Button href={props.repo.info.html_url} size="small" color="primary">
           <OpenInBrowserIcon />
         </Button>
+        {props.deleteResource ? (
+          <IconButton aria-label="Delete Heroe">
+            <DeleteIcon
+              color="error"
+              onClick={() =>
+                props.deleteResource({
+                  resourceId: props.repo.id,
+                  target: "resources.repos",
+                })
+              }
+            />
+          </IconButton>
+        ) : (
+          ""
+        )}
       </CardActions>
     </Card>
   ) : (
@@ -73,7 +91,6 @@ export default function RepoCard(props) {
             color="primary"
             size="small"
           />
-
           <Divider light />
         </CardContent>
       </CardActionArea>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Redirect } from "@reach/router";
 
 import RepoCard from "Molecules/cards/RepoCard.jsx";
@@ -8,6 +8,7 @@ import ResourceCard from "Molecules/cards/ResourceCard.jsx";
 import MicrosoftLogin from "Atoms/utils/MicrosoftLogin.jsx";
 
 import { GET_RESOURCES_PROJECT } from "GQL/queries";
+import { DELETE_RESOURCE } from "GQL/mutations";
 import { CircularProgress } from "@material-ui/core";
 
 export default function Resource(props) {
@@ -16,6 +17,21 @@ export default function Resource(props) {
       id: props.activeProject,
     },
   });
+
+  const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
+
+  const handleDeleteResource = ({ resourceId, target }) => {
+    let projectId = String(props.activeProject);
+    let resource = String(resourceId);
+
+    deleteResource({
+      variables: {
+        id: projectId,
+        target,
+        resourceId: resource,
+      },
+    });
+  };
 
   return getResources.error ? (
     getResources.error.message.includes("Unauthorized!") ? (
@@ -62,7 +78,7 @@ export default function Resource(props) {
                   key={Math.random()}
                   className="col-md-5 col-lg-4 col-12 mb-3"
                 >
-                  <RepoCard repo={repo} />
+                  <RepoCard deleteResource={handleDeleteResource} repo={repo} />
                 </div>
               ))
             ) : (
@@ -91,7 +107,10 @@ export default function Resource(props) {
                     key={notebookIndex}
                     className="col-md-5 col-lg-4 col-12 mb-5"
                   >
-                    <NotebookCard notebook={notebook} />
+                    <NotebookCard
+                      deleteResource={handleDeleteResource}
+                      notebook={notebook}
+                    />
                   </div>
                 )
               )
@@ -121,7 +140,10 @@ export default function Resource(props) {
                     className="col-md-4 col-lg-3 col-12 mb-4"
                     key={resourceIndex}
                   >
-                    <ResourceCard resource={resource} />
+                    <ResourceCard
+                      deleteResource={handleDeleteResource}
+                      resource={resource}
+                    />
                   </div>
                 )
               )

@@ -1,17 +1,22 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import { blue } from "@material-ui/core/colors";
+
 import Card from "@material-ui/core/Card";
+import Collapse from "@material-ui/core/Collapse";
+import List from "@material-ui/core/List";
+
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import { blue } from "@material-ui/core/colors";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import IconButton from "@material-ui/core/IconButton";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import ListItemText from "@material-ui/core/ListItemText";
 
@@ -57,16 +62,30 @@ export default function NotebookCard(props) {
           </Avatar>
         }
         action={
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="settings"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
+          <>
+            <IconButton aria-label="Delete Heroe">
+              <DeleteIcon
+                color="error"
+                onClick={() =>
+                  props.deleteResource({
+                    resourceId: props.notebook.id,
+                    target: "resources.notebooks",
+                  })
+                }
+              />
+            </IconButton>
+
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="settings"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </>
         }
         title={props.notebook.resource.name}
       />
