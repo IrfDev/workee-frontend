@@ -1,15 +1,18 @@
 import React from "react";
 import clsx from "clsx";
+import { useMutation } from "@apollo/react-hooks";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import Collapse from "@material-ui/core/Collapse";
+
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+
 import { red } from "@material-ui/core/colors";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import ShareIcon from "@material-ui/icons/Share";
@@ -73,7 +76,10 @@ export default function BoardCards(props) {
 
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <DeleteIcon />
+          <DeleteIcon
+            color="error"
+            onClick={() => props.deleteBoard({ resourceId: props.board.id })}
+          />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

@@ -37,7 +37,7 @@ const renderSwitch = ({ param, project }) => {
       );
 
     default:
-      <Weekly boards={project.weekly.boards} />;
+      <Weekly activeProject={project.id} boards={project.weekly.boards} />;
       break;
   }
 };

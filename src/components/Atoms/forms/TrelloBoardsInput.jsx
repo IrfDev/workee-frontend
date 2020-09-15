@@ -45,7 +45,12 @@ export default function TrelloBoardsInput({
           labelId="trello-board-input"
           id="trello-board-inputs"
           autoWidth={true}
-          onChange={(e) => handler("board", e, { setBasicInfoProject })}
+          onChange={(e) =>
+            handler("board", e, {
+              setBasicInfoProject,
+              basicProjectInfo: formState,
+            })
+          }
         >
           {trelloBoards.data.getTrelloBoards.map((board) => (
             <MenuItem key={board.id} value={board.id}>
@@ -60,7 +65,12 @@ export default function TrelloBoardsInput({
           labelId="trello-list-input"
           id="trello-list-inputs"
           autoWidth={true}
-          onChange={(e) => handler("activeList", e)}
+          onChange={(e) =>
+            handler("activeList", e, {
+              setBasicInfoProject,
+              basicProjectInfo: formState,
+            })
+          }
         >
           {trelloLists.data ? (
             trelloLists.data.getTrelloListsFromBoard.map((board) => (

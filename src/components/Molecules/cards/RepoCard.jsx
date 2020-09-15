@@ -52,7 +52,7 @@ export default function RepoCard(props) {
         {/* <Button size="small" color="secondary">
           <DeleteIcon />
         </Button> */}
-        <Button href={props.repo.info.url} size="small" color="primary">
+        <Button href={props.repo.info.html_url} size="small" color="primary">
           <OpenInBrowserIcon />
         </Button>
       </CardActions>

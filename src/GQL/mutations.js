@@ -9,6 +9,14 @@ export const GET_LOGIN = gql`
   }
 `;
 
+export const DELETE_RESOURCE = gql`
+  mutation PullInProject($id: ID!, $target: String!, $resourceId: String!) {
+    pullInProject(id: $id, target: $target, resourceId: $resourceId) {
+      success
+    }
+  }
+`;
+
 export const NEW_PROJECT = gql`
   mutation CreateProject(
     $title: String!

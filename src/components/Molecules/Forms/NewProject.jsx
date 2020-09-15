@@ -92,11 +92,17 @@ export default function NewProjectStepperForm() {
         variables: { githubId: basicProjectInfo.repo },
       });
 
-      const newState = await setBasicInfoProject({
+      const newState = setBasicInfoProject({
         ...basicProjectInfo,
         repo: newRepoResponse.data.createRepo.data.id,
         board: newBoardResponse.data.createBoard.data.id,
       });
+      console.log(
+        "[Creating new project]:",
+        newBoardResponse,
+        newRepoResponse,
+        basicProjectInfo
+      );
 
       const newProjectResponse = await newProject({
         variables: {

@@ -1,9 +1,11 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { CircularProgress } from "@material-ui/core";
 
 import TaskCard from "Molecules/cards/TaskCard.jsx";
+
 import { GET_DAILY_PROJECT } from "GQL/queries";
+import { DELETE_RESOURCE } from "GQL/mutations";
 
 export default function Daily(props) {
   const getDaily = useQuery(GET_DAILY_PROJECT, {
@@ -12,23 +14,47 @@ export default function Daily(props) {
     },
   });
 
-  console.log("QUery Get Daily:", getDaily);
+  const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
+
+  const handleDeleteTask = ({ resourceId }) => {
+    let projectId = String(props.activeProject);
+    let resource = String(resourceId);
+
+    deleteResource({
+      variables: {
+        id: projectId,
+        target: "daily.tasks",
+        resourceId: resource,
+      },
+    });
+  };
+
+  console.log("[Deleted Task]:", data);
+
   return (
     <div className="row m-0">
       <div className="col-12 text-center">
         <h2>Tasks</h2>
       </div>
       {!getDaily.loading ? (
-        !getDaily.error ? (
+        !getDaily.error && getDaily.data.getProjectById.daily ? (
           getDaily.data.getProjectById.daily.tasks.map((task, taskIndex) => (
-            <div key={taskIndex} className="col-12 col-md-6 col-lg-4">
-              <TaskCard task={task} />
+            <div key={taskIndex} className="col-12 col-md-4 col-lg-3">
+              <TaskCard task={task} deleteTask={handleDeleteTask} />
             </div>
           ))
         ) : (
-          <div>
-            <h3>Error while fetching Weekly project try reloading</h3>
-            <p>{getDaily.error.message}</p>
+          <div className="col-12 text-center mt-4">
+            <h4>
+              {getDaily.error
+                ? "Error while fetching Weekly project try reloading"
+                : "Please create some tasks for your project"}
+            </h4>
+            <p>
+              {getDaily.error
+                ? getDaily.error.message
+                : "Your tasks will appear here. Start creating one"}
+            </p>
           </div>
         )
       ) : (

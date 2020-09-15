@@ -55,6 +55,7 @@ export const GET_DAILY_PROJECT = gql`
       id
       daily {
         tasks {
+          id
           resource {
             title
             about
@@ -84,13 +85,16 @@ export const GET_RESOURCES_PROJECT = gql`
           }
         }
         resources {
+          id
           name
           tags
           website
         }
         repos {
+          id
           info: githubRepo {
             name
+            html_url
             owner {
               login
               avatar_url
@@ -112,6 +116,7 @@ export const GET_SOURCES_PROJECT = gql`
       id
       sources {
         heroes {
+          id
           name
           tags
           links {

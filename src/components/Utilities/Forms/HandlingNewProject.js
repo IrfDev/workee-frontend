@@ -4,6 +4,7 @@ export default function handlingBasicProjectInput(
   { setBasicInfoProject, basicProjectInfo }
 ) {
   event.persist();
+
   switch (target) {
     case "name":
       setBasicInfoProject({

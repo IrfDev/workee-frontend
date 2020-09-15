@@ -1,11 +1,12 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import StreamCard from "Molecules/cards/StreamCard.jsx";
 import HeroCard from "Molecules/cards/HeroCard.jsx";
 
-import { GET_SOURCES_PROJECT } from "GQL/queries";
 import { CircularProgress } from "@material-ui/core";
+import { GET_SOURCES_PROJECT } from "GQL/queries";
+import { DELETE_RESOURCE } from "GQL/mutations";
 
 export default function Source(props) {
   const validSource = (resources) =>
@@ -16,6 +17,21 @@ export default function Source(props) {
       id: props.activeProject,
     },
   });
+
+  const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
+
+  const handleDeleteHeroe = ({ resourceId, target }) => {
+    let projectId = String(props.activeProject);
+    let resource = String(resourceId);
+
+    deleteResource({
+      variables: {
+        id: projectId,
+        target: "sources.heroes",
+        resourceId: resource,
+      },
+    });
+  };
 
   console.log(
     "[Query to get sources]:",
@@ -55,18 +71,26 @@ export default function Source(props) {
         <h2>Heros</h2>
       </div>
       {!getSources.loading ? (
-        !getSources.error ? (
+        !getSources.error && getSources.data.getProjectById.sources ? (
           getSources.data.getProjectById.sources.heroes.map(
             (hero, heroIndex) => (
               <div key={heroIndex} className="col-lg-4 col-md-5 col-12 mb-4">
-                <HeroCard hero={hero} />
+                <HeroCard deleteHeroe={handleDeleteHeroe} hero={hero} />
               </div>
             )
           )
         ) : (
           <div className="col-12 text-center">
-            <h4>Error while fetching Heros projects try reloading</h4>
-            <p>{getSources.error.message}</p>
+            <h4>
+              {getSources.error
+                ? "Error while fetching Heroes projects try reloading"
+                : "Please create some Heroes for your inspiration on this project"}
+            </h4>
+            <p>
+              {getSources.error
+                ? getSources.error.message
+                : "Your Heroes will appear here. Start creating one"}
+            </p>
           </div>
         )
       ) : (

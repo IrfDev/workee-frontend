@@ -1,15 +1,19 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Chip } from "@material-ui/core/";
+import IconButton from "@material-ui/core/IconButton";
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import ShareIcon from "@material-ui/icons/Share";
+
 import Typography from "@material-ui/core/Typography";
+import ShareIcon from "@material-ui/icons/Share";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
     marginTop: 10,
   },
   title: {
@@ -44,7 +48,13 @@ export default function TaskCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <ShareIcon />
+        <IconButton aria-label="Complete task">
+          <CheckIcon
+            onClick={() => props.deleteTask({ resourceId: props.task.id })}
+            color="primary"
+            className="danger"
+          />
+        </IconButton>
       </CardActions>
     </Card>
   );
