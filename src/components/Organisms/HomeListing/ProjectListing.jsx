@@ -26,12 +26,10 @@ export default function ProjectListing() {
       const { getAllProjects: projectsArray } = cache.readQuery({
         query: GET_ALL_PROJECTS,
       });
-      console.log("Query inside cache", projectsArray, dataResultCache);
 
       const projectsArrayFilter = projectsArray.filter(
         (project) => project.id !== dataResultCache
       );
-      console.log("Project filter", projectsArrayFilter);
 
       cache.writeQuery({
         query: GET_ALL_PROJECTS,

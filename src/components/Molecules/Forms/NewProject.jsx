@@ -117,12 +117,6 @@ export default function NewProjectStepperForm() {
         repo: newRepoResponse.data.createRepo.data.id,
         board: newBoardResponse.data.createBoard.data.id,
       });
-      console.log(
-        "[Creating new project]:",
-        newBoardResponse,
-        newRepoResponse,
-        basicProjectInfo
-      );
 
       const newProjectResponse = await newProject({
         variables: {

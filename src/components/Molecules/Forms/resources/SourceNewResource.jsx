@@ -105,8 +105,8 @@ export default function SourceNewResource(props) {
       <FormControl variant="filled" fullWidth={true}>
         <InputLabel id="trello-list-input">Recurso</InputLabel>
         <Select
-          labelId="trello-list-input"
-          id="trello-list-inputs"
+          labelId="hero-list-input"
+          id="hero-list-inputs"
           value={previousState.activeResource}
           onChange={handleActiveResource}
           autoWidth={true}

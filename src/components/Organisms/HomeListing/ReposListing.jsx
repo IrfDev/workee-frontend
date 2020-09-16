@@ -10,8 +10,6 @@ import { GET_GITHUB_REPOS } from "GQL/queries";
 export default function ReposListing() {
   const allGithubRepos = useQuery(GET_GITHUB_REPOS);
 
-  console.log("[RepoListingQuery]", allGithubRepos);
-
   return (
     // <Grid container spacing={2}>
     <div className="row m-0 align-items-stretch align-content-stretch justify-content-around">

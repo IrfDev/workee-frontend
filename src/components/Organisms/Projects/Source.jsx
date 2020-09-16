@@ -41,13 +41,6 @@ export default function Source(props) {
     });
   };
 
-  console.log(
-    "[Query to get sources]:",
-    getSources,
-    "[Valid source]",
-    validSource
-  );
-
   return (
     <div className="row m-0 mt-3">
       {/* <div className="col-12 text-center">

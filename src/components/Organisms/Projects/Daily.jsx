@@ -37,8 +37,6 @@ export default function Daily(props) {
     });
   };
 
-  console.log("[Deleted Task]:", data);
-
   return (
     <div className="row m-0">
       <div className="col-12 text-center">

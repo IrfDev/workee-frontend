@@ -15,8 +15,6 @@ export default function Weekly(props) {
     },
   });
 
-  console.log("[GetWeeklyQuery]:", getWeekly);
-
   const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
   // {
   // update(
@@ -89,7 +87,6 @@ export default function Weekly(props) {
       ],
     });
   };
-  console.log("[Deleted board]:", data);
 
   return (
     <div className="row m-0 justify-content-around ">

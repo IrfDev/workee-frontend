@@ -47,8 +47,8 @@ export default function NewHeroForm(props) {
     const linksArray = props.previousState.heroLinks;
 
     const newLink = {
-      website: props.previousState.newHeroLinkInput,
-      urlLink: props.previousState.newLinkName,
+      urlLink: props.previousState.newHeroLinkInput,
+      website: props.previousState.newLinkName,
     };
 
     linksArray.push(newLink);

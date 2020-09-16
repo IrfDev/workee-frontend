@@ -95,10 +95,10 @@ export default function HeroCard(props) {
           <List component="nav" aria-label="contacts">
             {props.hero.links.map((link, linkIndex) => (
               <ListItem key={linkIndex} button href={link.url}>
-                <ListItemIcon href={link.url}>
+                <IconButton href={link.url}>
                   <LinkIcon href={link.url} />
-                </ListItemIcon>
-                <ListItemText href={link.url} primary={link.name} />
+                  <ListItemText href={link.url} primary={link.name} />
+                </IconButton>
               </ListItem>
             ))}
           </List>

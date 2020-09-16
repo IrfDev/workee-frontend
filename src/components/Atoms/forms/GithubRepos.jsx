@@ -20,8 +20,6 @@ export default function SelectGithubRepos(props) {
 
   const githubRepos = useQuery(GET_GITHUB_REPOS);
 
-  console.log(githubRepos);
-
   return githubRepos.error ? (
     <h6>Were having troubles with the Github API, please try again</h6>
   ) : (
