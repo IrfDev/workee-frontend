@@ -30,6 +30,14 @@ export default function Source(props) {
         target: "sources.heroes",
         resourceId: resource,
       },
+      refetchQueries: [
+        {
+          query: GET_SOURCES_PROJECT,
+          variables: {
+            id: props.activeProject,
+          },
+        },
+      ],
     });
   };
 

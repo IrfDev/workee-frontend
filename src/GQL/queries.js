@@ -246,6 +246,9 @@ export const PUSH_NEW_BOARD = gql`
   mutation PushBoardIntoProject($id: ID!, $target: String!, $data: String!) {
     pushInProject(id: $id, data: $data, target: $target) {
       success
+      data {
+        id
+      }
     }
   }
 `;

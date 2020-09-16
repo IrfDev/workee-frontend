@@ -8,6 +8,7 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
 import { NEW_HERO, PUSH_NEW_SOURCE } from "GQL/mutations";
+import { GET_SOURCES_PROJECT } from "GQL/queries";
 
 import SwitchContent from "Molecules/Forms/SwitchContent/NewSourceContent.jsx";
 
@@ -58,6 +59,14 @@ export default function SourceNewResource(props) {
               target: "sources.heroes",
               data: heroId,
             },
+            refetchQueries: [
+              {
+                query: GET_SOURCES_PROJECT,
+                variables: {
+                  id: props.activeProject,
+                },
+              },
+            ],
           });
         });
 

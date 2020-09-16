@@ -13,6 +13,10 @@ export const DELETE_RESOURCE = gql`
   mutation PullInProject($id: ID!, $target: String!, $resourceId: String!) {
     pullInProject(id: $id, target: $target, resourceId: $resourceId) {
       success
+      data {
+        id
+        resourceId
+      }
     }
   }
 `;
@@ -21,6 +25,9 @@ export const DELETE_PROJECT = gql`
   mutation DeleteProject($title: String!, $id: ID!) {
     deleteProject(title: $title, id: $id) {
       success
+      data {
+        id
+      }
     }
   }
 `;

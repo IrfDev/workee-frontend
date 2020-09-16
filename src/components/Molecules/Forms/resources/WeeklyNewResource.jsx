@@ -7,7 +7,7 @@ const TagsInput = React.lazy(() => import("Atoms/forms/TagsResourceInput.jsx"));
 
 import { useMutation } from "@apollo/react-hooks";
 
-import { PUSH_NEW_BOARD, NEW_BOARD } from "GQL/queries";
+import { PUSH_NEW_BOARD, NEW_BOARD, GET_WEEKLY_PROJECT } from "GQL/queries";
 
 export default function WeeklyNewResource(props) {
   const [lastState, setState] = useState({
@@ -34,6 +34,7 @@ export default function WeeklyNewResource(props) {
   };
 
   const [newBoard] = useMutation(NEW_BOARD);
+
   const [pushNewBoard] = useMutation(PUSH_NEW_BOARD);
 
   const handlingForm = async () => {
@@ -49,6 +50,14 @@ export default function WeeklyNewResource(props) {
         target: "weekly.boards",
         data: boardId,
       },
+      refetchQueries: [
+        {
+          query: GET_WEEKLY_PROJECT,
+          variables: {
+            idWeekly: props.activeProject,
+          },
+        },
+      ],
     });
 
     if (pushBoardResponse.data.pushInProject.success) {

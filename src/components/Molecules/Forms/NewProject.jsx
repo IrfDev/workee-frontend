@@ -17,7 +17,7 @@ import handlingBasicProjectInput from "Utilities/Forms/HandlingNewProject";
 import ColorlibStepIcon from "Atoms/utils/NewProjectStepIcons.jsx";
 
 import { NEW_PROJECT, NEW_REPO, NEW_BOARD } from "GQL/mutations";
-import { GET_GITHUB_REPOS } from "GQL/queries";
+import { GET_GITHUB_REPOS, GET_ALL_PROJECTS } from "GQL/queries";
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -65,7 +65,9 @@ function getSteps() {
 
 export default function NewProjectStepperForm() {
   const classes = useStyles();
+
   const [activeStep, setActiveStep] = React.useState(0);
+
   const [basicProjectInfo, setBasicInfoProject] = useState({
     title: "",
     description: "",
@@ -73,7 +75,25 @@ export default function NewProjectStepperForm() {
 
   const githubRepos = useQuery(GET_GITHUB_REPOS);
 
-  const [newProject, { data: newProjectData }] = useMutation(NEW_PROJECT);
+  const [newProject, { data: newProjectData }] = useMutation(NEW_PROJECT, {
+    update(cache, { data: { createProject } }) {
+      const { getAllProjects: projectsCacheArray } = cache.readQuery({
+        query: GET_ALL_PROJECTS,
+      });
+
+      let newProject = {
+        ...createProject.data,
+        thumb: "",
+      };
+
+      cache.writeQuery({
+        query: GET_ALL_PROJECTS,
+        data: {
+          getAllProjects: [...projectsCacheArray, newProject],
+        },
+      });
+    },
+  });
   const [newRepo] = useMutation(NEW_REPO);
   const [newBoard] = useMutation(NEW_BOARD);
 

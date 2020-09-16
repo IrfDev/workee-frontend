@@ -29,7 +29,7 @@ export default function BasicCard(props) {
           <CardMedia
             className={classes.media}
             image={props.project.thumb}
-            title="Contemplative Reptile"
+            title={props.project.title}
           />
         </Link>
         <CardContent>

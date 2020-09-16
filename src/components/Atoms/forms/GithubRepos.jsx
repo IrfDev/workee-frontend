@@ -22,8 +22,8 @@ export default function SelectGithubRepos(props) {
 
   console.log(githubRepos);
 
-  githubRepos.error ? (
-    <h6>We're having troubles with the Github API, please try again</h6>
+  return githubRepos.error ? (
+    <h6>Were having troubles with the Github API, please try again</h6>
   ) : (
     <div>
       <h3>Selecciona un repositorio activo de Github</h3>

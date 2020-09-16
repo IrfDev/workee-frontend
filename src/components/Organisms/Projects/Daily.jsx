@@ -26,6 +26,14 @@ export default function Daily(props) {
         target: "daily.tasks",
         resourceId: resource,
       },
+      refetchQueries: [
+        {
+          query: GET_DAILY_PROJECT,
+          variables: {
+            id: props.activeProject,
+          },
+        },
+      ],
     });
   };
 

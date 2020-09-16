@@ -15,7 +15,60 @@ export default function Weekly(props) {
     },
   });
 
+  console.log("[GetWeeklyQuery]:", getWeekly);
+
   const [deleteResource, { data }] = useMutation(DELETE_RESOURCE);
+  // {
+  // update(
+  //   cache,
+  //   {
+  //     data: {
+  //       pullInProject: {
+  //         data: { id: idProjectCache, resourceId: idResourceCache },
+  //       },
+  //     },
+  //   }
+  // ) {
+  //   const {
+  //     getProjectById: {
+  //       id: idProject,
+  //       weekly: { boards: boardsArrayQuery },
+  //     },
+  //   } = cache.readQuery({
+  //     query: GET_WEEKLY_PROJECT,
+  //     variables: {
+  //       idWeekly: idProjectCache,
+  //     },
+  //   }
+
+  //     console.log("Query inside cache", boardsArrayQuery, idResourceCache);
+
+  //     const boardsArrayFilter = boardsArrayQuery.filter(
+  //       (board) => board.id !== idResourceCache
+  //     );
+  //     console.log("[BoardsFilter]:", boardsArrayFilter, idResourceCache);
+
+  //     const queryData = {
+  //       id: idProject,
+  //       weekly: { boards: boardsArrayFilter },
+  //     };
+
+  //     console.log("[QueryData]:", queryData);
+
+  //     cache.writeQuery({
+  //       query: GET_WEEKLY_PROJECT,
+  //       id: idProject,
+  //       variables: {
+  //         Project: idProject,
+  //       },
+  //       data: {
+  //         Project: {
+  //           getProjectById: queryData,
+  //         },
+  //       },
+  //     });
+  //   },
+  // }
 
   const handleDeleteBoard = async ({ resourceId }) => {
     let projectId = String(props.activeProject);
@@ -26,6 +79,14 @@ export default function Weekly(props) {
         target: "weekly.boards",
         resourceId: resource,
       },
+      refetchQueries: [
+        {
+          query: GET_WEEKLY_PROJECT,
+          variables: {
+            idWeekly: projectId,
+          },
+        },
+      ],
     });
   };
   console.log("[Deleted board]:", data);

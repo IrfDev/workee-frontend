@@ -12,7 +12,33 @@ import { DELETE_PROJECT } from "GQL/mutations";
 export default function ProjectListing() {
   const projects = useQuery(GET_ALL_PROJECTS);
 
-  const [deleteProject] = useMutation(DELETE_PROJECT);
+  const [deleteProject] = useMutation(DELETE_PROJECT, {
+    update(
+      cache,
+      {
+        data: {
+          deleteProject: {
+            data: { id: dataResultCache },
+          },
+        },
+      }
+    ) {
+      const { getAllProjects: projectsArray } = cache.readQuery({
+        query: GET_ALL_PROJECTS,
+      });
+      console.log("Query inside cache", projectsArray, dataResultCache);
+
+      const projectsArrayFilter = projectsArray.filter(
+        (project) => project.id !== dataResultCache
+      );
+      console.log("Project filter", projectsArrayFilter);
+
+      cache.writeQuery({
+        query: GET_ALL_PROJECTS,
+        data: { getAllProjects: projectsArrayFilter },
+      });
+    },
+  });
 
   const handleDeleteProject = ({ title, id }) => {
     deleteProject({

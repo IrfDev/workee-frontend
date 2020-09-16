@@ -16,6 +16,8 @@ import {
   PUSH_NEW_RESOURCE,
 } from "GQL/mutations";
 
+import { GET_RESOURCES_PROJECT } from "GQL/queries";
+
 export default function SourceNewResource(props) {
   const [state, setState] = useState({
     activeResource: "Notebooks",
@@ -61,6 +63,14 @@ export default function SourceNewResource(props) {
               data: response.data.createRepo.data.id,
               id: props.activeProject,
             },
+            refetchQueries: [
+              {
+                query: GET_RESOURCES_PROJECT,
+                variables: {
+                  id: props.activeProject,
+                },
+              },
+            ],
           });
         });
 
@@ -80,6 +90,14 @@ export default function SourceNewResource(props) {
               data: response.data.createNotebook.data.id,
               id: props.activeProject,
             },
+            refetchQueries: [
+              {
+                query: GET_RESOURCES_PROJECT,
+                variables: {
+                  id: props.activeProject,
+                },
+              },
+            ],
           });
         });
 
@@ -99,6 +117,14 @@ export default function SourceNewResource(props) {
               target: "resources.resources",
               data: response.data.createResource.data.id,
             },
+            refetchQueries: [
+              {
+                query: GET_RESOURCES_PROJECT,
+                variables: {
+                  id: props.activeProject,
+                },
+              },
+            ],
           }).then((res) => console.log("Push source:", res));
         });
 

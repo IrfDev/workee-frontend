@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import TagsInput from "Atoms/forms/TagsResourceInput.jsx";
 
 import { NEW_TASK, PUSH_NEW_TASK } from "GQL/mutations";
+import { GET_DAILY_PROJECT } from "GQL/queries";
 
 export default function DailyNewResource(props) {
   const [previousState, setNewDailyObject] = useState({
@@ -50,6 +51,14 @@ export default function DailyNewResource(props) {
         target: "daily.tasks",
         data: taskId,
       },
+      refetchQueries: [
+        {
+          query: GET_DAILY_PROJECT,
+          variables: {
+            id: props.activeProject,
+          },
+        },
+      ],
     });
 
     if (pushBoardResponse.data.pushInProject.success) {
