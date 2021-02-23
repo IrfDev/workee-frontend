@@ -10,6 +10,6 @@ static_sites:
       deploy_on_push: true
       repo: irfdev/workee-frontend
     name: Workee-frontend
-    error_document: index.html
+    catchall_document: index.html
     routes:
       - path: /
